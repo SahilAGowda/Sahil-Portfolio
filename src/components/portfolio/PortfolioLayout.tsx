@@ -42,12 +42,12 @@ export function PortfolioLayout() {
   const ActiveComponent = sections[activeSection as keyof typeof sections];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground flex">
       {/* Sidebar */}
       <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} />
       
       {/* Main Content */}
-      <main className="lg:ml-80 min-h-screen">
+      <main className="flex-1 lg:ml-80 min-h-screen overflow-x-hidden">
         <div className="animate-fade-in">
           <ActiveComponent setActiveSection={setActiveSection} />
         </div>
