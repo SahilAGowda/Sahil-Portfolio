@@ -2,57 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Modern Portfolio Design System - Dark theme with electric blue accents */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Dark theme colors */
+    --background: 222 47% 7%;  /* #121212 dark base */
+    --foreground: 210 40% 98%; /* Off-white text */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 225 25% 10%;       /* Dark card background */
+    --card-foreground: 210 40% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 225 25% 10%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Electric blue primary */
+    --primary: 195 100% 50%;   /* #00c2ff electric cyan */
+    --primary-foreground: 222 47% 7%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 225 25% 15%;  /* Slightly lighter dark */
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 225 25% 12%;      /* Muted background */
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 195 100% 50%;    /* Electric blue accent */
+    --accent-foreground: 222 47% 7%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 225 25% 20%;     /* Subtle borders */
+    --input: 225 25% 15%;      /* Input backgrounds */
+    --ring: 195 100% 50%;      /* Focus rings */
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
+    /* Sidebar specific tokens */
+    --sidebar-background: 225 25% 8%;  /* Darker sidebar */
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 195 100% 50%;
+    --sidebar-primary-foreground: 222 47% 7%;
+    --sidebar-accent: 225 25% 12%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 225 25% 15%;
+    --sidebar-ring: 195 100% 50%;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Custom portfolio tokens */
+    --hero-bg: 222 47% 6%;     /* Hero section background */
+    --hero-accent: 195 100% 50%; /* Hero accent color */
+    --section-bg: 225 25% 9%;   /* Section backgrounds */
+    --code-bg: 225 25% 12%;     /* Code/skill backgrounds */
+    --hover-bg: 225 25% 15%;    /* Hover states */
+    
+    /* Typography */
+    --text-primary: 210 40% 98%;    /* Main text */
+    --text-secondary: 215 20% 70%;  /* Secondary text */
+    --text-muted: 215 20% 50%;      /* Muted text */
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 4px hsl(222 47% 4% / 0.1);
+    --shadow-md: 0 4px 12px hsl(222 47% 4% / 0.15);
+    --shadow-lg: 0 8px 24px hsl(222 47% 4% / 0.2);
+    --shadow-glow: 0 0 20px hsl(195 100% 50% / 0.3);
   }
 
   .dark {
@@ -100,6 +112,49 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-poppins overflow-x-hidden;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* Portfolio specific component styles */
+  .portfolio-section {
+    @apply p-6 lg:p-8 min-h-screen;
+  }
+  
+  .section-title {
+    @apply text-3xl lg:text-4xl font-bold mb-8 text-foreground;
+  }
+  
+  .hero-title {
+    @apply text-4xl lg:text-6xl font-bold bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 hover:scale-105 hover:shadow-lg;
+  }
+  
+  .btn-primary {
+    @apply bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:shadow-glow hover:scale-105;
+  }
+  
+  .btn-secondary {
+    @apply border border-primary text-primary px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:bg-primary hover:text-primary-foreground;
+  }
+  
+  .skill-badge {
+    @apply bg-code-bg text-foreground px-3 py-1 rounded-full text-sm font-medium border border-border;
+  }
+  
+  .nav-item {
+    @apply flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 hover:bg-sidebar-accent text-sidebar-foreground;
+  }
+  
+  .nav-item-active {
+    @apply bg-sidebar-primary text-sidebar-primary-foreground shadow-md;
   }
 }
