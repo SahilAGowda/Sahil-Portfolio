@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ExternalLink, Github, Eye, Filter } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -106,6 +106,11 @@ const categories = ["All", "Web", "AI", "Full Stack"];
 
 export function Projects() {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [isVisible, setIsVisible] = useState(false);
+  
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
   
   const filteredProjects = activeCategory === "All" 
     ? projects 
@@ -125,23 +130,28 @@ export function Projects() {
   return (
     <section className="portfolio-section">
       <div className="max-w-6xl mx-auto">
-        <h2 className="section-title">Featured Projects</h2>
+        <h2 className={`section-title transition-all duration-1000 ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'
+        }`}>Featured Projects</h2>
         
         {/* Filter Tabs */}
-        <div className="flex flex-wrap gap-2 mb-8">
+        <div className={`flex flex-wrap gap-2 mb-8 transition-all duration-1000 delay-200 ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+        }`}>
           <Filter className="h-5 w-5 text-text-muted mr-2 mt-1" />
-          {categories.map((category) => (
+          {categories.map((category, index) => (
             <Button
               key={category}
               variant={activeCategory === category ? "default" : "ghost"}
               onClick={() => setActiveCategory(category)}
               className={`
-                transition-all duration-300
+                transition-all duration-300 hover:scale-105 animate-stagger-in
                 ${activeCategory === category 
-                  ? 'bg-primary text-primary-foreground' 
-                  : 'hover:bg-hover-bg'
+                  ? 'bg-primary text-primary-foreground shadow-lg' 
+                  : 'hover:bg-hover-bg hover:shadow-md'
                 }
               `}
+              style={{animationDelay: `${0.4 + index * 0.1}s`}}
             >
               {category}
             </Button>
@@ -151,23 +161,29 @@ export function Projects() {
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map((project, index) => (
-            <Card key={index} className="card-hover bg-card border-border overflow-hidden group">
+            <Card 
+              key={index} 
+              className={`card-hover bg-card border-border overflow-hidden group animate-stagger-in transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:border-primary/50 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
+              style={{animationDelay: `${0.8 + index * 0.2}s`}}
+            >
               {/* Project Image */}
               <div className="relative h-48 bg-gradient-to-br from-primary/10 to-primary/5 overflow-hidden">
-                <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <div className="flex gap-3">
-                    <Button size="sm" className="bg-background text-foreground hover:bg-background/90">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-primary/10 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center scale-110 group-hover:scale-100">
+                  <div className="flex gap-3 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    <Button size="sm" className="bg-background text-foreground hover:bg-background/90 hover:scale-110 transition-all duration-300">
                       <Eye className="h-4 w-4 mr-1" />
                       Demo
                     </Button>
-                    <Button size="sm" variant="outline" className="border-background text-background hover:bg-background hover:text-foreground">
+                    <Button size="sm" variant="outline" className="border-background text-background hover:bg-background hover:text-foreground hover:scale-110 transition-all duration-300">
                       <Github className="h-4 w-4 mr-1" />
                       Code
                     </Button>
                   </div>
                 </div>
-                <div className="absolute top-3 right-3">
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(project.status)}`}>
+                <div className="absolute top-3 right-3 transform group-hover:scale-110 transition-transform duration-300">
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium border animate-pulse ${getStatusColor(project.status)}`}>
                     {project.status}
                   </span>
                 </div>
@@ -176,15 +192,15 @@ export function Projects() {
               {/* Project Content */}
               <div className="p-6">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors">
+                  <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-all duration-300 group-hover:scale-105">
                     {project.title}
                   </h3>
-                  <span className="px-2 py-1 bg-secondary text-secondary-foreground rounded-full text-xs font-medium">
+                  <span className="px-2 py-1 bg-secondary text-secondary-foreground rounded-full text-xs font-medium group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
                     {project.category}
                   </span>
                 </div>
 
-                <p className="text-text-secondary text-sm mb-4 leading-relaxed">
+                <p className="text-text-secondary text-sm mb-4 leading-relaxed group-hover:text-foreground transition-colors duration-300">
                   {project.description}
                 </p>
 

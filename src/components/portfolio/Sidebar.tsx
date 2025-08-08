@@ -93,9 +93,9 @@ export function Sidebar({ activeSection, setActiveSection }: SidebarProps) {
       `}>
         <div className="flex flex-col h-full p-6">
           {/* Profile Section */}
-          <div className="text-center mb-8">
-            <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center">
-              <span className="text-2xl font-bold text-primary">SG</span>
+          <div className="text-center mb-8 animate-fade-in-up">
+            <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-primary/20 group">
+              <span className="text-2xl font-bold text-primary group-hover:scale-110 transition-transform">SG</span>
             </div>
             <h2 className="text-xl font-bold text-sidebar-foreground mb-1">Sahil A Gowda</h2>
             <p className="text-sm text-text-secondary">Full Stack Developer</p>
@@ -104,24 +104,39 @@ export function Sidebar({ activeSection, setActiveSection }: SidebarProps) {
           {/* Navigation */}
           <nav className="flex-1">
             <ul className="space-y-2">
-              {navigationItems.map((item) => {
+              {navigationItems.map((item, index) => {
                 const IconComponent = item.icon;
                 const isActive = activeSection === item.id;
                 
                 return (
-                  <li key={item.id}>
+                  <li key={item.id} 
+                      className="animate-fade-in-up" 
+                      style={{animationDelay: `${index * 0.1}s`}}>
                     <button
                       onClick={() => {
                         setActiveSection(item.id);
                         setIsOpen(false);
                       }}
                       className={`
-                        nav-item w-full text-left
-                        ${isActive ? 'nav-item-active' : ''}
+                        nav-item w-full text-left group relative overflow-hidden
+                        ${isActive ? 'nav-item-active scale-105' : 'hover:scale-105'}
+                        transition-all duration-300
                       `}
                     >
-                      <IconComponent className="h-5 w-5" />
+                      <IconComponent className={`h-5 w-5 transition-all duration-300 ${
+                        isActive ? 'scale-110' : 'group-hover:scale-110'
+                      }`} />
                       <span className="font-medium">{item.label}</span>
+                      
+                      {/* Active indicator */}
+                      {isActive && (
+                        <div className="absolute right-2 top-1/2 transform -translate-y-1/2 w-2 h-2 bg-sidebar-primary-foreground rounded-full animate-pulse"></div>
+                      )}
+                      
+                      {/* Hover effect */}
+                      <div className={`absolute inset-0 bg-gradient-to-r from-primary/0 to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 ${
+                        isActive ? 'opacity-20' : ''
+                      }`}></div>
                     </button>
                   </li>
                 );
@@ -130,10 +145,10 @@ export function Sidebar({ activeSection, setActiveSection }: SidebarProps) {
           </nav>
 
           {/* Social Links */}
-          <div className="mt-8 pt-6 border-t border-sidebar-border">
+          <div className="mt-8 pt-6 border-t border-sidebar-border animate-fade-in-up" style={{animationDelay: '0.8s'}}>
             <p className="text-sm text-text-muted mb-4 text-center">Connect with me</p>
             <div className="flex justify-center space-x-4">
-              {socialLinks.map((social) => {
+              {socialLinks.map((social, index) => {
                 const IconComponent = social.icon;
                 return (
                   <a
@@ -143,8 +158,10 @@ export function Sidebar({ activeSection, setActiveSection }: SidebarProps) {
                     rel="noopener noreferrer"
                     className={`
                       p-2 rounded-lg text-text-secondary transition-all duration-300 
-                      hover:bg-sidebar-accent ${social.color}
+                      hover:bg-sidebar-accent ${social.color} hover:scale-125 hover:rotate-12
+                      animate-bounce-in
                     `}
+                    style={{animationDelay: `${1 + index * 0.1}s`}}
                     aria-label={social.name}
                   >
                     <IconComponent className="h-5 w-5" />
