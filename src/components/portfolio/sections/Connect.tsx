@@ -156,11 +156,11 @@ export function Connect() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div>
                       <label htmlFor="name" className="text-sm font-medium">Full name *</label>
-                      <Input id="name" name="name" value={form.name} onChange={onChange} required placeholder="John Doe" className="mt-2" />
+                      <Input id="name" name="name" value={form.name} onChange={onChange} required placeholder="Enter your name" className="mt-2" />
                     </div>
                     <div>
                       <label htmlFor="email" className="text-sm font-medium">Email *</label>
-                      <Input id="email" name="email" type="email" value={form.email} onChange={onChange} required placeholder="john@example.com" className="mt-2" />
+                      <Input id="email" name="email" type="email" value={form.email} onChange={onChange} required placeholder="Enter your email" className="mt-2" />
                     </div>
                   </div>
                   <div>

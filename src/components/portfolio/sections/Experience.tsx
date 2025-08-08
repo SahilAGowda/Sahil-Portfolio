@@ -3,6 +3,19 @@ import { Card } from "@/components/ui/card";
 
 const experiences = [
   {
+    title: "Website Development Intern",
+    company: "Avarista Nexus Pvt. Ltd.",
+    location: "Remote / Hybrid",
+    period: "June 2025 – Sept 2025",
+    type: "Internship",
+    description: [
+      "Designed and developed a visually appealing, 10+ page responsive website, ensuring cross-platform compatibility and brand consistency",
+      "Created a detailed UI/UX plan, selecting optimal color schemes and layout structures, improving user engagement by 25% during testing",
+      "Collaborated with the client to incorporate feedback, reducing design revisions by 30% and delivering frontend ahead of schedule"
+    ],
+    skills: ["React", "TypeScript", "Tailwind CSS", "Responsive Design", "UI/UX", "Accessibility"]
+  },
+  {
     title: "Image Quality Assessment Intern",
     company: "Samsung Prism",
     location: "Bangalore, India",

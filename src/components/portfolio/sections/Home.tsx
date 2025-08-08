@@ -90,8 +90,8 @@ export function Home({ setActiveSection }: HomeProps) {
   }, []);
 
   const handleDownloadResume = () => {
-    // This would typically link to a PDF resume
-    window.open("/resume.pdf", "_blank");
+    // Open a wrapper page that embeds the PDF and uses the updated favicon
+    window.open("/resume.html", "_blank");
   };
 
   const handleViewWork = () => {
@@ -216,30 +216,33 @@ export function Home({ setActiveSection }: HomeProps) {
             <div className="relative group">
               {/* Main Image Container */}
               <div className="relative w-80 h-80 lg:w-96 lg:h-96">
-                {/* Placeholder for actual image */}
-                <div className={`w-full h-full rounded-3xl bg-gradient-to-br from-primary/20 via-primary/10 to-primary/5 border-4 border-primary/30 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 hover:shadow-2xl ${
+                {/* Profile Image */}
+                <div className={`w-full h-full rounded-full bg-gradient-to-br from-primary/20 via-primary/10 to-primary/5 border-4 border-primary/30 overflow-hidden transition-all duration-500 group-hover:scale-105 group-hover:rotate-1 hover:shadow-2xl ${
                   isFloating ? 'animate-float' : ''
                 }`}>
-                  <div className="w-3/4 h-3/4 rounded-2xl bg-primary/10 flex items-center justify-center border-2 border-primary/20 group-hover:bg-primary/20 transition-all duration-300">
-                    <span className="text-6xl lg:text-7xl font-bold text-primary group-hover:scale-110 transition-transform">SG</span>
-                  </div>
+                  <img
+                    src="/me.jpg"
+                    alt="Sahil A Gowda"
+                    className="w-full h-full object-cover"
+                    loading="eager"
+                  />
                 </div>
-                
+
                 {/* Floating Elements */}
                 <div className="absolute -top-4 -right-4 w-12 h-12 bg-primary/20 rounded-full blur-xl animate-pulse"></div>
                 <div className="absolute -top-8 -left-8 w-8 h-8 bg-primary/30 rounded-full blur-lg animate-ping"></div>
                 <div className="absolute -bottom-6 -right-6 w-10 h-10 bg-primary/25 rounded-full blur-xl animate-pulse" style={{animationDelay: '1s'}}></div>
-                
+
                 {/* Glow Effect */}
-                <div className="absolute inset-0 rounded-3xl bg-primary/10 blur-2xl opacity-0 group-hover:opacity-70 transition-opacity duration-500"></div>
-                
+                <div className="absolute inset-0 rounded-full bg-primary/10 blur-2xl opacity-0 group-hover:opacity-70 transition-opacity duration-500"></div>
+
                 {/* Orbiting Elements */}
                 <div className="absolute inset-0 animate-spin-slow">
                   <div className="absolute top-4 left-1/2 w-2 h-2 bg-primary rounded-full animate-pulse"></div>
                   <div className="absolute bottom-4 left-1/2 w-2 h-2 bg-primary rounded-full animate-pulse" style={{animationDelay: '0.5s'}}></div>
                 </div>
               </div>
-              
+
               {/* Background Decoration */}
               <div className="absolute -inset-8 bg-gradient-to-br from-primary/5 to-transparent rounded-full -z-10 animate-pulse"></div>
             </div>
