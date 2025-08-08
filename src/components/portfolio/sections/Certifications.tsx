@@ -11,7 +11,8 @@ const certifications = [
     description: "Comprehensive certification covering AWS cloud fundamentals, services, and best practices.",
     skills: ["Cloud Computing", "AWS Services", "Cloud Architecture", "Security"],
     verified: true,
-    logo: "☁️"
+    logo: "☁️",
+    certificateUrl: "https://drive.google.com/file/d/14TGjTTAcI3SG6dc5bxS5nv03avHX5n4K/view?usp=sharing"
   },
   {
     title: "Machine Learning and Data Science",
@@ -21,7 +22,8 @@ const certifications = [
     description: "Intensive course covering ML algorithms, data analysis, and practical implementation.",
     skills: ["Machine Learning", "Data Science", "Python", "Statistics"],
     verified: true,
-    logo: "🤖"
+    logo: "🤖",
+    certificateUrl: "https://drive.google.com/file/d/1EA-l523bPbAKhSJqZtU9ykUlu3cdYrcC/view?usp=sharing"
   },
   {
     title: "Introduction to Selenium",
@@ -31,7 +33,8 @@ const certifications = [
     description: "Automation testing certification focusing on Selenium WebDriver and testing frameworks.",
     skills: ["Test Automation", "Selenium", "WebDriver", "Quality Assurance"],
     verified: true,
-    logo: "🔧"
+    logo: "🔧",
+    certificateUrl: "https://drive.google.com/file/d/1-gm4ljgFwgGaDPe_-I8mKgu8To2ykqtT/view?usp=sharing"
   },
   {
     title: "Introduction to Artificial Intelligence",
@@ -41,45 +44,46 @@ const certifications = [
     description: "Foundational course covering AI concepts, applications, and future trends.",
     skills: ["Artificial Intelligence", "Neural Networks", "Deep Learning", "AI Ethics"],
     verified: true,
-    logo: "🧠"
+    logo: "🧠",
+    certificateUrl: "https://drive.google.com/file/d/1OpcmcSJ4r5m2EjM3BURkAwoC8Jhi57nO/view?usp=sharing"
   }
 ];
 
 const codingProfiles = [
   {
     platform: "LeetCode",
-    username: "sahil-gowda",
-    url: "https://leetcode.com/sahil-gowda",
+    username: "sahilgowda204",
+    url: "https://leetcode.com/u/sahilgowda204/",
     logo: "💻",
     stats: "500+ Problems Solved"
   },
   {
     platform: "CodeChef",
-    username: "sahil_gowda",
-    url: "https://codechef.com/users/sahil_gowda",
+    username: "sahilgowda204",
+    url: "https://www.codechef.com/users/sahilgowda204",
     logo: "👨‍💻",
     stats: "3 Star Rating"
   },
   {
     platform: "HackerRank",
-    username: "sahilgowda",
-    url: "https://hackerrank.com/sahilgowda",
+    username: "sahilgowda204",
+    url: "https://www.hackerrank.com/profile/sahilgowda204",
     logo: "🏆",
     stats: "Gold Badge"
   },
   {
-    platform: "HackerEarth",
-    username: "sahil-gowda",
-    url: "https://hackerearth.com/sahil-gowda",
+    platform: "GitHub",
+    username: "SahilAGowda",
+    url: "https://github.com/SahilAGowda",
     logo: "🎯",
-    stats: "Top 15%"
+    stats: "Active Contributor"
   },
   {
-    platform: "Coding Ninjas",
-    username: "sahilgowda",
-    url: "https://codingninjas.com/sahilgowda",
+    platform: "LinkedIn",
+    username: "sahil-a-gowda",
+    url: "https://www.linkedin.com/in/sahil-a-gowda-551b32270/",
     logo: "🥷",
-    stats: "Expert Level"
+    stats: "Professional Network"
   }
 ];
 
@@ -132,7 +136,11 @@ export function Certifications() {
                 </div>
               </div>
               
-              <Button className="w-full btn-secondary" size="sm">
+              <Button 
+                className="w-full btn-secondary" 
+                size="sm"
+                onClick={() => window.open(cert.certificateUrl, '_blank')}
+              >
                 <Award className="h-4 w-4 mr-2" />
                 View Certificate
                 <ExternalLink className="h-3 w-3 ml-1" />

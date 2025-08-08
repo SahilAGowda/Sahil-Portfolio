@@ -47,7 +47,7 @@ export function PortfolioLayout() {
       <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} />
       
       {/* Main Content */}
-      <main className="flex-1 min-h-screen overflow-x-hidden lg:pl-80">
+      <main className="flex-1 min-h-screen overflow-x-hidden">
         <div className="animate-fade-in">
           <ActiveComponent setActiveSection={setActiveSection} />
         </div>

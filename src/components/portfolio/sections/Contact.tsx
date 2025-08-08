@@ -31,25 +31,31 @@ const socialLinks = [
   {
     name: "GitHub",
     icon: Github,
-    url: "https://github.com/sahil-gowda",
+    url: "https://github.com/SahilAGowda",
     color: "hover:text-primary"
   },
   {
     name: "LinkedIn",
     icon: Linkedin,
-    url: "https://linkedin.com/in/sahil-gowda",
+    url: "https://www.linkedin.com/in/sahil-a-gowda-551b32270/",
     color: "hover:text-primary"
   },
   {
     name: "LeetCode",
     icon: ExternalLink,
-    url: "https://leetcode.com/sahil-gowda",
+    url: "https://leetcode.com/u/sahilgowda204/",
     color: "hover:text-primary"
   },
   {
-    name: "Portfolio",
+    name: "HackerRank",
     icon: ExternalLink,
-    url: "#",
+    url: "https://www.hackerrank.com/profile/sahilgowda204",
+    color: "hover:text-primary"
+  },
+  {
+    name: "CodeChef",
+    icon: ExternalLink,
+    url: "https://www.codechef.com/users/sahilgowda204",
     color: "hover:text-primary"
   }
 ];
@@ -253,17 +259,6 @@ export function Contact() {
             </form>
           </Card>
         </div>
-
-        {/* Google Maps */}
-        <Card className="mt-12 overflow-hidden border-border">
-          <div className="h-64 bg-muted flex items-center justify-center">
-            <div className="text-center">
-              <MapPin className="h-12 w-12 text-primary mx-auto mb-2" />
-              <p className="text-foreground font-medium">Bangalore, India</p>
-              <p className="text-text-muted text-sm">Silicon Valley of India</p>
-            </div>
-          </div>
-        </Card>
 
         {/* Call to Action */}
         <div className="text-center mt-12">
