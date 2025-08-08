@@ -6,28 +6,31 @@ const skillCategories = [
   {
     title: "Programming Languages",
     icon: Code,
+    color: "from-blue-500 to-purple-600",
     skills: [
       { name: "JavaScript", level: 90 },
       { name: "Python", level: 85 },
       { name: "Java", level: 88 },
-      { name: "TypeScript", level: 82 },
+      { name: "TypeScript", level: 70 },
       { name: "SQL", level: 80 }
     ]
   },
   {
     title: "Frontend Development",
     icon: Palette,
+    color: "from-pink-500 to-rose-600",
     skills: [
       { name: "React", level: 92 },
       { name: "HTML5", level: 95 },
       { name: "CSS3", level: 90 },
-      { name: "Tailwind CSS", level: 85 },
+      { name: "Tailwind CSS", level: 65 },
       { name: "Bootstrap", level: 80 }
     ]
   },
   {
     title: "Backend Development",
     icon: Server,
+    color: "from-green-500 to-emerald-600",
     skills: [
       { name: "Spring Boot", level: 85 },
       { name: "Node.js", level: 88 },
@@ -39,6 +42,7 @@ const skillCategories = [
   {
     title: "Databases",
     icon: Database,
+    color: "from-orange-500 to-red-600",
     skills: [
       { name: "MySQL", level: 85 },
       { name: "MongoDB", level: 80 },
@@ -49,6 +53,7 @@ const skillCategories = [
   {
     title: "AI/ML & Data Science",
     icon: Brain,
+    color: "from-violet-500 to-indigo-600",
     skills: [
       { name: "TensorFlow", level: 80 },
       { name: "OpenCV", level: 85 },
@@ -60,6 +65,7 @@ const skillCategories = [
   {
     title: "Tools & Technologies",
     icon: Wrench,
+    color: "from-cyan-500 to-teal-600",
     skills: [
       { name: "Git", level: 90 },
       { name: "VS Code", level: 95 },
@@ -72,116 +78,157 @@ const skillCategories = [
 
 export function Skills() {
   const [isVisible, setIsVisible] = useState(false);
-  const [animatedSkills, setAnimatedSkills] = useState<{[key: string]: boolean}>({});
+  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
 
   useEffect(() => {
     setIsVisible(true);
-    
-    // Trigger skill bar animations with delay
-    const timer = setTimeout(() => {
-      const newAnimatedSkills: {[key: string]: boolean} = {};
-      skillCategories.forEach((category, categoryIndex) => {
-        category.skills.forEach((skill, skillIndex) => {
-          const key = `${categoryIndex}-${skillIndex}`;
-          setTimeout(() => {
-            setAnimatedSkills(prev => ({...prev, [key]: true}));
-          }, (categoryIndex * 200) + (skillIndex * 100));
-        });
-      });
-    }, 500);
-
-    return () => clearTimeout(timer);
   }, []);
 
   return (
-    <section className="portfolio-section">
-      <div className="max-w-6xl mx-auto">
-        <h2 className={`section-title transition-all duration-1000 ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'
-        }`}>Technical Skills</h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {skillCategories.map((category, index) => {
+    <section className="py-20 bg-background">
+      <div className="container mx-auto px-4 max-w-7xl">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h2 className={`text-4xl font-bold text-foreground mb-4 transition-all duration-1000 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+          }`}>
+            Technical Skills
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Here are the technologies and tools I work with
+          </p>
+        </div>
+
+        {/* Skills Categories */}
+        <div className="space-y-16">
+          {skillCategories.map((category, categoryIndex) => {
             const IconComponent = category.icon;
             
             return (
-              <Card 
-                key={index} 
-                className={`card-hover bg-card border-border p-6 group transition-all duration-500 hover:scale-105 hover:shadow-xl hover:border-primary/50 animate-stagger-in ${
-                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              <div 
+                key={categoryIndex}
+                className={`transition-all duration-1000 ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
                 }`}
-                style={{animationDelay: `${0.2 + index * 0.1}s`}}
+                style={{ transitionDelay: `${categoryIndex * 200}ms` }}
               >
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300 group-hover:scale-110">
-                    <IconComponent className="h-5 w-5 text-primary group-hover:scale-110 transition-transform duration-300" />
+                {/* Category Header */}
+                <div className="flex items-center gap-4 mb-8">
+                  <div className={`w-12 h-12 bg-gradient-to-r ${category.color} rounded-xl flex items-center justify-center`}>
+                    <IconComponent className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors duration-300">{category.title}</h3>
+                  <h3 className="text-2xl font-bold text-foreground">{category.title}</h3>
+                  <div className="flex-1 h-px bg-border ml-4"></div>
                 </div>
-                
-                <div className="space-y-4">
-                  {category.skills.map((skill, idx) => {
-                    const skillKey = `${index}-${idx}`;
-                    const isAnimated = animatedSkills[skillKey];
-                    
-                    return (
-                      <div key={idx} className="space-y-2 group/skill">
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm font-medium text-foreground group-hover/skill:text-primary transition-colors duration-300">{skill.name}</span>
-                          <span className="text-xs text-text-muted group-hover/skill:text-primary transition-colors duration-300">{skill.level}%</span>
-                        </div>
-                        <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
-                          <div 
-                            className="bg-gradient-to-r from-primary to-primary/80 h-2 rounded-full transition-all duration-1000 ease-out relative"
-                            style={{ 
-                              width: isAnimated ? `${skill.level}%` : '0%',
-                              boxShadow: isAnimated ? '0 0 10px rgba(0, 194, 255, 0.3)' : 'none'
-                            }}
-                          >
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse"></div>
+
+                {/* Skills Grid */}
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                  {category.skills.map((skill, skillIndex) => (
+                    <div
+                      key={skillIndex}
+                      className="group cursor-pointer"
+                      onMouseEnter={() => setHoveredSkill(skill.name)}
+                      onMouseLeave={() => setHoveredSkill(null)}
+                    >
+                      <Card className="p-6 text-center bg-card border-border hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:scale-105">
+                        <div className="space-y-4">
+                          {/* Skill Name */}
+                          <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                            {skill.name}
+                          </h4>
+                          
+                          {/* Circular Progress */}
+                          <div className="relative w-20 h-20 mx-auto">
+                            <svg className="w-20 h-20 transform -rotate-90" viewBox="0 0 100 100">
+                              {/* Background Circle */}
+                              <circle
+                                cx="50"
+                                cy="50"
+                                r="45"
+                                stroke="currentColor"
+                                strokeWidth="8"
+                                fill="none"
+                                className="text-muted/30"
+                              />
+                              {/* Progress Circle */}
+                              <circle
+                                cx="50"
+                                cy="50"
+                                r="45"
+                                stroke="currentColor"
+                                strokeWidth="8"
+                                fill="none"
+                                strokeLinecap="round"
+                                strokeDasharray={`${2 * Math.PI * 45}`}
+                                strokeDashoffset={`${2 * Math.PI * 45 * (1 - (isVisible ? skill.level / 100 : 0))}`}
+                                className={`transition-all duration-1500 ease-out ${
+                                  categoryIndex === 0 ? 'text-blue-500' :
+                                  categoryIndex === 1 ? 'text-pink-500' :
+                                  categoryIndex === 2 ? 'text-green-500' :
+                                  categoryIndex === 3 ? 'text-orange-500' :
+                                  categoryIndex === 4 ? 'text-violet-500' :
+                                  'text-cyan-500'
+                                }`}
+                                style={{ transitionDelay: `${categoryIndex * 200 + skillIndex * 100}ms` }}
+                              />
+                            </svg>
+                            {/* Percentage Text */}
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <span className="text-lg font-bold text-foreground group-hover:text-primary transition-colors">
+                                {skill.level}%
+                              </span>
+                            </div>
+                          </div>
+                          
+                          {/* Skill Level Text */}
+                          <div className="text-sm text-muted-foreground">
+                            {skill.level >= 90 ? 'Expert' : 
+                             skill.level >= 80 ? 'Advanced' : 
+                             skill.level >= 70 ? 'Intermediate' : 'Beginner'}
                           </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      </Card>
+                    </div>
+                  ))}
                 </div>
-              </Card>
+              </div>
             );
           })}
         </div>
 
-        {/* Additional Skills Section */}
-        <Card className={`mt-8 bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20 p-6 transition-all duration-1000 delay-500 hover:shadow-xl hover:scale-105 ${
+        {/* Summary Stats */}
+        <div className={`mt-20 transition-all duration-1000 delay-1000 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
-          <h3 className="text-xl font-bold text-foreground mb-4 text-center">Additional Competencies</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center group">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg mx-auto mb-2 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300 group-hover:scale-110">
-                <span className="text-xl group-hover:scale-110 transition-transform duration-300">🚀</span>
+          <Card className="p-8 bg-muted/30">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              <div>
+                <div className="text-3xl font-bold text-primary mb-2">
+                  {skillCategories.length}
+                </div>
+                <div className="text-sm text-muted-foreground">Skill Categories</div>
               </div>
-              <p className="text-sm font-medium text-foreground">Performance Optimization</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg mx-auto mb-2 flex items-center justify-center">
-                <span className="text-xl">🔒</span>
+              <div>
+                <div className="text-3xl font-bold text-primary mb-2">
+                  {skillCategories.reduce((total, category) => total + category.skills.length, 0)}
+                </div>
+                <div className="text-sm text-muted-foreground">Technologies</div>
               </div>
-              <p className="text-sm font-medium text-foreground">Security Best Practices</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg mx-auto mb-2 flex items-center justify-center">
-                <span className="text-xl">📱</span>
+              <div>
+                <div className="text-3xl font-bold text-primary mb-2">
+                  {Math.round(skillCategories.reduce((total, category) => 
+                    total + category.skills.reduce((sum, skill) => sum + skill.level, 0), 0) / 
+                    skillCategories.reduce((total, category) => total + category.skills.length, 0))}%
+                </div>
+                <div className="text-sm text-muted-foreground">Average Proficiency</div>
               </div>
-              <p className="text-sm font-medium text-foreground">Responsive Design</p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg mx-auto mb-2 flex items-center justify-center">
-                <span className="text-xl">⚡</span>
+              <div>
+                <div className="text-3xl font-bold text-primary mb-2">3+</div>
+                <div className="text-sm text-muted-foreground">Years Experience</div>
               </div>
-              <p className="text-sm font-medium text-foreground">Agile Development</p>
             </div>
-          </div>
-        </Card>
+          </Card>
+        </div>
       </div>
     </section>
   );

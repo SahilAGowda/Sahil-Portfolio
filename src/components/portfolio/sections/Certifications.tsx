@@ -12,7 +12,7 @@ const certifications = [
     skills: ["Cloud Computing", "AWS Services", "Cloud Architecture", "Security"],
     verified: true,
     logo: "☁️",
-    certificateUrl: "https://drive.google.com/file/d/14TGjTTAcI3SG6dc5bxS5nv03avHX5n4K/view?usp=sharing"
+    certificateUrl: "https://drive.google.com/file/d/1OpcmcSJ4r5m2EjM3BURkAwoC8Jhi57nO/view?usp=sharing"
   },
   {
     title: "Machine Learning and Data Science",
@@ -23,7 +23,7 @@ const certifications = [
     skills: ["Machine Learning", "Data Science", "Python", "Statistics"],
     verified: true,
     logo: "🤖",
-    certificateUrl: "https://drive.google.com/file/d/1EA-l523bPbAKhSJqZtU9ykUlu3cdYrcC/view?usp=sharing"
+    certificateUrl: "https://drive.google.com/file/d/14TGjTTAcI3SG6dc5bxS5nv03avHX5n4K/view?usp=sharing"
   },
   {
     title: "Introduction to Selenium",
@@ -34,7 +34,7 @@ const certifications = [
     skills: ["Test Automation", "Selenium", "WebDriver", "Quality Assurance"],
     verified: true,
     logo: "🔧",
-    certificateUrl: "https://drive.google.com/file/d/1-gm4ljgFwgGaDPe_-I8mKgu8To2ykqtT/view?usp=sharing"
+    certificateUrl: "https://drive.google.com/file/d/1EA-l523bPbAKhSJqZtU9ykUlu3cdYrcC/view?usp=sharing"
   },
   {
     title: "Introduction to Artificial Intelligence",
@@ -45,7 +45,8 @@ const certifications = [
     skills: ["Artificial Intelligence", "Neural Networks", "Deep Learning", "AI Ethics"],
     verified: true,
     logo: "🧠",
-    certificateUrl: "https://drive.google.com/file/d/1OpcmcSJ4r5m2EjM3BURkAwoC8Jhi57nO/view?usp=sharing"
+    
+    certificateUrl: "https://drive.google.com/file/d/1-gm4ljgFwgGaDPe_-I8mKgu8To2ykqtT/view?usp=sharing"
   }
 ];
 

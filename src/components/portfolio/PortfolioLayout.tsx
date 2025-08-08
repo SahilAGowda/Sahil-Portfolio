@@ -7,7 +7,7 @@ import { Projects } from "./sections/Projects";
 import { Skills } from "./sections/Skills";
 import { Achievements } from "./sections/Achievements";
 import { Certifications } from "./sections/Certifications";
-import { Contact } from "./sections/Contact";
+import { Connect } from "./sections/Connect";
 import { Button } from "@/components/ui/button";
 import { ArrowUp } from "lucide-react";
 
@@ -19,7 +19,7 @@ const sections = {
   skills: Skills,
   achievements: Achievements,
   certifications: Certifications,
-  contact: Contact,
+  contact: Connect,
 };
 
 export function PortfolioLayout() {
