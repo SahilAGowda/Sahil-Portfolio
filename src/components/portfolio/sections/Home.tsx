@@ -152,7 +152,6 @@ export function Home({ setActiveSection }: HomeProps) {
                 
                 {/* Floating Elements */}
                 <div className="absolute -top-4 -right-4 w-12 h-12 bg-primary/20 rounded-full blur-xl animate-pulse"></div>
-                <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-primary/15 rounded-full blur-2xl animate-pulse" style={{animationDelay: '1s'}}></div>
                 
                 {/* Glow Effect */}
                 <div className="absolute inset-0 rounded-3xl bg-primary/10 blur-2xl opacity-0 group-hover:opacity-50 transition-opacity duration-500"></div>
@@ -161,13 +160,6 @@ export function Home({ setActiveSection }: HomeProps) {
               {/* Background Decoration */}
               <div className="absolute -inset-8 bg-gradient-to-br from-primary/5 to-transparent rounded-full -z-10"></div>
             </div>
-          </div>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-primary/50 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-primary rounded-full mt-2 animate-pulse"></div>
           </div>
         </div>
       </div>
