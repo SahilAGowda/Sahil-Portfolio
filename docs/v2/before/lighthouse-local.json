@@ -1,0 +1,134 @@
+{
+  "tool": "Lighthouse 13.5.0 (CLI), headless Chromium 141 in a cloud container",
+  "target": "http://127.0.0.1:4173/ = `vite preview` of a local production build of main@80c732a (the commit Vercel last deployed). NOT the live URL: sahil-a-gowda-portfolio.vercel.app is blocked by the container egress policy.",
+  "method": "3 runs per form factor, median reported. Mobile = Lighthouse default (simulated slow-4G, 4x CPU slowdown); desktop = --preset=desktop. Categories: performance, accessibility, best-practices, seo.",
+  "caveats": [
+    "Local server: no CDN, no HTTP/2, no Vercel edge caching, so absolute timings will differ from the live site; use these numbers only for like-for-like before/after comparison on the same setup.",
+    "Google Fonts were reachable from the container, so Poppins loaded normally."
+  ],
+  "mobile": {
+    "median": {
+      "perf": 90,
+      "a11y": 90,
+      "bp": 100,
+      "seo": 100,
+      "fcp": 2490,
+      "lcp": 2565,
+      "tbt": 0,
+      "cls": 0,
+      "si": 4808,
+      "bytes": 383321
+    },
+    "runs": [
+      {
+        "perf": 90,
+        "a11y": 90,
+        "bp": 100,
+        "seo": 100,
+        "fcp": 2490,
+        "lcp": 2565,
+        "tbt": 0,
+        "cls": 0,
+        "si": 4808,
+        "bytes": 383301
+      },
+      {
+        "perf": 91,
+        "a11y": 90,
+        "bp": 100,
+        "seo": 100,
+        "fcp": 2471,
+        "lcp": 2546,
+        "tbt": 0,
+        "cls": 0,
+        "si": 4828,
+        "bytes": 383323
+      },
+      {
+        "perf": 90,
+        "a11y": 90,
+        "bp": 100,
+        "seo": 100,
+        "fcp": 2522,
+        "lcp": 2597,
+        "tbt": 0,
+        "cls": 0,
+        "si": 4784,
+        "bytes": 383321
+      }
+    ]
+  },
+  "desktop": {
+    "median": {
+      "perf": 97,
+      "a11y": 96,
+      "bp": 100,
+      "seo": 100,
+      "fcp": 767,
+      "lcp": 808,
+      "tbt": 0,
+      "cls": 0.084,
+      "si": 831,
+      "bytes": 383324
+    },
+    "runs": [
+      {
+        "perf": 98,
+        "a11y": 96,
+        "bp": 100,
+        "seo": 100,
+        "fcp": 759,
+        "lcp": 808,
+        "tbt": 0,
+        "cls": 0.083,
+        "si": 831,
+        "bytes": 383325
+      },
+      {
+        "perf": 97,
+        "a11y": 96,
+        "bp": 100,
+        "seo": 100,
+        "fcp": 780,
+        "lcp": 826,
+        "tbt": 0,
+        "cls": 0.084,
+        "si": 852,
+        "bytes": 383324
+      },
+      {
+        "perf": 97,
+        "a11y": 96,
+        "bp": 100,
+        "seo": 100,
+        "fcp": 767,
+        "lcp": 804,
+        "tbt": 0,
+        "cls": 0.084,
+        "si": 767,
+        "bytes": 383324
+      }
+    ]
+  },
+  "auditsBelow90_mobile": [
+    "first-contentful-paint",
+    "largest-contentful-paint",
+    "speed-index",
+    "button-name",
+    "color-contrast",
+    "unused-css-rules",
+    "unused-javascript",
+    "image-delivery-insight",
+    "lcp-breakdown-insight",
+    "network-dependency-tree-insight",
+    "render-blocking-insight"
+  ],
+  "auditsBelow90_desktop": [
+    "color-contrast",
+    "unused-css-rules",
+    "unused-javascript",
+    "image-delivery-insight",
+    "network-dependency-tree-insight",
+    "render-blocking-insight"
+  ]
+}
