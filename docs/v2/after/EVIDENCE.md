@@ -85,7 +85,7 @@ All pass on the final build: skip link first; rail and menu links land on the he
 | 20 | Fixed for the dependencies. **Open item:** both lockfiles are kept; `bun.lockb` was regenerated to match. |
 | 21 | Fixed. Self-hosted font with preload, sitemap, canonical, JSON-LD, touch icon, manifest, `vercel.json` with a rewrite for deep links. |
 
-Beyond the brief (Phase 0): the phone menu no longer covers headings and has a name, a skip link exists, contrast passes, tap targets are 44 px, the portrait is 21 kB instead of 218 kB, and lint is clean outside one shadcn file. The phone number is no longer on the page, but it is still in the PDF.
+Beyond the brief (Phase 0): the phone menu no longer covers headings and has a name, a skip link exists, contrast passes, tap targets are 44 px, the portrait is 29 kB as JPEG, or 9 kB as WebP on most screens, instead of 218 kB, and lint is clean outside one shadcn file. The phone number is no longer on the page, but it is still in the PDF.
 
 ## Open items for Sahil
 
