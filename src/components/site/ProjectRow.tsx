@@ -1,19 +1,14 @@
 import { Link } from "react-router-dom";
 import { hasDiagram } from "@/data/diagrams";
-import type { Project } from "@/data/projects";
+import { projectMeta, type Project } from "@/data/projects";
 import { cn } from "@/lib/utils";
 import { ProjectDiagram } from "../diagrams/ProjectDiagram";
 import { ExternalLink } from "./ExternalLink";
 
-const originLabel: Record<NonNullable<Project["origin"]>, string> = {
-  DIATOZ: "Built at DIATOZ",
-  Personal: "Personal project",
-};
-
 /** One project: its diagram on the left (when it has one), the text on the right. */
 export function ProjectRow({ project }: { project: Project }) {
   const diagram = hasDiagram(project.slug);
-  const meta = project.origin ? originLabel[project.origin] : project.year;
+  const meta = projectMeta(project);
   const hasLinks = project.caseStudy || project.repo || project.live;
 
   return (
@@ -24,15 +19,7 @@ export function ProjectRow({ project }: { project: Project }) {
         </div>
       )}
       <div className={cn(!diagram && "md:col-start-2")}>
-        <h3 className="text-lede font-semibold">
-          {project.caseStudy ? (
-            <Link to={`/projects/${project.slug}`} className="underline-offset-4 hover:underline">
-              {project.title}
-            </Link>
-          ) : (
-            project.title
-          )}
-        </h3>
+        <h3 className="text-lede font-semibold">{project.title}</h3>
         {meta && <p className="text-muted-foreground">{meta}</p>}
         <p className="mt-3 max-w-[64ch]">{project.summary}</p>
         <p className="mt-3 max-w-[64ch] text-caption text-muted-foreground">
@@ -43,7 +30,7 @@ export function ProjectRow({ project }: { project: Project }) {
           <p className="mt-2 flex flex-wrap gap-x-6">
             {project.caseStudy && (
               <Link to={`/projects/${project.slug}`} className="link inline-flex min-h-11 items-center">
-                Read case study
+                Read case study<span className="sr-only"> for {project.title}</span>
               </Link>
             )}
             {project.repo && (

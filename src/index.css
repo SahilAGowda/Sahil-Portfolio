@@ -145,6 +145,7 @@
 
   code {
     @apply font-mono;
+    overflow-wrap: anywhere;
     font-size: 0.9em;
     background: hsl(var(--muted));
     border-radius: 3px;

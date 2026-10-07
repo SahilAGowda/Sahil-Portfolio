@@ -314,7 +314,7 @@ export const diagrams: Record<string, DiagramSpec> = {
   gmailsage: {
     title: "GmailSage",
     description:
-      "A job runs every 15 minutes and fetches recent inbox mail from Gmail. A SQLite store of processed message IDs lets it skip mail it has already handled. Rules on sender domain and subject classify most mail; on a miss, an LLM classifier on Groq decides among 12 categories. Labels are applied and low-priority mail is archived, never deleted; every action goes into an undo log in the store, and a daily digest email is built from the store.",
+      "A job runs every 15 minutes and fetches recent inbox mail from Gmail. A SQLite store of processed message IDs lets it skip mail it has already handled. Rules on sender domain and subject classify most mail; on a miss, an LLM classifier on Groq decides among 13 categories. Labels are applied and low-priority mail is archived, never deleted; every action goes into an undo log in the store, and a daily digest email is built from the store.",
     full: {
       width: 720,
       height: 300,
@@ -325,7 +325,7 @@ export const diagrams: Record<string, DiagramSpec> = {
         node("rules", "flow", "Rules engine", 256, 18, 150, 52, "sender domain, subject"),
         node("actions", "flow", "Labels and\narchive", 444, 18, 120, 52),
         node("digest", "flow", "Daily digest", 602, 18, 118, 52, "8 am email"),
-        node("llm", "model", "LLM classifier", 241, 122, 180, 96, "Groq, 12 categories"),
+        node("llm", "model", "LLM classifier", 241, 122, 180, 96, "Groq, 13 categories"),
         node("store", "store", "SQLite store", 419, 236, 170, 62, "processed IDs, undo log"),
       ],
       edges: [
@@ -354,7 +354,7 @@ export const diagrams: Record<string, DiagramSpec> = {
       width: 320,
       height: 444,
       fontSize: 12.5,
-      texts: [{ x: 70, y: 310, text: "Groq, 12 categories", anchor: "middle" }],
+      texts: [{ x: 70, y: 310, text: "Groq, 13 categories", anchor: "middle" }],
       nodes: [
         node("inbox", "plain", "Gmail inbox", 0, 4, 140, 34),
         node("triage", "flow", "Triage job", 0, 60, 140, 44, "every 15 min"),

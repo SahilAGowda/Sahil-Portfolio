@@ -9,7 +9,7 @@ export interface Project {
   year?: string;
   summary: string;
   stack: string[];
-  /** True once a /projects/:slug page exists for this project. */
+  /** True when src/data/caseStudies.ts has content for this slug, which turns on its /projects/:slug page and links. */
   caseStudy?: boolean;
   /** Public repositories only. */
   repo?: string;
@@ -25,6 +25,7 @@ export const projects: Project[] = [
     summary:
       "A Spring Batch pipeline ingests about 273 million records with multithreaded workers and JDBC batch inserts. A second pipeline validates Excel workbooks against 14+ rules and streams them with SXSSF instead of loading whole files into memory.",
     stack: ["Java", "Spring Batch", "JDBC", "Apache POI"],
+    caseStudy: true,
   },
   {
     slug: "report-search",
@@ -33,6 +34,7 @@ export const projects: Project[] = [
     summary:
       "Report APIs serve multi-filter analytics over millions of records. Elasticsearch indexing cut query latency from 1 s to 400 ms while PostgreSQL stays the source of truth; updates run asynchronously and an audit mechanism checks that the two stay consistent.",
     stack: ["Spring Boot", "Elasticsearch", "PostgreSQL"],
+    caseStudy: true,
   },
   {
     slug: "rag-chatbot",
@@ -41,6 +43,7 @@ export const projects: Project[] = [
     summary:
       "Automated Q&A over ingested documents with LangChain and LangGraph. I evaluated Milvus and Pinecone and implemented reranking, multi-representation indexing, query structuring and logical routing.",
     stack: ["LangChain", "LangGraph", "Milvus", "Pinecone"],
+    caseStudy: true,
   },
   {
     slug: "whatsapp-agent",
@@ -49,6 +52,7 @@ export const projects: Project[] = [
     summary:
       "A WhatsApp automation agent on Meta's Cloud API that serves several tenants. Parts lookup uses LLM-as-selector RAG, slot-filling is deterministic, PDFs are delivered in chat, and Nginx fronts the webhook callbacks.",
     stack: ["Meta WhatsApp Cloud API", "RAG", "Nginx"],
+    caseStudy: true,
   },
   {
     slug: "gmailsage",
@@ -57,6 +61,7 @@ export const projects: Project[] = [
     summary:
       "Triages a Gmail inbox every 15 minutes: rules first, an LLM (Groq) as the fallback. It labels and archives job-alert spam, sends a daily digest of what matters, and logs every action so it can be undone.",
     stack: ["Python", "Gmail API", "Groq", "SQLite"],
+    caseStudy: true,
     repo: "https://github.com/SahilAGowda/GmailSage",
   },
   {
@@ -77,3 +82,16 @@ export const projects: Project[] = [
     stack: ["Java", "Spring Boot", "MySQL", "Hibernate", "JWT", "Maven"],
   },
 ];
+
+const originLabel: Record<NonNullable<Project["origin"]>, string> = {
+  DIATOZ: "Built at DIATOZ",
+  Personal: "Personal project",
+};
+
+/** The short line under a project title: where it was built, or its year. */
+export function projectMeta(project: Project): string | undefined {
+  return project.origin ? originLabel[project.origin] : project.year;
+}
+
+/** Projects that have a case-study page, in display order. */
+export const caseStudyProjects = projects.filter((project) => project.caseStudy);
