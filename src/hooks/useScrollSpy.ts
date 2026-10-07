@@ -30,7 +30,8 @@ export function useScrollSpy(ids: readonly string[], enabled: boolean): string |
       if (!frame) frame = window.requestAnimationFrame(update);
     };
 
-    update();
+    // The first measurement waits for a frame, so it does not force a layout inside the first render.
+    schedule();
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
     return () => {

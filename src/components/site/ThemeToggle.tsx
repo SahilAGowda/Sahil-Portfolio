@@ -1,13 +1,9 @@
-import { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
+import { useTheme } from "@/hooks/useTheme";
 import { cn } from "@/lib/utils";
 
 /** Two labelled buttons, so the choice never depends on colour or an icon alone. */
 export function ThemeToggle() {
-  const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  const current = mounted ? resolvedTheme : undefined;
+  const { resolvedTheme: current, setTheme } = useTheme();
 
   const option = (value: "light" | "dark", label: string) => (
     <button

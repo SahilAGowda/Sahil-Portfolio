@@ -4,15 +4,11 @@ import { ExperienceSection } from "@/components/site/ExperienceSection";
 import { Hero } from "@/components/site/Hero";
 import { SkillsSection } from "@/components/site/SkillsSection";
 import { WorkSection } from "@/components/site/WorkSection";
+import { profile } from "@/data/profile";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
 const Index = () => {
-  usePageMeta({
-    title: "Sahil A Gowda, backend and AI engineer",
-    description:
-      "Backend and AI engineer in Bengaluru. Spring Batch ingestion at 273 million records, Elasticsearch search, RAG chatbots and a multi-tenant WhatsApp agent.",
-    path: "/",
-  });
+  usePageMeta({ title: profile.title, description: profile.description, path: "/" });
 
   // On phones a 2 px flowline runs down the left edge; each section heading carries a dot on it.
   return (

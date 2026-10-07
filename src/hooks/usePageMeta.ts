@@ -6,6 +6,8 @@ interface PageMeta {
   description: string;
   /** Path of the page, for example "/" or "/projects/report-search". */
   path: string;
+  /** For pages that must stay out of search results, such as the not-found page. */
+  noindex?: boolean;
 }
 
 function setTag(selector: string, create: () => HTMLElement, attr: string, value: string) {
@@ -31,7 +33,7 @@ function meta(attrName: "name" | "property", key: string, value: string) {
 }
 
 /** Sets the title and the matching meta tags for the current route, by hand (no head library). */
-export function usePageMeta({ title, description, path }: PageMeta) {
+export function usePageMeta({ title, description, path, noindex = false }: PageMeta) {
   useEffect(() => {
     const url = SITE_URL + path;
     document.title = title;
@@ -51,5 +53,7 @@ export function usePageMeta({ title, description, path }: PageMeta) {
       "href",
       url,
     );
-  }, [title, description, path]);
+    if (noindex) meta("name", "robots", "noindex");
+    else document.head.querySelector('meta[name="robots"]')?.remove();
+  }, [title, description, path, noindex]);
 }

@@ -1,12 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sahil A Gowda - Full Stack Developer & AI/ML Enthusiast</title>
-    <meta name="description" content="Portfolio of Sahil A Gowda - Computer Science student specializing in full-stack development, AI/ML, and computer vision. Building intelligent, scalable web solutions." />
-    <meta name="author" content="Sahil A Gowda" />
+    <title>{{title}}</title>
+    <meta name="description" content="{{description}}" />
+    <meta name="author" content="{{name}}" />
+    <link rel="canonical" href="{{siteUrl}}/" />
     <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#F5F6F3" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#101519" media="(prefers-color-scheme: dark)" />
     <script>
       // Set the theme class before first paint so dark-mode visitors never see a light flash.
       (function () {
@@ -17,25 +20,41 @@
         } catch (e) {}
       })();
     </script>
-    <meta name="keywords" content="Full Stack Developer, AI/ML, Computer Vision, React, Spring Boot, JavaScript, Python" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <meta property="og:title" content="sahil-codes-ai" />
-    <meta property="og:description" content="Lovable Generated Project" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-
+    <meta property="og:site_name" content="{{name}}" />
+    <meta property="og:title" content="{{title}}" />
+    <meta property="og:description" content="{{description}}" />
+    <meta property="og:url" content="{{siteUrl}}/" />
+    <meta property="og:image" content="{{siteUrl}}/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="{{name}}, {{role}}. {{headline}}" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-  <!-- App Icon -->
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="twitter:title" content="{{title}}" />
+    <meta name="twitter:description" content="{{description}}" />
+    <meta name="twitter:image" content="{{siteUrl}}/og.png" />
+    <meta name="twitter:image:alt" content="{{name}}, {{role}}. {{headline}}" />
+
+    <script type="application/ld+json">{{{jsonLd}}}</script>
   </head>
 
   <body>
     <div id="root"></div>
+    <noscript>
+      <div style="max-width: 40rem; margin: 2rem auto; padding: 0 1rem; font: 1.0625rem/1.6 system-ui, sans-serif">
+        <h1>{{name}}</h1>
+        <p>{{role}}, {{location}}</p>
+        <p>{{summary}}</p>
+        <ul>{{{noscriptLinks}}}</ul>
+        <p>Turn on JavaScript to read the case studies and use search.</p>
+      </div>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

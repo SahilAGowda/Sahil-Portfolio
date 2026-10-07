@@ -8,6 +8,7 @@ const NotFound = () => {
     title: "Page not found | Sahil A Gowda",
     description: "This page does not exist. Go back to the portfolio.",
     path: pathname,
+    noindex: true,
   });
 
   return (

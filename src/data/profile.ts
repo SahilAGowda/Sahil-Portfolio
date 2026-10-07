@@ -37,6 +37,10 @@ export const profile = {
   role: "Backend and AI engineer",
   /** The hero line: what I do. */
   headline: "I build data pipelines, search and RAG systems.",
+  /** The home page's <title> and meta description; also used by index.html and the social card. */
+  title: "Sahil A Gowda, backend and AI engineer",
+  description:
+    "Backend and AI engineer in Bengaluru. Spring Batch ingestion at 273 million records, Elasticsearch search, RAG chatbots and a multi-tenant WhatsApp agent.",
   summary:
     "I'm a software development engineer at DIATOZ in Bengaluru, building Java backends and applied-AI systems. " +
     "I built a Spring Batch pipeline that ingests about 273 million records and an Elasticsearch read path that cut report queries from 1 s to 400 ms. " +
@@ -45,7 +49,7 @@ export const profile = {
     email: "sahilgowda204@gmail.com",
     location: "Bengaluru, India",
   },
-  photo: { src: "/portrait.jpg", alt: "Sahil A Gowda", width: 96, height: 120 },
+  photo: { base: "/portrait", alt: "Portrait of Sahil A Gowda", width: 96, height: 120 },
   /** One label for the one action, wherever the resume link appears. */
   resume: { href: "/Sahil-A-Gowda-Resume.pdf", label: "Open resume" },
 };

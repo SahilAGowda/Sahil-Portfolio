@@ -26,9 +26,9 @@ export function MobileBar({ active, onSearch }: { active: string | null; onSearc
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background lg:hidden">
+    <header data-mobile-bar className="sticky top-0 z-40 border-b border-border bg-background lg:hidden">
       <div className="flex h-14 items-center justify-between px-5">
-        <Link to={{ pathname: "/", hash: "#about" }} className="font-semibold">
+        <Link to={{ pathname: "/", hash: "#about" }} className="inline-flex min-h-11 items-center font-semibold">
           {profile.name}
         </Link>
         <div className="flex items-center gap-2">

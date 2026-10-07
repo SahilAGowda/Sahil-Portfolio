@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { ThemeProvider } from "next-themes";
 import { SiteShell } from "@/components/site/SiteShell";
+import { ThemeProvider } from "@/components/site/ThemeProvider";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
@@ -20,7 +20,7 @@ const router = createBrowserRouter(
 );
 
 const App = () => (
-  <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+  <ThemeProvider>
     <RouterProvider router={router} future={{ v7_startTransition: true }} />
   </ThemeProvider>
 );

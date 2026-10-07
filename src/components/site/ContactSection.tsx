@@ -27,15 +27,24 @@ export function ContactSection() {
   return (
     <Section id="contact" title="Get in touch">
       <div className="mt-10 grid gap-8 sm:grid-cols-[auto_1fr] sm:gap-10">
-        <img
-          src={profile.photo.src}
-          alt={profile.photo.alt}
-          width={profile.photo.width}
-          height={profile.photo.height}
-          loading="lazy"
-          decoding="async"
-          className="h-[120px] w-24 rounded-md object-cover"
-        />
+        <picture>
+          <source
+            type="image/webp"
+            srcSet={`${profile.photo.base}-192.webp 192w, ${profile.photo.base}-288.webp 288w`}
+            sizes={`${profile.photo.width}px`}
+          />
+          <img
+            src={`${profile.photo.base}.jpg`}
+            srcSet={`${profile.photo.base}-192.jpg 192w, ${profile.photo.base}.jpg 288w`}
+            sizes={`${profile.photo.width}px`}
+            alt={profile.photo.alt}
+            width={profile.photo.width}
+            height={profile.photo.height}
+            loading="lazy"
+            decoding="async"
+            className="h-[120px] w-24 rounded-md object-cover"
+          />
+        </picture>
         <div>
           <p className="max-w-[64ch]">Email is the quickest way to reach me.</p>
           <p className="mt-3 break-all text-lede font-semibold">{email}</p>

@@ -20,11 +20,11 @@ export default {
 					'sans-serif',
 				],
 				mono: [
-					'"Atkinson Hyperlegible Mono"',
 					'ui-monospace',
 					'SFMono-Regular',
 					'Menlo',
 					'Consolas',
+					'"Liberation Mono"',
 					'monospace',
 				],
 			},
