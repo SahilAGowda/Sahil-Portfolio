@@ -136,11 +136,17 @@
     text-wrap: pretty;
   }
 
+  /* Search hits. The text colour is set too, so contrast holds over links and muted text in both themes. */
   mark {
     background: hsl(var(--mark));
-    color: inherit;
+    color: hsl(var(--foreground));
     border-radius: 2px;
     padding: 0 0.1em;
+  }
+
+  ::highlight(search) {
+    background-color: hsl(var(--mark));
+    color: hsl(var(--foreground));
   }
 
   code {

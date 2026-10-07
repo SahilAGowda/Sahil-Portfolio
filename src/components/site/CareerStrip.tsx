@@ -1,6 +1,6 @@
 import { education } from "@/data/credentials";
 import { experience } from "@/data/experience";
-import { formatRange, monthIndex } from "@/lib/dates";
+import { formatRange, monthIndex } from "@/data/dates";
 
 // One axis, in whole months: 2022 up to the end of 2026. "Present" bars end at the current month.
 const AXIS_START = "2022-01";

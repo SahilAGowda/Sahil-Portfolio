@@ -28,10 +28,10 @@ export function ContactSection() {
     <Section id="contact" title="Get in touch">
       <div className="mt-10 grid gap-8 sm:grid-cols-[auto_1fr] sm:gap-10">
         <img
-          src="/portrait.jpg"
+          src={profile.photo.src}
           alt={profile.photo.alt}
-          width={96}
-          height={120}
+          width={profile.photo.width}
+          height={profile.photo.height}
           loading="lazy"
           decoding="async"
           className="h-[120px] w-24 rounded-md object-cover"

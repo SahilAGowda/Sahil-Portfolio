@@ -45,7 +45,7 @@ export const profile = {
     email: "sahilgowda204@gmail.com",
     location: "Bengaluru, India",
   },
-  photo: { src: "/me.jpg", alt: "Sahil A Gowda" },
+  photo: { src: "/portrait.jpg", alt: "Sahil A Gowda", width: 96, height: 120 },
   /** One label for the one action, wherever the resume link appears. */
   resume: { href: "/Sahil-A-Gowda-Resume.pdf", label: "Open resume" },
 };

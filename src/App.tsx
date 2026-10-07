@@ -1,11 +1,8 @@
-import { Suspense, lazy } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { SiteShell } from "@/components/site/SiteShell";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-
-const Project = lazy(() => import("./pages/Project"));
 
 const router = createBrowserRouter(
   [
@@ -13,14 +10,8 @@ const router = createBrowserRouter(
       element: <SiteShell />,
       children: [
         { path: "/", element: <Index /> },
-        {
-          path: "/projects/:slug",
-          element: (
-            <Suspense fallback={null}>
-              <Project />
-            </Suspense>
-          ),
-        },
+        // Loaded before the navigation completes, so hash jumps and scroll restoration find the page's content.
+        { path: "/projects/:slug", lazy: async () => ({ Component: (await import("./pages/Project")).default }) },
         { path: "*", element: <NotFound /> },
       ],
     },

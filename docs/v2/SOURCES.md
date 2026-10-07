@@ -23,7 +23,7 @@ Rule from the brief: every title, date, number and claim traces to `resume-lates
 | Selenium WebDriver with Java, Simplilearn, 2024 | Resume |
 | 2nd place GDSC Quizzard 2024, Finalist SIH 2025, Tech Lead GDSC (50+ students) | Resume |
 | LeetCode, HackerRank, CodeChef links, no counts | Profile URLs from the previous site. The resume claims "LeetCode 450+" and "HackerRank 5-Star Java"; the brief says to show only what the profile pages confirm, and they were not reachable from here |
-| Skills lists | Resume, plus FastAPI and JWT from the Meet transcriber README and the Railway project bullet |
+| Skills lists | Resume, plus FastAPI from the brief's positioning line and the Meet transcriber README, and JWT from the Railway project bullet |
 | Railway Reservation System, 2024, stack, RBAC with JWT | Resume |
 | Meet transcriber extension | Its README (Brave extension, FastAPI backend, faster-whisper on CPU, Markdown transcript) |
 | GmailSage: every 15 minutes, daily 8 am digest, rules then Groq, 13 categories, safety layers, keep list, undo, SQLite store, nothing deleted | README and code of `SahilAGowda/GmailSage`, read on 7 October 2026 |

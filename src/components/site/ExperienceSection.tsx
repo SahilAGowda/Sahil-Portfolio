@@ -1,5 +1,5 @@
 import { experience } from "@/data/experience";
-import { formatRange } from "@/lib/dates";
+import { formatRange } from "@/data/dates";
 import { CareerStrip } from "./CareerStrip";
 import { Rich } from "./Rich";
 import { Section } from "./Section";

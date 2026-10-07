@@ -469,3 +469,12 @@ Self-critique after the build, changes made before committing:
 - Cylinder labels in the diagrams were touching the front of the top cap. Text for stores now centres in the body below the cap, and the compact SQLite node got taller.
 - Removed the "Full-time" and "Internship" label under each date. The title already says it, and the label cost a line per entry.
 - The name link in the rail and the certificate link had tap targets under 44 px; both are 44 px now.
+
+### Search, as built
+
+- A "Search" button sits under the nav in the rail (with a `/` hint) and next to "Menu" on phones. `/` opens it from anywhere except a text field.
+- It is a native `<dialog>` loaded on demand: 2.7 kB gzipped, fetched when the button is hovered, focused or pressed. Focus is trapped, Esc and a click outside close it, and focus returns to the button.
+- Every word of the query has to appear in an entry. The index is built from the same `src/data` modules the pages render, including the case studies, so a result cannot disagree with its page. Results show the section name, a heading and a snippet with the hit marked.
+- Choosing a result goes to the page with `?q=` in the URL. The hits are painted on the page with the CSS Custom Highlight API instead of wrapping text in `<mark>`, so React never fights a changed text node. A browser without the API still gets the jump to the section. A small bar at the bottom says what is highlighted and has "Clear highlights"; Esc does the same.
+- Contrast: highlighted text is forced to the foreground colour, so a hit over a link or muted text still passes AA in both themes.
+- A term that is not on the site gets "No mention of “x” on this site." One letter gets "Type at least two letters."

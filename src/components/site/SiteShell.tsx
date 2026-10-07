@@ -1,9 +1,13 @@
-import { useEffect, useRef } from "react";
-import { Outlet, ScrollRestoration, useLocation } from "react-router-dom";
+import { Suspense, lazy, useCallback, useEffect, useRef, useState } from "react";
+import { Outlet, ScrollRestoration, useLocation, useSearchParams } from "react-router-dom";
 import { sections } from "@/data/profile";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
+import { useSearchHighlight } from "@/hooks/useSearchHighlight";
+import { HighlightNotice } from "./HighlightNotice";
 import { MobileBar } from "./MobileBar";
 import { Rail } from "./Rail";
+
+const SearchDialog = lazy(() => import("./SearchDialog"));
 
 const sectionIds = sections.map((section) => section.id);
 
@@ -12,6 +16,41 @@ export function SiteShell() {
   const onHome = location.pathname === "/";
   const active = useScrollSpy(sectionIds, onHome);
   const previousPath = useRef(location.pathname);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [params, setParams] = useSearchParams();
+  const highlight = params.get("q");
+  useSearchHighlight(highlight);
+
+  // "/" opens the search, unless the reader is typing somewhere.
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== "/" || event.metaKey || event.ctrlKey || event.altKey) return;
+      const target = event.target as HTMLElement | null;
+      if (target && (target.isContentEditable || /^(input|textarea|select)$/i.test(target.tagName))) return;
+      event.preventDefault();
+      setSearchOpen(true);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
+
+  const clearHighlight = useCallback(() => {
+    const next = new URLSearchParams(params);
+    next.delete("q");
+    setParams(next, { replace: true, preventScrollReset: true });
+  }, [params, setParams]);
+  const openSearch = () => setSearchOpen(true);
+
+  // Escape clears the highlight when nothing else (the search or the menu) is open.
+  useEffect(() => {
+    if (!highlight) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== "Escape" || document.querySelector("dialog[open], #mobile-menu")) return;
+      clearHighlight();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [highlight, clearHighlight]);
 
   // After a hash jump, move focus to the target so keyboard and screen-reader users land there.
   useEffect(() => {
@@ -34,13 +73,19 @@ export function SiteShell() {
       >
         Skip to content
       </a>
-      <MobileBar active={active} />
+      <MobileBar active={active} onSearch={openSearch} />
       <div className="mx-auto min-h-screen max-w-[70rem] px-5 lg:grid lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-x-12 lg:px-8">
-        <Rail active={active} />
+        <Rail active={active} onSearch={openSearch} />
         <main id="content" tabIndex={-1} className="min-w-0 pb-32 outline-none">
+          {highlight && <HighlightNotice query={highlight} onClear={clearHighlight} />}
           <Outlet />
         </main>
       </div>
+      {searchOpen && (
+        <Suspense fallback={null}>
+          <SearchDialog onClose={() => setSearchOpen(false)} />
+        </Suspense>
+      )}
       <ScrollRestoration />
     </>
   );

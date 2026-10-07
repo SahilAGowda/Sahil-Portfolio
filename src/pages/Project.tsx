@@ -11,7 +11,7 @@ import NotFound from "./NotFound";
 
 function Block({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return (
-    <section aria-labelledby={`${id}-title`} className="mt-14">
+    <section id={id} tabIndex={-1} aria-labelledby={`${id}-title`} className="mt-14 scroll-mt-20 outline-none lg:scroll-mt-10">
       <h2 id={`${id}-title`} className="text-h2-sm font-semibold">
         {title}
       </h2>

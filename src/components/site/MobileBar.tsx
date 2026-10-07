@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { profile } from "@/data/profile";
+import { SearchButton } from "./SearchButton";
 import { SectionNav } from "./SectionNav";
 import { ThemeToggle } from "./ThemeToggle";
 
-/** Below 1024 px: a 56 px bar with the name and a labelled Menu button that opens the flowline. */
-export function MobileBar({ active }: { active: string | null }) {
+/** Below 1024 px: a 56 px bar with the name, Search and a labelled Menu button that opens the flowline. */
+export function MobileBar({ active, onSearch }: { active: string | null; onSearch: () => void }) {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -30,16 +31,24 @@ export function MobileBar({ active }: { active: string | null }) {
         <Link to={{ pathname: "/", hash: "#about" }} className="font-semibold">
           {profile.name}
         </Link>
-        <button
-          ref={buttonRef}
-          type="button"
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          onClick={() => setOpen((value) => !value)}
-          className="min-h-11 rounded-md border border-input px-4 text-[0.9375rem] hover:bg-accent active:translate-y-px"
-        >
-          Menu
-        </button>
+        <div className="flex items-center gap-2">
+          <SearchButton
+            onClick={() => {
+              setOpen(false);
+              onSearch();
+            }}
+          />
+          <button
+            ref={buttonRef}
+            type="button"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            onClick={() => setOpen((value) => !value)}
+            className="min-h-11 rounded-md border border-input px-4 text-[0.9375rem] hover:bg-accent active:translate-y-px"
+          >
+            Menu
+          </button>
+        </div>
       </div>
       {open && (
         <div
