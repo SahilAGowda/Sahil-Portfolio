@@ -1,0 +1,41 @@
+kind	href	text	found on	result
+hash	#content	Skip to content	/ /projects/ingestion-pipelines /projects/report-search /projects/rag-chatbot /projects/whatsapp-agent /projects/gmailsage	ok
+internal	/#about	Sahil A Gowda / About	/ /projects/ingestion-pipelines /projects/report-search /projects/rag-chatbot /projects/whatsapp-agent /projects/gmailsage	200, target exists
+internal	/#experience	Experience	/ /projects/ingestion-pipelines /projects/report-search /projects/rag-chatbot /projects/whatsapp-agent /projects/gmailsage	200, target exists
+internal	/#work	Work / Back to work	/ /projects/ingestion-pipelines /projects/report-search /projects/rag-chatbot /projects/whatsapp-agent /projects/gmailsage	200, target exists
+internal	/#skills	Skills	/ /projects/ingestion-pipelines /projects/report-search /projects/rag-chatbot /projects/whatsapp-agent /projects/gmailsage	200, target exists
+internal	/#credentials	Credentials	/ /projects/ingestion-pipelines /projects/report-search /projects/rag-chatbot /projects/whatsapp-agent /projects/gmailsage	200, target exists
+internal	/#contact	Contact	/ /projects/ingestion-pipelines /projects/report-search /projects/rag-chatbot /projects/whatsapp-agent /projects/gmailsage	200, target exists
+internal	/projects/ingestion-pipelines	273 million records / Read case study for Ingestion pipelines 	/	200
+internal	/projects/report-search	from 1 s to 400 ms / Read case study for Report search on Ela / Next case study: Report search on Elasti	/ /projects/ingestion-pipelines	200
+mailto	mailto:sahilgowda204@gmail.com	Email me	/	ok (not fetched)
+internal	/Sahil-A-Gowda-Resume.pdf	Open resume (opens in a new tab)	/	200
+external	https://www.linkedin.com/in/sahil-a-gowda-551b32270/	LinkedIn (opens in a new tab)	/	unverifiable: HTTP 403 (bot-blocking or the container network policy)
+external	https://github.com/SahilAGowda	GitHub (opens in a new tab) / Open GitHub profile (opens in a new tab)	/	200
+internal	/projects/rag-chatbot	Read case study for RAG chatbot over ing / Next case study: RAG chatbot over ingest	/ /projects/report-search	200
+internal	/projects/whatsapp-agent	Read case study for Multi-tenant WhatsAp / Next case study: Multi-tenant WhatsApp a	/ /projects/rag-chatbot	200
+internal	/projects/gmailsage	Read case study for GmailSage / Next case study: GmailSage	/ /projects/whatsapp-agent	200
+external	https://github.com/SahilAGowda/GmailSage	Open repository (opens in a new tab)	/ /projects/gmailsage	200
+external	https://github.com/SahilAGowda/Meet-Transcriber-Extension	Open repository (opens in a new tab)	/	200
+external	https://drive.google.com/file/d/1OpcmcSJ4r5m2EjM3BURkAwoC8Jhi57nO/view?usp=sharing	Open certificate (opens in a new tab)	/	unverifiable: HTTP 403 (bot-blocking or the container network policy)
+external	https://leetcode.com/u/sahilgowda204/	LeetCode (opens in a new tab)	/	unverifiable: HTTP 403 (bot-blocking or the container network policy)
+external	https://www.hackerrank.com/profile/sahilgowda204	HackerRank (opens in a new tab)	/	unverifiable: HTTP 403 (bot-blocking or the container network policy)
+external	https://www.codechef.com/users/sahilgowda204	CodeChef (opens in a new tab)	/	unverifiable: HTTP 403 (bot-blocking or the container network policy)
+asset	/sitemap.xml		head or public	200
+asset	/robots.txt		head or public	200
+asset	/site.webmanifest		head or public	200
+asset	/favicon.ico		head or public	200
+asset	/favicon.svg		head or public	200
+asset	/apple-touch-icon.png		head or public	200
+asset	/og.png		head or public	200
+asset	/portrait.jpg		head or public	200
+asset	/portrait-192.jpg		head or public	200
+asset	/portrait-192.webp		head or public	200
+asset	/portrait-288.webp		head or public	200
+asset	/Sahil-A-Gowda-Resume.pdf		head or public	200
+sitemap	https://sahil-a-gowda-portfolio.vercel.app/		sitemap.xml	200
+sitemap	https://sahil-a-gowda-portfolio.vercel.app/projects/ingestion-pipelines		sitemap.xml	200
+sitemap	https://sahil-a-gowda-portfolio.vercel.app/projects/report-search		sitemap.xml	200
+sitemap	https://sahil-a-gowda-portfolio.vercel.app/projects/rag-chatbot		sitemap.xml	200
+sitemap	https://sahil-a-gowda-portfolio.vercel.app/projects/whatsapp-agent		sitemap.xml	200
+sitemap	https://sahil-a-gowda-portfolio.vercel.app/projects/gmailsage		sitemap.xml	200

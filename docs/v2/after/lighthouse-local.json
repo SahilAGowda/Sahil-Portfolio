@@ -1,0 +1,326 @@
+{
+  "tool": "Lighthouse 13.5, median of 3 runs per cell, default simulated throttling (mobile: 4x CPU, 1.6 Mbps, 150 ms RTT; desktop preset)",
+  "setups": {
+    "old-prod": {
+      "description": "Before: main@80c732a, served with brotli and the cache headers from vercel.json-style rules (local static server)",
+      "mobile": {
+        "median": {
+          "perf": 91,
+          "a11y": 90,
+          "bp": 100,
+          "seo": 100,
+          "fcp": 2420,
+          "lcp": 2495,
+          "tbt": 0,
+          "cls": 0,
+          "si": 4726,
+          "bytes": 375049
+        },
+        "runs": [
+          {
+            "perf": 91,
+            "a11y": 90,
+            "bp": 100,
+            "seo": 100,
+            "fcp": 2420,
+            "lcp": 2495,
+            "tbt": 0,
+            "cls": 0,
+            "si": 4745,
+            "bytes": 375049
+          },
+          {
+            "perf": 91,
+            "a11y": 90,
+            "bp": 100,
+            "seo": 100,
+            "fcp": 2414,
+            "lcp": 2489,
+            "tbt": 0,
+            "cls": 0,
+            "si": 4703,
+            "bytes": 375048
+          },
+          {
+            "perf": 91,
+            "a11y": 90,
+            "bp": 100,
+            "seo": 100,
+            "fcp": 2439,
+            "lcp": 2514,
+            "tbt": 0,
+            "cls": 0,
+            "si": 4726,
+            "bytes": 375049
+          }
+        ]
+      },
+      "desktop": {
+        "median": {
+          "perf": 97,
+          "a11y": 96,
+          "bp": 100,
+          "seo": 100,
+          "fcp": 827,
+          "lcp": 827,
+          "tbt": 0,
+          "cls": 0.084,
+          "si": 851,
+          "bytes": 375049
+        },
+        "runs": [
+          {
+            "perf": 97,
+            "a11y": 96,
+            "bp": 100,
+            "seo": 100,
+            "fcp": 807,
+            "lcp": 807,
+            "tbt": 0,
+            "cls": 0.083,
+            "si": 887,
+            "bytes": 375049
+          },
+          {
+            "perf": 97,
+            "a11y": 96,
+            "bp": 100,
+            "seo": 100,
+            "fcp": 827,
+            "lcp": 827,
+            "tbt": 0,
+            "cls": 0.084,
+            "si": 827,
+            "bytes": 375049
+          },
+          {
+            "perf": 96,
+            "a11y": 96,
+            "bp": 100,
+            "seo": 100,
+            "fcp": 851,
+            "lcp": 851,
+            "tbt": 0,
+            "cls": 0.092,
+            "si": 851,
+            "bytes": 375049
+          }
+        ]
+      }
+    },
+    "last-prod": {
+      "description": "After: portfolio-v2, same local static server",
+      "mobile": {
+        "median": {
+          "perf": 99,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "fcp": 1419,
+          "lcp": 1719,
+          "tbt": 73,
+          "cls": 0,
+          "si": 1419,
+          "bytes": 130412
+        },
+        "runs": [
+          {
+            "perf": 99,
+            "a11y": 100,
+            "bp": 100,
+            "seo": 100,
+            "fcp": 1411,
+            "lcp": 1711,
+            "tbt": 73,
+            "cls": 0,
+            "si": 1411,
+            "bytes": 130412
+          },
+          {
+            "perf": 99,
+            "a11y": 100,
+            "bp": 100,
+            "seo": 100,
+            "fcp": 1422,
+            "lcp": 1761,
+            "tbt": 92,
+            "cls": 0,
+            "si": 1422,
+            "bytes": 130412
+          },
+          {
+            "perf": 99,
+            "a11y": 100,
+            "bp": 100,
+            "seo": 100,
+            "fcp": 1419,
+            "lcp": 1719,
+            "tbt": 49,
+            "cls": 0,
+            "si": 1419,
+            "bytes": 130412
+          }
+        ]
+      },
+      "desktop": {
+        "median": {
+          "perf": 100,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "fcp": 336,
+          "lcp": 385,
+          "tbt": 0,
+          "cls": 0,
+          "si": 336,
+          "bytes": 130412
+        },
+        "runs": [
+          {
+            "perf": 100,
+            "a11y": 100,
+            "bp": 100,
+            "seo": 100,
+            "fcp": 336,
+            "lcp": 385,
+            "tbt": 0,
+            "cls": 0,
+            "si": 336,
+            "bytes": 130412
+          },
+          {
+            "perf": 100,
+            "a11y": 100,
+            "bp": 100,
+            "seo": 100,
+            "fcp": 338,
+            "lcp": 378,
+            "tbt": 0,
+            "cls": 0,
+            "si": 338,
+            "bytes": 130412
+          },
+          {
+            "perf": 100,
+            "a11y": 100,
+            "bp": 100,
+            "seo": 100,
+            "fcp": 333,
+            "lcp": 385,
+            "tbt": 0,
+            "cls": 0,
+            "si": 333,
+            "bytes": 130412
+          }
+        ]
+      }
+    },
+    "last-preview": {
+      "description": "After: portfolio-v2, served by `vite preview` (the Phase 0 method: no compression, no-cache headers)",
+      "mobile": {
+        "median": {
+          "perf": 99,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "fcp": 1408,
+          "lcp": 1734,
+          "tbt": 91,
+          "cls": 0,
+          "si": 1408,
+          "bytes": 136698
+        },
+        "runs": [
+          {
+            "perf": 99,
+            "a11y": 100,
+            "bp": 100,
+            "seo": 100,
+            "fcp": 1408,
+            "lcp": 1558,
+            "tbt": 104,
+            "cls": 0,
+            "si": 1408,
+            "bytes": 136698
+          },
+          {
+            "perf": 99,
+            "a11y": 100,
+            "bp": 100,
+            "seo": 100,
+            "fcp": 1399,
+            "lcp": 1734,
+            "tbt": 91,
+            "cls": 0,
+            "si": 1399,
+            "bytes": 136698
+          },
+          {
+            "perf": 99,
+            "a11y": 100,
+            "bp": 100,
+            "seo": 100,
+            "fcp": 1451,
+            "lcp": 1751,
+            "tbt": 59,
+            "cls": 0,
+            "si": 1451,
+            "bytes": 136698
+          }
+        ]
+      },
+      "desktop": {
+        "median": {
+          "perf": 100,
+          "a11y": 100,
+          "bp": 100,
+          "seo": 100,
+          "fcp": 350,
+          "lcp": 390,
+          "tbt": 0,
+          "cls": 0,
+          "si": 350,
+          "bytes": 136698
+        },
+        "runs": [
+          {
+            "perf": 100,
+            "a11y": 100,
+            "bp": 100,
+            "seo": 100,
+            "fcp": 360,
+            "lcp": 400,
+            "tbt": 0,
+            "cls": 0,
+            "si": 360,
+            "bytes": 136698
+          },
+          {
+            "perf": 100,
+            "a11y": 100,
+            "bp": 100,
+            "seo": 100,
+            "fcp": 340,
+            "lcp": 380,
+            "tbt": 0,
+            "cls": 0,
+            "si": 340,
+            "bytes": 136698
+          },
+          {
+            "perf": 100,
+            "a11y": 100,
+            "bp": 100,
+            "seo": 100,
+            "fcp": 350,
+            "lcp": 390,
+            "tbt": 0,
+            "cls": 0,
+            "si": 350,
+            "bytes": 136698
+          }
+        ]
+      }
+    }
+  }
+}
