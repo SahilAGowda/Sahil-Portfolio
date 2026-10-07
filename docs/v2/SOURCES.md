@@ -8,11 +8,11 @@ Rule from the brief: every title, date, number and claim traces to `resume-lates
 | "Software development engineer at DIATOZ", May 2026 to present | Resume; Facts |
 | Software Engineering Intern, Oct 2025 to May 2026 | Resume; Facts |
 | About 273 million records, Spring Batch, multithreading, JDBC batch inserts | Resume; Facts |
-| Excel pipeline, 14+ validation rules, heap fix with Apache POI SXSSF | Resume; Facts. **check** SXSSF is Apache POI's streaming writer; POI streams reads through its SAX event API. Worth confirming which one the pipeline uses so the wording is exact |
+| Excel pipeline, 14+ validation rules, heap fix with Apache POI SXSSF | Resume; Facts. The site says "streaming with Apache POI SXSSF", the brief's wording; the resume says "streaming read via SXSSF". **check** SXSSF is POI's streaming writer, and reads stream through its SAX event API. Confirm which one the pipeline uses so the wording is exact |
 | Report APIs, Elasticsearch, 1 s to 400 ms (60%), PostgreSQL as source of truth | Resume; Facts |
 | Async Elasticsearch and PostgreSQL updates after a production timeout, audit mechanism | Resume; Facts |
 | RAG chatbot, LangChain and LangGraph, Milvus and Pinecone evaluated, reranking, multi-representation indexing, query structuring, logical routing | Resume; Facts |
-| Multi-tenant WhatsApp agent, Meta Cloud API, LLM-as-selector RAG for parts lookup, deterministic slot-filling, in-chat PDFs, Nginx and webhook callbacks | Resume; Facts |
+| Multi-tenant WhatsApp agent, Meta Cloud API, LLM-as-selector RAG for parts lookup, deterministic slot-filling, in-chat PDFs, Nginx and webhook callbacks | Resume; Facts. The resume says Nginx and the callbacks were configured "on the Meta Developer Dashboard"; the case study says only that the callbacks are set up there |
 | Client name in the WhatsApp experience bullet, Lexi, MuleSoft | Resume bullets; you said at Checkpoint A that what is on the resume can be mentioned. Case-study pages do not name the client |
 | Voice-agent bug fix and human transfer | Resume |
 | Valtren, AEGIS, Samsung Prism, Avarista Nexus | Not on the site, as you asked |

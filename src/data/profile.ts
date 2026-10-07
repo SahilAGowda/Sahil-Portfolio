@@ -3,6 +3,9 @@
 
 export const SITE_URL = "https://sahil-a-gowda-portfolio.vercel.app";
 
+/** Colours for the browser chrome (the theme-color meta tags). They match --background in src/index.css. */
+export const themeColors = { light: "#F5F6F3", dark: "#101519" } as const;
+
 export type LinkKey = "github" | "linkedin" | "leetcode" | "hackerrank" | "codechef";
 
 export interface ProfileLink {

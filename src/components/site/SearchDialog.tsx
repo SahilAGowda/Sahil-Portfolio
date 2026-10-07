@@ -17,6 +17,7 @@ function targetFor(hit: SearchHit, query: string) {
 /** A modal search over everything the site says. Mounted only while open, so it loads on demand. */
 export default function SearchDialog({ onClose }: { onClose: () => void }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const pressStartedOnBackdrop = useRef(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const [query, setQuery] = useState("");
@@ -77,8 +78,12 @@ export default function SearchDialog({ onClose }: { onClose: () => void }) {
       ref={dialogRef}
       aria-labelledby={titleId}
       onClose={onClose}
+      onPointerDown={(event) => {
+        pressStartedOnBackdrop.current = event.target === event.currentTarget;
+      }}
       onClick={(event) => {
-        if (event.target === event.currentTarget) close();
+        // A drag that starts in the field and ends on the backdrop must not close the dialog.
+        if (event.target === event.currentTarget && pressStartedOnBackdrop.current) close();
       }}
       className="m-0 mx-auto mt-4 max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-xl flex-col rounded-md border border-input bg-popover p-0 text-popover-foreground backdrop:bg-background/80 open:flex sm:mt-[10vh] sm:max-h-[80vh]"
     >

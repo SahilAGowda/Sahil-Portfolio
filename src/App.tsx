@@ -3,15 +3,27 @@ import { SiteShell } from "@/components/site/SiteShell";
 import { ThemeProvider } from "@/components/site/ThemeProvider";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import RouteError from "./pages/RouteError";
 
 const router = createBrowserRouter(
   [
     {
       element: <SiteShell />,
       children: [
-        { path: "/", element: <Index /> },
+        { path: "/", element: <Index />, errorElement: <RouteError /> },
         // Loaded before the navigation completes, so hash jumps and scroll restoration find the page's content.
-        { path: "/projects/:slug", lazy: async () => ({ Component: (await import("./pages/Project")).default }) },
+        {
+          path: "/projects/:slug",
+          lazy: async () => {
+            try {
+              return { Component: (await import("./pages/Project")).default };
+            } catch {
+              // The file could not be loaded (a stale tab after a redeploy, or no connection): show the error page in the shell.
+              return { Component: RouteError };
+            }
+          },
+          errorElement: <RouteError />,
+        },
         { path: "*", element: <NotFound /> },
       ],
     },

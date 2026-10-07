@@ -5,6 +5,7 @@ import { useScrollSpy } from "@/hooks/useScrollSpy";
 import { useSearchHighlight } from "@/hooks/useSearchHighlight";
 import { HighlightNotice } from "./HighlightNotice";
 import { MobileBar } from "./MobileBar";
+import { QuietBoundary } from "./QuietBoundary";
 import { Rail } from "./Rail";
 
 const SearchDialog = lazy(() => import("./SearchDialog"));
@@ -55,7 +56,11 @@ export function SiteShell() {
   // After a hash jump, move focus to the target so keyboard and screen-reader users land there.
   useEffect(() => {
     if (!location.hash) return;
-    document.getElementById(decodeURIComponent(location.hash.slice(1)))?.focus({ preventScroll: true });
+    try {
+      document.getElementById(decodeURIComponent(location.hash.slice(1)))?.focus({ preventScroll: true });
+    } catch {
+      // A hash with a broken percent sequence points at nothing.
+    }
   }, [location.key, location.hash]);
 
   // After moving to another page, focus the main area (not on the first load).
@@ -82,9 +87,11 @@ export function SiteShell() {
         </main>
       </div>
       {searchOpen && (
-        <Suspense fallback={null}>
-          <SearchDialog onClose={() => setSearchOpen(false)} />
-        </Suspense>
+        <QuietBoundary onError={() => setSearchOpen(false)}>
+          <Suspense fallback={null}>
+            <SearchDialog onClose={() => setSearchOpen(false)} />
+          </Suspense>
+        </QuietBoundary>
       )}
       <ScrollRestoration />
     </>

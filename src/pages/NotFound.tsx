@@ -1,11 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { profile } from "@/data/profile";
 import { usePageMeta } from "@/hooks/usePageMeta";
 
 const NotFound = () => {
   const { pathname } = useLocation();
   usePageMeta({
-    title: "Page not found | Sahil A Gowda",
+    title: `Page not found | ${profile.name}`,
     description: "This page does not exist. Go back to the portfolio.",
     path: pathname,
     noindex: true,

@@ -38,7 +38,7 @@ export const experience: ExperienceEntry[] = [
     to: "2026-05",
     bullets: [
       "Built a Spring Batch ingestion pipeline for about 273 million records, using multithreaded processing and JDBC batch inserts.",
-      "Built an Excel-workbook ingestion pipeline with 14+ validation rules. Fixed a heap-exhaustion bug caused by loading whole files into memory by switching to streaming reads with Apache POI SXSSF.",
+      "Built an Excel-workbook ingestion pipeline with 14+ validation rules. Fixed a heap-exhaustion bug caused by loading whole files into memory by switching to streaming with Apache POI SXSSF.",
       "Built Spring Boot REST APIs for a report module that serves analytics over millions of records with multi-filter support. Elasticsearch indexing cut read-heavy query latency from 1 s to 400 ms (60%), with PostgreSQL kept as the source of truth.",
       "Fixed a production server timeout by making Elasticsearch and PostgreSQL updates asynchronous, and added an audit mechanism to verify write consistency.",
       "Traced a UAT-versus-production schema mismatch to a missing `liquibase.enabled` flag that silently skipped migrations in production; fixed the config and reconciled the schema.",

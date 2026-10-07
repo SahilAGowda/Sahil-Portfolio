@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
+import { themeColors } from "@/data/profile";
 import { ThemeContext, type Theme } from "@/hooks/useTheme";
 
 const STORAGE_KEY = "theme";
@@ -27,6 +28,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const root = document.documentElement;
     if (root.classList.contains("dark") !== (resolvedTheme === "dark")) root.classList.toggle("dark", resolvedTheme === "dark");
+    // The two theme-color tags in index.html follow the system setting; an explicit choice has to override both.
+    document.querySelectorAll('meta[name="theme-color"]').forEach((tag) => tag.setAttribute("content", themeColors[resolvedTheme]));
   }, [resolvedTheme]);
 
   // Follow the system setting while the visitor has not chosen, and follow choices made in other tabs.

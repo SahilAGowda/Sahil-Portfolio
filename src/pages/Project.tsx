@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { ResponsiveProjectDiagram } from "@/components/diagrams/ProjectDiagram";
 import { ExternalLink } from "@/components/site/ExternalLink";
 import { Rich } from "@/components/site/Rich";
-import { employerNote, getCaseStudy, type CaseStudy } from "@/data/caseStudies";
+import { caseStudyMeta, employerNote, getCaseStudy, type CaseStudy } from "@/data/caseStudies";
 import { hasDiagram } from "@/data/diagrams";
 import { caseStudyProjects, projectMeta, type Project } from "@/data/projects";
 import { usePageMeta } from "@/hooks/usePageMeta";
@@ -21,11 +21,7 @@ function Block({ id, title, children }: { id: string; title: string; children: R
 }
 
 function CaseStudyPage({ project, study }: { project: Project; study: CaseStudy }) {
-  usePageMeta({
-    title: `${project.title} | Sahil A Gowda`,
-    description: study.outcome.replace(/`/g, ""),
-    path: `/projects/${project.slug}`,
-  });
+  usePageMeta(caseStudyMeta(project.slug)!);
 
   const index = caseStudyProjects.findIndex((entry) => entry.slug === project.slug);
   const next = caseStudyProjects[index + 1];

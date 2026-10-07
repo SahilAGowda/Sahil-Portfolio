@@ -70,7 +70,7 @@ export const diagrams: Record<string, DiagramSpec> = {
   "ingestion-pipelines": {
     title: "Ingestion pipelines",
     description:
-      "Two pipelines. Source data of about 273 million records goes through a multithreaded Spring Batch job and JDBC batch inserts into a database. Separately, an Excel workbook is read as a stream with Apache POI SXSSF and checked against 14 or more validation rules.",
+      "Two pipelines. Source data of about 273 million records goes through a multithreaded Spring Batch job and JDBC batch inserts into a database. Separately, an Excel workbook is streamed with Apache POI SXSSF and checked against 14 or more validation rules.",
     full: {
       width: 720,
       height: 216,
@@ -85,7 +85,7 @@ export const diagrams: Record<string, DiagramSpec> = {
         node("jdbc", "flow", "JDBC", 430, 28, 130, 52, "batch inserts"),
         node("db", "store", "Database", 610, 24, 110, 60),
         node("xlsx", "plain", "Excel workbook", 0, 148, 150, 52),
-        node("stream", "flow", "Streaming read", 210, 148, 170, 52, "Apache POI SXSSF"),
+        node("stream", "flow", "Streaming", 210, 148, 170, 52, "Apache POI SXSSF"),
         node("rules", "flow", "14+ validation\nrules", 440, 148, 150, 52),
       ],
       edges: [
@@ -110,7 +110,7 @@ export const diagrams: Record<string, DiagramSpec> = {
         node("jdbc", "flow", "JDBC", 0, 148, 150, 40, "batch inserts"),
         node("db", "store", "Database", 0, 210, 150, 48),
         node("xlsx", "plain", "Excel workbook", 170, 24, 150, 40),
-        node("stream", "flow", "Streaming read", 170, 86, 150, 40, "Apache POI SXSSF"),
+        node("stream", "flow", "Streaming", 170, 86, 150, 40, "Apache POI SXSSF"),
         node("rules", "flow", "14+ validation\nrules", 170, 148, 150, 44),
       ],
       edges: [

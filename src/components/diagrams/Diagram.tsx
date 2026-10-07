@@ -123,7 +123,7 @@ export function Diagram({ layout, title, description, className }: DiagramProps)
 
   return (
     <svg
-      viewBox={`0 0 ${width} ${height}`}
+      viewBox={`-1 -1 ${width + 2} ${height + 2}`}
       role="img"
       aria-labelledby={`${id}-title ${id}-desc`}
       className={className ?? "h-auto w-full"}
@@ -206,12 +206,14 @@ export function DiagramLegend({ layout }: { layout: DiagramLayout }) {
           {legendText[kind]}
         </li>
       ))}
-      <li className="flex items-center gap-2">
-        <svg width="22" height="16" viewBox="0 0 22 16" aria-hidden="true">
-          <path d="M 1 8 H 21" strokeWidth="1.5" strokeDasharray="4 3" style={{ stroke: "hsl(var(--muted-foreground))" }} />
-        </svg>
-        Dashed means asynchronous or a check
-      </li>
+      {layout.edges.some((edge) => edge.dashed) && (
+        <li className="flex items-center gap-2">
+          <svg width="22" height="16" viewBox="0 0 22 16" aria-hidden="true">
+            <path d="M 1 8 H 21" strokeWidth="1.5" strokeDasharray="4 3" style={{ stroke: "hsl(var(--muted-foreground))" }} />
+          </svg>
+          Dashed means asynchronous or a check
+        </li>
+      )}
     </ul>
   );
 }

@@ -6,7 +6,7 @@ import { achievements, certifications, codingProfiles, education } from "./crede
 import { experience } from "./experience";
 import { profile } from "./profile";
 import { projectMeta, projects } from "./projects";
-import { segment, tokenize, type Segment } from "./searchText";
+import { fold, segment, tokenize, type Segment } from "./searchText";
 import { skillGroups } from "./skills";
 
 export interface SearchEntry {
@@ -119,7 +119,7 @@ const WINDOW = 150;
 
 /** A window of the entry text around the first match, with every match marked. */
 function snippetOf(text: string, tokens: string[]): Segment[] {
-  const lower = text.toLowerCase();
+  const lower = fold(text);
   let first = -1;
   for (const token of tokens) {
     const at = lower.indexOf(token);
@@ -143,8 +143,8 @@ export function searchSite(query: string, limit = 8): { hits: SearchHit[]; total
   cached ??= buildIndex();
   const scored: { entry: SearchEntry; score: number; order: number }[] = [];
   cached.forEach((entry, order) => {
-    const title = (entry.title ?? "").toLowerCase();
-    const haystack = `${title} ${entry.text.toLowerCase()}`;
+    const title = fold(entry.title ?? "");
+    const haystack = `${title} ${fold(entry.text)}`;
     if (!tokens.every((token) => haystack.includes(token))) return;
     const inTitle = tokens.filter((token) => title.includes(token)).length;
     scored.push({ entry, score: entry.weight * 10 + inTitle * 5, order });

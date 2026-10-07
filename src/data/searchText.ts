@@ -1,9 +1,13 @@
 // Text helpers shared by the search dialog and the on-page highlighter. Pure functions, no React.
 
-/** Lowercased, de-duplicated words of a query. Words shorter than two characters are ignored. */
+/** Lowercase and drop accents, so "karcher" matches "Kärcher". Text with precomposed letters keeps its length. */
+export function fold(text: string): string {
+  return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
+/** Folded, de-duplicated words of a query. Words shorter than two characters are ignored. */
 export function tokenize(query: string): string[] {
-  const words = query
-    .toLowerCase()
+  const words = fold(query)
     .split(/\s+/)
     .filter((word) => word.length >= 2);
   return [...new Set(words)];
@@ -17,7 +21,7 @@ export interface Segment {
 /** Splits text into runs, marking every occurrence of any token (case-insensitive). */
 export function segment(text: string, tokens: string[]): Segment[] {
   if (!text) return [];
-  const lower = text.toLowerCase();
+  const lower = fold(text);
   if (!tokens.length || lower.length !== text.length) return [{ text, hit: false }];
 
   const marked = new Array<boolean>(text.length).fill(false);

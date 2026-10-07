@@ -8,8 +8,8 @@
     <meta name="author" content="{{name}}" />
     <link rel="canonical" href="{{siteUrl}}/" />
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#F5F6F3" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#101519" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="{{themeLight}}" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="{{themeDark}}" media="(prefers-color-scheme: dark)" />
     <script>
       // Set the theme class before first paint so dark-mode visitors never see a light flash.
       (function () {
@@ -18,6 +18,13 @@
           var dark = stored === "dark" || ((!stored || stored === "system") && window.matchMedia("(prefers-color-scheme: dark)").matches);
           if (dark) document.documentElement.classList.add("dark");
         } catch (e) {}
+        // A hash with a broken percent sequence (for example "#100%") makes the router's hash lookup throw, so drop it
+        // before any module runs.
+        try {
+          decodeURIComponent(location.hash.slice(1));
+        } catch (e) {
+          history.replaceState(null, "", location.pathname + location.search);
+        }
       })();
     </script>
 

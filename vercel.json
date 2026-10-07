@@ -1,5 +1,11 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
+  "cleanUrls": true,
+  "redirects": [
+    { "source": "/resume.html", "destination": "/Sahil-A-Gowda-Resume.pdf", "permanent": true },
+    { "source": "/Sahil A Gowda Resume.pdf", "destination": "/Sahil-A-Gowda-Resume.pdf", "permanent": true },
+    { "source": "/Sahil%20A%20Gowda%20Resume.pdf", "destination": "/Sahil-A-Gowda-Resume.pdf", "permanent": true }
+  ],
+  "rewrites": [{ "source": "/((?!assets/)[^.]*)", "destination": "/index.html" }],
   "headers": [
     {
       "source": "/assets/(.*)",

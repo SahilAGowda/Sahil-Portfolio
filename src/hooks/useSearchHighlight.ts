@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { tokenize } from "@/data/searchText";
+import { fold, tokenize } from "@/data/searchText";
 
 const HIGHLIGHT_NAME = "search";
 
@@ -27,7 +27,9 @@ export function useSearchHighlight(query: string | null) {
       const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
       for (let node = walker.nextNode(); node; node = walker.nextNode()) {
         if (node.parentElement?.closest("svg, script, style, .sr-only, [data-search-skip]")) continue;
-        const lower = (node as Text).data.toLowerCase();
+        const data = (node as Text).data;
+        const lower = fold(data);
+        if (lower.length !== data.length) continue;
         for (const token of tokens) {
           for (let at = lower.indexOf(token); at !== -1; at = lower.indexOf(token, at + token.length)) {
             const range = new Range();

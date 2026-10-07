@@ -4,6 +4,9 @@
 // DIATOZ entries are employer work, described at resume level: no client names, code, schemas or data.
 // Backticked text renders as inline code.
 
+import { profile } from "./profile";
+import { projects } from "./projects";
+
 export interface Decision {
   title: string;
   body: string;
@@ -56,7 +59,7 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         title: "Stream Excel workbooks instead of loading them",
-        body: "Loading a whole workbook into memory exhausted the heap. Reading workbooks as a stream with Apache POI SXSSF fixed it.",
+        body: "Loading a whole workbook into memory exhausted the heap. Streaming the workbooks with Apache POI SXSSF fixed it.",
       },
     ],
     results: [
@@ -141,7 +144,7 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         title: "Nginx and webhook callbacks",
-        body: "Nginx and the webhook callbacks are configured on the Meta Developer Dashboard, which got the agent to a working MVP.",
+        body: "Nginx and the webhook callbacks were configured for a working MVP. The callbacks are set up on the Meta Developer Dashboard.",
       },
       {
         title: "PDFs in the chat",
@@ -204,4 +207,16 @@ export const caseStudies: CaseStudy[] = [
 
 export function getCaseStudy(slug: string): CaseStudy | undefined {
   return caseStudies.find((study) => study.slug === slug);
+}
+
+/** Title, description and path for a case-study page. The page and the static HTML emitted at build time both read this. */
+export function caseStudyMeta(slug: string): { title: string; description: string; path: string } | undefined {
+  const study = getCaseStudy(slug);
+  const project = projects.find((entry) => entry.slug === slug);
+  if (!study || !project) return undefined;
+  return {
+    title: `${project.title} | ${profile.name}`,
+    description: study.outcome.replace(/`/g, ""),
+    path: `/projects/${slug}`,
+  };
 }
