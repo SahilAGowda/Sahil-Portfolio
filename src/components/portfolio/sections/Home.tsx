@@ -1,44 +1,15 @@
 import { Button } from "@/components/ui/button";
-import { Download, Eye, ArrowRight, Github, Linkedin, ExternalLink, Code, BookOpen, Sparkles } from "lucide-react";
-import { Card } from "@/components/ui/card";
+import { ArrowRight, Eye, FileText, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
+import { linkOrder, links, profile } from "@/data/profile";
+import { linkIcons } from "../linkIcons";
 
 interface HomeProps {
   setActiveSection: (section: string) => void;
 }
 
-const socialLinks = [
-  {
-    name: "GitHub",
-    icon: Github,
-    url: "https://github.com/SahilAGowda",
-    color: "hover:text-primary"
-  },
-  {
-    name: "LinkedIn",
-    icon: Linkedin,
-    url: "https://www.linkedin.com/in/sahil-a-gowda-551b32270/",
-    color: "hover:text-primary"
-  },
-  {
-    name: "LeetCode",
-    icon: Code,
-    url: "https://leetcode.com/u/sahilgowda204/",
-    color: "hover:text-primary"
-  },
-  {
-    name: "HackerRank",
-    icon: ExternalLink,
-    url: "https://www.hackerrank.com/profile/sahilgowda204",
-    color: "hover:text-primary"
-  },
-  {
-    name: "CodeChef",
-    icon: BookOpen,
-    url: "https://www.codechef.com/users/sahilgowda204",
-    color: "hover:text-primary"
-  }
-];
+const fullText = profile.name;
+const fullTitle = profile.headline;
 
 export function Home({ setActiveSection }: HomeProps) {
   const [isVisible, setIsVisible] = useState(false);
@@ -46,13 +17,10 @@ export function Home({ setActiveSection }: HomeProps) {
   const [typedTitle, setTypedTitle] = useState("");
   const [showCursor, setShowCursor] = useState(true);
   const [isFloating, setIsFloating] = useState(true);
-  
-  const fullText = "Sahil A Gowda";
-  const fullTitle = "Full Stack Developer & AI/ML Enthusiast";
 
   useEffect(() => {
     setIsVisible(true);
-    
+
     // Typing animation for the name
     let currentIndex = 0;
     const typingInterval = setInterval(() => {
@@ -61,7 +29,7 @@ export function Home({ setActiveSection }: HomeProps) {
         currentIndex++;
       } else {
         clearInterval(typingInterval);
-        
+
         // Start typing the title after name is complete
         setTimeout(() => {
           let titleIndex = 0;
@@ -88,11 +56,6 @@ export function Home({ setActiveSection }: HomeProps) {
       clearTimeout(floatingTimer);
     };
   }, []);
-
-  const handleDownloadResume = () => {
-    // Open a wrapper page that embeds the PDF and uses the updated favicon
-    window.open("/resume.html", "_blank");
-  };
 
   const handleViewWork = () => {
     setActiveSection("projects");
@@ -136,33 +99,10 @@ export function Home({ setActiveSection }: HomeProps) {
                   </span>
                 </h2>
               </div>
-              
-              <p className="text-lg lg:text-xl text-text-secondary leading-relaxed max-w-2xl animate-fade-in-up" style={{animationDelay: '2s'}}>
-                I'm a passionate Computer Science student who loves creating{" "}
-                <span className="text-primary font-medium hover:text-primary/80 transition-colors">intelligent web solutions</span>,{" "}
-                <span className="text-primary font-medium hover:text-primary/80 transition-colors">AI-powered applications</span>, and{" "}
-                <span className="text-primary font-medium hover:text-primary/80 transition-colors">solving complex problems</span> through innovative code.
-              </p>
-            </div>
 
-            {/* Stats Cards */}
-            <div className="grid grid-cols-2 gap-4 animate-fade-in-up" style={{animationDelay: '2.3s'}}>
-              <Card className="p-4 bg-card border-border hover:border-primary/50 transition-all duration-300 hover:scale-105 hover:shadow-xl group">
-                <div className="text-2xl font-bold text-primary group-hover:scale-110 transition-transform">4+</div>
-                <div className="text-sm text-text-muted">Years Experience</div>
-              </Card>
-              <Card className="p-4 bg-card border-border hover:border-primary/50 transition-all duration-300 hover:scale-105 hover:shadow-xl group">
-                <div className="text-2xl font-bold text-primary group-hover:scale-110 transition-transform">7+</div>
-                <div className="text-sm text-text-muted">Projects Built</div>
-              </Card>
-              <Card className="p-4 bg-card border-border hover:border-primary/50 transition-all duration-300 hover:scale-105 hover:shadow-xl group">
-                <div className="text-2xl font-bold text-primary group-hover:scale-110 transition-transform">5+</div>
-                <div className="text-sm text-text-muted">Tech Stacks</div>
-              </Card>
-              <Card className="p-4 bg-card border-border hover:border-primary/50 transition-all duration-300 hover:scale-105 hover:shadow-xl group">
-                <div className="text-2xl font-bold text-primary group-hover:scale-110 transition-transform">9.25</div>
-                <div className="text-sm text-text-muted">CGPA</div>
-              </Card>
+              <p className="text-lg lg:text-xl text-text-secondary leading-relaxed max-w-2xl animate-fade-in-up" style={{animationDelay: '2s'}}>
+                {profile.summary}
+              </p>
             </div>
 
             {/* Call to Action Buttons */}
@@ -173,34 +113,38 @@ export function Home({ setActiveSection }: HomeProps) {
                 size="lg"
               >
                 <Eye className="h-5 w-5 mr-2 group-hover:animate-pulse" />
-                View My Work
+                View my work
                 <ArrowRight className="h-5 w-5 ml-2 transition-transform group-hover:translate-x-2" />
               </Button>
-              
+
               <Button
-                onClick={handleDownloadResume}
+                asChild
                 variant="outline"
                 className="btn-secondary transition-all duration-300 hover:shadow-xl hover:scale-105"
                 size="lg"
               >
-                <Download className="h-5 w-5 mr-2 group-hover:animate-bounce" />
-                Download Resume
+                <a href={profile.resume.href} target="_blank" rel="noopener noreferrer">
+                  <FileText className="h-5 w-5 mr-2" />
+                  {profile.resume.label}
+                </a>
               </Button>
             </div>
 
             {/* Social Links */}
             <div className="flex flex-wrap gap-4 animate-fade-in-up" style={{animationDelay: '2.9s'}}>
-              {socialLinks.map((social, index) => {
-                const IconComponent = social.icon;
+              {linkOrder.map((key, index) => {
+                const link = links[key];
+                const IconComponent = linkIcons[key];
                 return (
                   <a
-                    key={social.name}
-                    href={social.url}
+                    key={key}
+                    href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`p-3 rounded-lg bg-card border border-border ${social.color} transition-all duration-300 hover:scale-125 hover:rotate-6 hover:shadow-xl group animate-bounce-in`}
+                    className="p-3 rounded-lg bg-card border border-border hover:text-primary transition-all duration-300 hover:scale-125 hover:rotate-6 hover:shadow-xl group animate-bounce-in"
                     style={{animationDelay: `${3 + index * 0.1}s`}}
-                    title={social.name}
+                    title={link.label}
+                    aria-label={link.label}
                   >
                     <IconComponent className="h-5 w-5 group-hover:animate-pulse" />
                   </a>
@@ -221,8 +165,8 @@ export function Home({ setActiveSection }: HomeProps) {
                   isFloating ? 'animate-float' : ''
                 }`}>
                   <img
-                    src="/me.jpg"
-                    alt="Sahil A Gowda"
+                    src={profile.photo.src}
+                    alt={profile.photo.alt}
                     className="w-full h-full object-cover"
                     loading="eager"
                   />

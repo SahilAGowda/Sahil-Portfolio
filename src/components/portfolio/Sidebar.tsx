@@ -9,12 +9,11 @@ import {
   Award, 
   Mail,
   Menu,
-  X,
-  Github,
-  Linkedin,
-  ExternalLink
+  X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { linkOrder, links, profile } from "@/data/profile";
+import { linkIcons } from "./linkIcons";
 
 interface SidebarProps {
   activeSection: string;
@@ -32,32 +31,11 @@ const navigationItems = [
   { id: "contact", label: "Contact", icon: Mail },
 ];
 
-const socialLinks = [
-  { 
-    name: "GitHub", 
-    icon: Github, 
-    url: "https://github.com/sahil-gowda", 
-    color: "hover:text-primary" 
-  },
-  { 
-    name: "LinkedIn", 
-    icon: Linkedin, 
-    url: "https://linkedin.com/in/sahil-gowda", 
-    color: "hover:text-primary" 
-  },
-  { 
-    name: "LeetCode", 
-    icon: ExternalLink, 
-    url: "https://leetcode.com/sahil-gowda", 
-    color: "hover:text-primary" 
-  },
-  { 
-    name: "CodeChef", 
-    icon: ExternalLink, 
-    url: "https://codechef.com/users/sahil_gowda", 
-    color: "hover:text-primary" 
-  },
-];
+const initials = profile.name
+  .split(" ")
+  .filter((_, i, words) => i === 0 || i === words.length - 1)
+  .map((word) => word[0])
+  .join("");
 
 export function Sidebar({ activeSection, setActiveSection }: SidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -95,10 +73,10 @@ export function Sidebar({ activeSection, setActiveSection }: SidebarProps) {
           {/* Profile Section */}
           <div className="text-center mb-8 animate-fade-in-up">
             <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center transition-all duration-300 hover:scale-110 hover:bg-primary/20 group">
-              <span className="text-2xl font-bold text-primary group-hover:scale-110 transition-transform">SG</span>
+              <span className="text-2xl font-bold text-primary group-hover:scale-110 transition-transform">{initials}</span>
             </div>
-            <h2 className="text-xl font-bold text-sidebar-foreground mb-1">Sahil A Gowda</h2>
-            <p className="text-sm text-text-secondary">Full Stack Developer</p>
+            <h2 className="text-xl font-bold text-sidebar-foreground mb-1">{profile.name}</h2>
+            <p className="text-sm text-text-secondary">{profile.role}</p>
           </div>
 
           {/* Navigation */}
@@ -148,21 +126,22 @@ export function Sidebar({ activeSection, setActiveSection }: SidebarProps) {
           <div className="mt-8 pt-6 border-t border-sidebar-border animate-fade-in-up" style={{animationDelay: '0.8s'}}>
             <p className="text-sm text-text-muted mb-4 text-center">Connect with me</p>
             <div className="flex justify-center space-x-4">
-              {socialLinks.map((social, index) => {
-                const IconComponent = social.icon;
+              {linkOrder.map((key, index) => {
+                const link = links[key];
+                const IconComponent = linkIcons[key];
                 return (
                   <a
-                    key={social.name}
-                    href={social.url}
+                    key={key}
+                    href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`
-                      p-2 rounded-lg text-text-secondary transition-all duration-300 
-                      hover:bg-sidebar-accent ${social.color} hover:scale-125 hover:rotate-12
+                      p-2 rounded-lg text-text-secondary transition-all duration-300
+                      hover:bg-sidebar-accent hover:text-primary hover:scale-125 hover:rotate-12
                       animate-bounce-in
                     `}
                     style={{animationDelay: `${1 + index * 0.1}s`}}
-                    aria-label={social.name}
+                    aria-label={link.label}
                   >
                     <IconComponent className="h-5 w-5" />
                   </a>
