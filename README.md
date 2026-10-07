@@ -1,73 +1,42 @@
-# Welcome to your Lovable project
+# Sahil A Gowda: portfolio
 
-## Project info
+Source for [sahil-a-gowda-portfolio.vercel.app](https://sahil-a-gowda-portfolio.vercel.app). One page, five case studies, light and dark themes, and a search over everything on the site. Built with Vite, React 18, TypeScript, Tailwind CSS 3 and react-router. Deployed on Vercel.
 
-**URL**: https://lovable.dev/projects/97c88daa-f286-4532-96c7-70bd481fc056
-
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/97c88daa-f286-4532-96c7-70bd481fc056) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+## Run it
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+npm install
+npm run dev       # http://localhost:8080
+npm run build     # production build in dist/
+npm run preview   # serve dist/ locally
+npm run lint
 ```
 
-**Edit a file directly in GitHub**
+## Edit the content
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+All text lives in `src/data`. Components read from there, and nothing is repeated in the JSX.
 
-**Use GitHub Codespaces**
+| File | What it holds |
+|---|---|
+| `profile.ts` | Name, role, hero line, summary, page title and description, every outbound link, the resume link |
+| `experience.ts` | The DIATOZ roles and their bullets |
+| `projects.ts` | The project list. Set `caseStudy: true` once a page exists |
+| `caseStudies.ts` | The case-study pages: outcome, problem, constraints, decisions, results with their sources |
+| `diagrams.ts` | The architecture diagrams: nodes, edges and a layout for wide and narrow screens |
+| `skills.ts`, `credentials.ts` | Skill groups; education, certifications, achievements and coding profiles |
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+To add a case study, add the project to `projects.ts`, write its page in `caseStudies.ts`, optionally draw a diagram in `diagrams.ts`, and set `caseStudy: true`. The page, its links, the search and the sitemap pick it up.
 
-## What technologies are used for this project?
+The rules the content follows: every number traces to the resume or a README, employer work stays at resume level, and a section without a source is left out. `docs/v2/SOURCES.md` lists where each claim comes from.
 
-This project is built with:
+## What the build generates
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+A small plugin in `vite.config.ts` fills the `{{placeholders}}` in `index.html` from `src/data` (title, description, social tags, JSON-LD and the `<noscript>` text), preloads the main font, and writes `sitemap.xml` and `robots.txt`. Change the data and the static head follows.
 
-## How can I deploy this project?
+`public/og.png` is a screenshot of `docs/v2/og-card.html` at 1200 by 630. To redo it, open that page in a browser at that size and save the screenshot over `public/og.png`.
 
-Simply open [Lovable](https://lovable.dev/projects/97c88daa-f286-4532-96c7-70bd481fc056) and click on Share -> Publish.
+## Notes
 
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- Fonts are self-hosted from `@fontsource-variable`, Latin subset.
+- The theme follows the system setting until a visitor picks Light or Dark. An inline script in `index.html` applies it before first paint.
+- `docs/v2` holds the audit, the design plan, the evidence and the before and after screenshots from the 2026 rebuild.

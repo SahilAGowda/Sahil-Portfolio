@@ -28,9 +28,6 @@ export const links: Record<LinkKey, ProfileLink> = {
   },
 };
 
-/** Order used wherever the links render as a row. */
-export const linkOrder: LinkKey[] = ["github", "linkedin", "leetcode", "hackerrank", "codechef"];
-
 export const profile = {
   name: "Sahil A Gowda",
   /** Short role line, used under the name and in metadata. */

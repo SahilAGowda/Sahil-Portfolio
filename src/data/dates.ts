@@ -1,7 +1,7 @@
 const monthYear = new Intl.DateTimeFormat("en", { month: "short", year: "numeric" });
 
 /** "2025-10" becomes "Oct 2025". A bare year stays a year. */
-export function formatMonth(iso: string): string {
+function formatMonth(iso: string): string {
   const [year, month] = iso.split("-").map(Number);
   if (!month) return String(year);
   return monthYear.format(new Date(year, month - 1, 1));
