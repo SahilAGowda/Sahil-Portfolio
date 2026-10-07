@@ -447,3 +447,25 @@ Light only, on purpose. A highlighter needs paper, and yellow on near-black is t
 3. Hero photo at 96 px: keep? Default: yes.
 4. Do you want the three-row Trace strip in the Experience header? Default: no.
 5. If you have reference sites or screenshots, send them; they override all of the above.
+
+---
+
+## Decision at Checkpoint B
+
+Answer received: "everything / both (toggle) / we can remove the pic or add that at a better position / however you feel the best way". I read that as a merge and built it as follows.
+
+| Question | Decision |
+|---|---|
+| Direction | **Flowline** as the backbone. Quiet versions of the other two ideas ride on it: hero numbers link to case studies and results show their source (from Marginalia's receipts), a Search button opens a small search with `/` as the shortcut (from Query), and the Experience header carries the three-row career strip (the Trace seed). |
+| Theme | Light and dark, with a two-button toggle labelled "Light" and "Dark". First visit follows the system setting. An inline script in `index.html` sets the class before first paint, so dark-mode visitors never see a light flash. |
+| Photo | Removed from the hero, which stays text-first for LCP. A small 96 px portrait sits next to the email in the Contact section. |
+| Search | No dimming of non-matching rows. The earlier Query sketch dimmed them, but dimmed text fails AA contrast. Matches get a `<mark>` highlight and a no-match query says "No mention of 'x' on this site." |
+| Mobile bar | One 1 px rule under the bar; the flowline gutter below it is 2 px. Section dots sit on the gutter. |
+
+Self-critique after the build, changes made before committing:
+
+- Section spacing moved from padding to margins, so a jump link lands on the heading, not on 100 px of empty space.
+- Container widened from 61 rem to 70 rem. The project text column was 296 px (about 36 characters a line); it is now 440 px at 1280 px and above.
+- Cylinder labels in the diagrams were touching the front of the top cap. Text for stores now centres in the body below the cap, and the compact SQLite node got taller.
+- Removed the "Full-time" and "Internship" label under each date. The title already says it, and the label cost a line per entry.
+- The name link in the rail and the certificate link had tap targets under 44 px; both are 44 px now.

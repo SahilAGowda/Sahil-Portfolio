@@ -1,0 +1,217 @@
+import { useId } from "react";
+import type { DEdge, DNode, DiagramLayout, NodeKind } from "@/data/diagrams";
+
+const palette: Record<NodeKind, { stroke: string; fill: string }> = {
+  flow: { stroke: "hsl(var(--flow))", fill: "hsl(var(--flow) / 0.1)" },
+  store: { stroke: "hsl(var(--store))", fill: "hsl(var(--store) / 0.1)" },
+  model: { stroke: "hsl(var(--model))", fill: "hsl(var(--model) / 0.1)" },
+  plain: { stroke: "hsl(var(--muted-foreground))", fill: "hsl(var(--foreground) / 0.04)" },
+};
+
+const CAP = 9; // height of the cylinder's elliptical cap
+
+function Shape({ node }: { node: DNode }) {
+  const { x, y, w, h, kind } = node;
+  const { stroke, fill } = palette[kind];
+  const style = { stroke, fill, strokeWidth: 1.5 };
+
+  if (kind === "store") {
+    const rx = w / 2;
+    const body = `M ${x} ${y + CAP} A ${rx} ${CAP} 0 0 1 ${x + w} ${y + CAP} V ${y + h - CAP} A ${rx} ${CAP} 0 0 1 ${x} ${y + h - CAP} Z`;
+    const rim = `M ${x} ${y + CAP} A ${rx} ${CAP} 0 0 0 ${x + w} ${y + CAP}`;
+    return (
+      <g>
+        <path d={body} style={style} />
+        <path d={rim} style={{ stroke, fill: "none", strokeWidth: 1.5 }} />
+      </g>
+    );
+  }
+  if (kind === "model") {
+    const cx = x + w / 2;
+    const cy = y + h / 2;
+    return <polygon points={`${cx},${y} ${x + w},${cy} ${cx},${y + h} ${x},${cy}`} style={{ ...style, strokeLinejoin: "round" }} />;
+  }
+  return <rect x={x} y={y} width={w} height={h} rx={6} style={style} />;
+}
+
+function NodeText({ node, size }: { node: DNode; size: number }) {
+  const lines = node.label.split("\n");
+  const subs = node.sub ? node.sub.split("\n") : [];
+  const lineHeight = size * 1.28;
+  const subSize = size * 0.88;
+  const subHeight = subSize * 1.28;
+  const total = lines.length * lineHeight + subs.length * subHeight;
+  const cx = node.x + node.w / 2;
+  // A cylinder's text sits in the body below the front of the top cap, not in the middle of its box.
+  const middle = node.kind === "store" ? node.y + (node.h + 2 * CAP - 3) / 2 : node.y + node.h / 2;
+  const top = middle - total / 2;
+
+  return (
+    <g textAnchor="middle">
+      {lines.map((line, i) => (
+        <text
+          key={`l${i}`}
+          x={cx}
+          y={top + lineHeight * i + lineHeight * 0.5 + size * 0.32}
+          fontSize={size}
+          fontWeight={600}
+          style={{ fill: "hsl(var(--foreground))" }}
+        >
+          {line}
+        </text>
+      ))}
+      {subs.map((line, i) => (
+        <text
+          key={`s${i}`}
+          x={cx}
+          y={top + lines.length * lineHeight + subHeight * i + subHeight * 0.5 + subSize * 0.32}
+          fontSize={subSize}
+          style={{ fill: "hsl(var(--muted-foreground))" }}
+        >
+          {line}
+        </text>
+      ))}
+    </g>
+  );
+}
+
+function Edge({ edge, markerId, size }: { edge: DEdge; markerId: string; size: number }) {
+  const d = edge.points.map(([px, py], i) => `${i === 0 ? "M" : "L"} ${px} ${py}`).join(" ");
+  const [lx, ly] = edge.labelAt ?? edge.points[0];
+  return (
+    <g>
+      <path
+        d={d}
+        fill="none"
+        strokeWidth={1.5}
+        strokeDasharray={edge.dashed ? "5 4" : undefined}
+        strokeLinejoin="round"
+        markerEnd={`url(#${markerId})`}
+        markerStart={edge.bothWays ? `url(#${markerId})` : undefined}
+        style={{ stroke: "hsl(var(--muted-foreground))" }}
+      />
+      {edge.label && (
+        <text
+          x={lx}
+          y={ly}
+          fontSize={size * 0.88}
+          textAnchor={edge.labelAnchor ?? "middle"}
+          paintOrder="stroke"
+          strokeWidth={4}
+          strokeLinejoin="round"
+          style={{ fill: "hsl(var(--muted-foreground))", stroke: "hsl(var(--background))" }}
+        >
+          {edge.label}
+        </text>
+      )}
+    </g>
+  );
+}
+
+interface DiagramProps {
+  layout: DiagramLayout;
+  title: string;
+  description: string;
+  className?: string;
+}
+
+/** Renders one diagram layout as inline SVG. Colours come from CSS variables, so both themes work. */
+export function Diagram({ layout, title, description, className }: DiagramProps) {
+  const id = useId().replace(/:/g, "");
+  const markerId = `${id}-arrow`;
+  const { width, height, fontSize, nodes, edges, texts } = layout;
+
+  return (
+    <svg
+      viewBox={`0 0 ${width} ${height}`}
+      role="img"
+      aria-labelledby={`${id}-title ${id}-desc`}
+      className={className ?? "h-auto w-full"}
+    >
+      <title id={`${id}-title`}>{title}</title>
+      <desc id={`${id}-desc`}>{description}</desc>
+      <defs>
+        <marker
+          id={markerId}
+          viewBox="0 0 10 10"
+          refX="9"
+          refY="5"
+          markerWidth="7"
+          markerHeight="7"
+          orient="auto-start-reverse"
+        >
+          <path d="M 0 0 L 10 5 L 0 10 z" style={{ fill: "hsl(var(--muted-foreground))" }} />
+        </marker>
+      </defs>
+      {texts?.map((t) => (
+        <text
+          key={t.text}
+          x={t.x}
+          y={t.y}
+          fontSize={fontSize * 0.88}
+          textAnchor={t.anchor ?? "start"}
+          style={{ fill: "hsl(var(--muted-foreground))" }}
+        >
+          {t.text}
+        </text>
+      ))}
+      {edges.map((edge, i) => (
+        <Edge key={i} edge={edge} markerId={markerId} size={fontSize} />
+      ))}
+      {nodes.map((n) => (
+        <g key={n.id}>
+          <Shape node={n} />
+          <NodeText node={n} size={fontSize} />
+        </g>
+      ))}
+    </svg>
+  );
+}
+
+const legendText: Record<NodeKind, string> = {
+  flow: "Job or service",
+  store: "Data store",
+  model: "Model call",
+  plain: "Input or output",
+};
+
+function LegendIcon({ kind }: { kind: NodeKind }) {
+  const { stroke, fill } = palette[kind];
+  const style = { stroke, fill, strokeWidth: 1.5 };
+  return (
+    <svg width="22" height="16" viewBox="0 0 22 16" aria-hidden="true">
+      {kind === "store" ? (
+        <>
+          <path d="M 2 4 A 9 3 0 0 1 20 4 V 12 A 9 3 0 0 1 2 12 Z" style={style} />
+          <path d="M 2 4 A 9 3 0 0 0 20 4" style={{ stroke, fill: "none", strokeWidth: 1.5 }} />
+        </>
+      ) : kind === "model" ? (
+        <polygon points="11,1 21,8 11,15 1,8" style={{ ...style, strokeLinejoin: "round" }} />
+      ) : (
+        <rect x="2" y="2" width="18" height="12" rx="3" style={style} />
+      )}
+    </svg>
+  );
+}
+
+/** Says what each shape means, for the kinds a diagram actually uses. */
+export function DiagramLegend({ layout }: { layout: DiagramLayout }) {
+  const order: NodeKind[] = ["flow", "store", "model", "plain"];
+  const used = order.filter((kind) => layout.nodes.some((n) => n.kind === kind));
+  return (
+    <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-caption text-muted-foreground">
+      {used.map((kind) => (
+        <li key={kind} className="flex items-center gap-2">
+          <LegendIcon kind={kind} />
+          {legendText[kind]}
+        </li>
+      ))}
+      <li className="flex items-center gap-2">
+        <svg width="22" height="16" viewBox="0 0 22 16" aria-hidden="true">
+          <path d="M 1 8 H 21" strokeWidth="1.5" strokeDasharray="4 3" style={{ stroke: "hsl(var(--muted-foreground))" }} />
+        </svg>
+        Dashed means asynchronous or a check
+      </li>
+    </ul>
+  );
+}

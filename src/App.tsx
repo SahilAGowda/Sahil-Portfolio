@@ -1,27 +1,37 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Suspense, lazy } from "react";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { ThemeProvider } from "next-themes";
+import { SiteShell } from "@/components/site/SiteShell";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
-const queryClient = new QueryClient();
+const Project = lazy(() => import("./pages/Project"));
+
+const router = createBrowserRouter(
+  [
+    {
+      element: <SiteShell />,
+      children: [
+        { path: "/", element: <Index /> },
+        {
+          path: "/projects/:slug",
+          element: (
+            <Suspense fallback={null}>
+              <Project />
+            </Suspense>
+          ),
+        },
+        { path: "*", element: <NotFound /> },
+      ],
+    },
+  ],
+  { future: { v7_relativeSplatPath: true, v7_fetcherPersist: true, v7_normalizeFormMethod: true, v7_partialHydration: true, v7_skipActionErrorRevalidation: true } },
+);
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+    <RouterProvider router={router} future={{ v7_startTransition: true }} />
+  </ThemeProvider>
 );
 
 export default App;

@@ -8,6 +8,8 @@ export interface EducationEntry {
   institution: string;
   location?: string;
   period: string;
+  /** Start and end as YYYY or YYYY-MM, where a timeline needs them. */
+  span?: { from: string; to: string };
   status?: string;
   grade?: string;
   detail?: string;
@@ -18,7 +20,8 @@ export const education: EducationEntry[] = [
     degree: "B.E. in Computer Science and Engineering",
     institution: "Cambridge Institute of Technology North Campus",
     location: "Bengaluru",
-    period: "2022 – 2026",
+    period: "2022 to 2026",
+    span: { from: "2022", to: "2026-05" },
     status: "Graduated May 2026",
     grade: "CGPA 9.25 / 10",
     detail: "Coursework: DSA, DBMS, operating systems, computer networks, OOP, system design.",
@@ -27,7 +30,7 @@ export const education: EducationEntry[] = [
     degree: "Pre-University Course (PUC)",
     institution: "M.E.S. Pre-University College",
     location: "Bengaluru",
-    period: "2020 – 2022",
+    period: "2020 to 2022",
     grade: "89%",
   },
   {

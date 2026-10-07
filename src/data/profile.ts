@@ -49,3 +49,21 @@ export const profile = {
   /** One label for the one action, wherever the resume link appears. */
   resume: { href: "/Sahil-A-Gowda-Resume.pdf", label: "Open resume" },
 };
+
+/** The page sections, in order. The nav, the flowline and the scroll-spy all read this. */
+export const sections = [
+  { id: "about", label: "About" },
+  { id: "experience", label: "Experience" },
+  { id: "work", label: "Work" },
+  { id: "skills", label: "Skills" },
+  { id: "credentials", label: "Credentials" },
+  { id: "contact", label: "Contact" },
+] as const;
+
+export type SectionId = (typeof sections)[number]["id"];
+
+/** Phrases in the summary that link to the case study holding the proof. */
+export const summaryLinks: { text: string; slug: string }[] = [
+  { text: "273 million records", slug: "ingestion-pipelines" },
+  { text: "from 1 s to 400 ms", slug: "report-search" },
+];

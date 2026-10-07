@@ -6,6 +6,17 @@
     <title>Sahil A Gowda - Full Stack Developer & AI/ML Enthusiast</title>
     <meta name="description" content="Portfolio of Sahil A Gowda - Computer Science student specializing in full-stack development, AI/ML, and computer vision. Building intelligent, scalable web solutions." />
     <meta name="author" content="Sahil A Gowda" />
+    <meta name="color-scheme" content="light dark" />
+    <script>
+      // Set the theme class before first paint so dark-mode visitors never see a light flash.
+      (function () {
+        try {
+          var stored = localStorage.getItem("theme");
+          var dark = stored === "dark" || ((!stored || stored === "system") && window.matchMedia("(prefers-color-scheme: dark)").matches);
+          if (dark) document.documentElement.classList.add("dark");
+        } catch (e) {}
+      })();
+    </script>
     <meta name="keywords" content="Full Stack Developer, AI/ML, Computer Vision, React, Spring Boot, JavaScript, Python" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

@@ -9,6 +9,8 @@ export interface Project {
   year?: string;
   summary: string;
   stack: string[];
+  /** True once a /projects/:slug page exists for this project. */
+  caseStudy?: boolean;
   /** Public repositories only. */
   repo?: string;
   live?: string;
