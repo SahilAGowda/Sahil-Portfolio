@@ -1,6 +1,6 @@
 # Sahil A Gowda: portfolio
 
-Source for [sahil-a-gowda-portfolio.vercel.app](https://sahil-a-gowda-portfolio.vercel.app). One page, five case studies with a 3D diagram each, light and dark themes, and a search over everything on the site. Built with Vite, React 18, TypeScript, Tailwind CSS 3, react-router and three.js (on the case-study pages only). Deployed on Vercel.
+Source for [sahil-a-gowda-portfolio.vercel.app](https://sahil-a-gowda-portfolio.vercel.app). One page, six case studies with a 3D diagram each, light and dark themes, and a search over everything on the site. Built with Vite, React 18, TypeScript, Tailwind CSS 3, react-router and three.js (on the case-study pages only). Deployed on Vercel.
 
 ## Run it
 

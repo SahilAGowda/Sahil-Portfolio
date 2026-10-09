@@ -490,3 +490,12 @@ Asked for by Sahil after the first review. It changes three rules in this plan, 
 - **Search.** The button left the rail for the top right of the page: a strip at 1024 px and wider that stays at the top, has the page's own colour, and moves nothing. Phones keep it in the top bar.
 - **Case studies.** Each row on the home page ends in a "Read the full case study" button (and the title links there too). A case-study page now runs: the diagram with a step-by-step "Follow the data" list, the problem, constraints, how I approached it, blockers and how I got past them, results, stack. A section that has no sourced content is left out instead of padded.
 - **Cost.** three.js (about 157 kB gzipped) sits in its own chunk. It loads only on a case-study page, only when the diagram is within a screen of the viewport, and only once the browser is idle. The home page's JavaScript grew by about 1 kB gzipped.
+
+## Revision, 9 October 2026 (second): the ingestion case study is split in two
+
+Sahil's reply to the request for "what was hardest" showed that the first case study had joined two separate pieces of work, so it is now two, and the page set is six case studies.
+
+- **Master-data ingestion** (the CSV of device records, about 273 million records, the Spring Batch flow) and **Bulk store upload** (the Excel upload that creates stores) each have their own page, diagram and walkthrough. The old `/projects/ingestion-pipelines` page is gone; it was never merged to `main`.
+- **Honest verbs.** The first ingestion flow was written by Sahil's senior engineers, so the pages and the home-page bullets say "reworked", with what was wrong, what was tried and what changed. The RAG chatbot is labelled a proof of concept. The work-row label under each title is "Work at DIATOZ" instead of "Built at DIATOZ".
+- **Where the content came from.** The pages describe mechanisms (partitioned workers, multi-row insert-or-update, validate once and save in the background, a duplicate-message check) and leave out class, endpoint and table names, the CSV's columns, configuration values and the client's name. `SOURCES.md` lists every claim and the three places where Sahil's account and the resume disagree.
+- **Diagrams.** Two new ones, and new nodes on three old ones: a download node on report search, a service-API node on the RAG chatbot, and webhook checks, Elasticsearch and repair status on the WhatsApp agent. Lane captions that stood behind a node in the 3D view are now notes under the diagram.

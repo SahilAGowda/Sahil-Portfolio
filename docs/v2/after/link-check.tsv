@@ -1,26 +1,60 @@
 kind	href	text	found on	result
-hash	#content	Skip to content	/ /projects/ingestion-pipelines /projects/report-search /projects/rag-chatbot /projects/whatsapp-agent /projects/gmailsage	ok
-internal	/#about	Sahil A Gowda / About	/ /projects/ingestion-pipelines /projects/report-search /projects/rag-chatbot /projects/whatsapp-agent /projects/gmailsage	200, target exists
-internal	/#experience	Experience	/ /projects/ingestion-pipelines /projects/report-search /projects/rag-chatbot /projects/whatsapp-agent /projects/gmailsage	200, target exists
-internal	/#work	Work / Back to work	/ /projects/ingestion-pipelines /projects/report-search /projects/rag-chatbot /projects/whatsapp-agent /projects/gmailsage	200, target exists
-internal	/#skills	Skills	/ /projects/ingestion-pipelines /projects/report-search /projects/rag-chatbot /projects/whatsapp-agent /projects/gmailsage	200, target exists
-internal	/#credentials	Credentials	/ /projects/ingestion-pipelines /projects/report-search /projects/rag-chatbot /projects/whatsapp-agent /projects/gmailsage	200, target exists
-internal	/#contact	Contact	/ /projects/ingestion-pipelines /projects/report-search /projects/rag-chatbot /projects/whatsapp-agent /projects/gmailsage	200, target exists
-internal	/projects/ingestion-pipelines	273 million records / Read case study for Ingestion pipelines 	/	200
-internal	/projects/report-search	from 1 s to 400 ms / Read case study for Report search on Ela / Next case study: Report search on Elasti	/ /projects/ingestion-pipelines	200
+hash	#content	Skip to content	/ /projects/master-data-ingestion /projects/bulk-store-upload /projects/report-search /projects/rag-chatbot /projects/whatsapp-agent /projects/gmailsage	ok
+internal	/#about	Sahil A Gowda / About	/ /projects/master-data-ingestion /projects/bulk-store-upload /projects/report-search /projects/rag-chatbot /projects/whatsapp-agent /projects/gmailsage	200, target exists
+internal	/#experience	Experience	/ /projects/master-data-ingestion /projects/bulk-store-upload /projects/report-search /projects/rag-chatbot /projects/whatsapp-agent /projects/gmailsage	200, target exists
+internal	/#work	Work / Back to work	/ /projects/master-data-ingestion /projects/bulk-store-upload /projects/report-search /projects/rag-chatbot /projects/whatsapp-agent /projects/gmailsage	200, target exists
+internal	/#skills	Skills	/ /projects/master-data-ingestion /projects/bulk-store-upload /projects/report-search /projects/rag-chatbot /projects/whatsapp-agent /projects/gmailsage	200, target exists
+internal	/#credentials	Credentials	/ /projects/master-data-ingestion /projects/bulk-store-upload /projects/report-search /projects/rag-chatbot /projects/whatsapp-agent /projects/gmailsage	200, target exists
+internal	/#contact	Contact	/ /projects/master-data-ingestion /projects/bulk-store-upload /projects/report-search /projects/rag-chatbot /projects/whatsapp-agent /projects/gmailsage	200, target exists
+internal	/projects/master-data-ingestion	273 million records / Master-data ingestion at 273 million rec / Read the full case study for Master-data	/	200
+internal	/projects/report-search	from 1 s to 400 ms / Report search on Elasticsearch / Read the full case study for Report sear / Next case study: Report search on Elasti	/ /projects/bulk-store-upload	200
 mailto	mailto:sahilgowda204@gmail.com	Email me	/	ok (not fetched)
 internal	/Sahil-A-Gowda-Resume.pdf	Open resume (opens in a new tab)	/	200
-external	https://www.linkedin.com/in/sahil-a-gowda-551b32270/	LinkedIn (opens in a new tab)	/	unverifiable: HTTP 403 (bot-blocking or the container network policy)
+external	https://www.linkedin.com/in/sahil-a-gowda-551b32270/	LinkedIn (opens in a new tab)	/	unverifiable: ENOTFOUND
 external	https://github.com/SahilAGowda	GitHub (opens in a new tab) / Open GitHub profile (opens in a new tab)	/	200
-internal	/projects/rag-chatbot	Read case study for RAG chatbot over ing / Next case study: RAG chatbot over ingest	/ /projects/report-search	200
-internal	/projects/whatsapp-agent	Read case study for Multi-tenant WhatsAp / Next case study: Multi-tenant WhatsApp a	/ /projects/rag-chatbot	200
-internal	/projects/gmailsage	Read case study for GmailSage / Next case study: GmailSage	/ /projects/whatsapp-agent	200
+internal	/projects/bulk-store-upload	Bulk store upload from Excel / Read the full case study for Bulk store  / Next case study: Bulk store upload from 	/ /projects/master-data-ingestion	200
+internal	/projects/rag-chatbot	RAG chatbot over ingested documents / Read the full case study for RAG chatbot / Next case study: RAG chatbot over ingest	/ /projects/report-search	200
+internal	/projects/whatsapp-agent	Multi-tenant WhatsApp agent / Read the full case study for Multi-tenan / Next case study: Multi-tenant WhatsApp a	/ /projects/rag-chatbot	200
+internal	/projects/gmailsage	GmailSage / Read the full case study for GmailSage / Next case study: GmailSage	/ /projects/whatsapp-agent	200
 external	https://github.com/SahilAGowda/GmailSage	Open repository (opens in a new tab)	/ /projects/gmailsage	200
 external	https://github.com/SahilAGowda/Meet-Transcriber-Extension	Open repository (opens in a new tab)	/	200
-external	https://drive.google.com/file/d/1OpcmcSJ4r5m2EjM3BURkAwoC8Jhi57nO/view?usp=sharing	Open certificate (opens in a new tab)	/	unverifiable: HTTP 403 (bot-blocking or the container network policy)
-external	https://leetcode.com/u/sahilgowda204/	LeetCode (opens in a new tab)	/	unverifiable: HTTP 403 (bot-blocking or the container network policy)
-external	https://www.hackerrank.com/profile/sahilgowda204	HackerRank (opens in a new tab)	/	unverifiable: HTTP 403 (bot-blocking or the container network policy)
-external	https://www.codechef.com/users/sahilgowda204	CodeChef (opens in a new tab)	/	unverifiable: HTTP 403 (bot-blocking or the container network policy)
+external	https://drive.google.com/file/d/1OpcmcSJ4r5m2EjM3BURkAwoC8Jhi57nO/view?usp=sharing	Open certificate (opens in a new tab)	/	unverifiable: ENOTFOUND
+external	https://leetcode.com/u/sahilgowda204/	LeetCode (opens in a new tab)	/	unverifiable: ENOTFOUND
+external	https://www.hackerrank.com/profile/sahilgowda204	HackerRank (opens in a new tab)	/	unverifiable: ENOTFOUND
+external	https://www.codechef.com/users/sahilgowda204	CodeChef (opens in a new tab)	/	unverifiable: ENOTFOUND
+internal	/projects/master-data-ingestion#diagram	How it fits together	/projects/master-data-ingestion	200, target exists
+internal	/projects/master-data-ingestion#problem	Problem	/projects/master-data-ingestion	200, target exists
+internal	/projects/master-data-ingestion#approach	Approach	/projects/master-data-ingestion	200, target exists
+internal	/projects/master-data-ingestion#blockers	Blockers	/projects/master-data-ingestion	200, target exists
+internal	/projects/master-data-ingestion#results	Results	/projects/master-data-ingestion	200, target exists
+internal	/projects/master-data-ingestion#stack	Stack	/projects/master-data-ingestion	200, target exists
+internal	/projects/bulk-store-upload#diagram	How it fits together	/projects/bulk-store-upload	200, target exists
+internal	/projects/bulk-store-upload#problem	Problem	/projects/bulk-store-upload	200, target exists
+internal	/projects/bulk-store-upload#approach	Approach	/projects/bulk-store-upload	200, target exists
+internal	/projects/bulk-store-upload#blockers	Blockers	/projects/bulk-store-upload	200, target exists
+internal	/projects/bulk-store-upload#results	Results	/projects/bulk-store-upload	200, target exists
+internal	/projects/bulk-store-upload#stack	Stack	/projects/bulk-store-upload	200, target exists
+internal	/projects/report-search#diagram	How it fits together	/projects/report-search	200, target exists
+internal	/projects/report-search#problem	Problem	/projects/report-search	200, target exists
+internal	/projects/report-search#approach	Approach	/projects/report-search	200, target exists
+internal	/projects/report-search#blockers	Blockers	/projects/report-search	200, target exists
+internal	/projects/report-search#results	Results	/projects/report-search	200, target exists
+internal	/projects/report-search#stack	Stack	/projects/report-search	200, target exists
+internal	/projects/rag-chatbot#diagram	How it fits together	/projects/rag-chatbot	200, target exists
+internal	/projects/rag-chatbot#problem	Problem	/projects/rag-chatbot	200, target exists
+internal	/projects/rag-chatbot#approach	Approach	/projects/rag-chatbot	200, target exists
+internal	/projects/rag-chatbot#stack	Stack	/projects/rag-chatbot	200, target exists
+internal	/projects/whatsapp-agent#diagram	How it fits together	/projects/whatsapp-agent	200, target exists
+internal	/projects/whatsapp-agent#problem	Problem	/projects/whatsapp-agent	200, target exists
+internal	/projects/whatsapp-agent#approach	Approach	/projects/whatsapp-agent	200, target exists
+internal	/projects/whatsapp-agent#blockers	Blockers	/projects/whatsapp-agent	200, target exists
+internal	/projects/whatsapp-agent#stack	Stack	/projects/whatsapp-agent	200, target exists
+internal	/projects/gmailsage#diagram	How it fits together	/projects/gmailsage	200, target exists
+internal	/projects/gmailsage#problem	Problem	/projects/gmailsage	200, target exists
+internal	/projects/gmailsage#approach	Approach	/projects/gmailsage	200, target exists
+internal	/projects/gmailsage#blockers	Blockers	/projects/gmailsage	200, target exists
+internal	/projects/gmailsage#results	Results	/projects/gmailsage	200, target exists
+internal	/projects/gmailsage#stack	Stack	/projects/gmailsage	200, target exists
 asset	/sitemap.xml		head or public	200
 asset	/robots.txt		head or public	200
 asset	/site.webmanifest		head or public	200
@@ -34,7 +68,8 @@ asset	/portrait-192.webp		head or public	200
 asset	/portrait-288.webp		head or public	200
 asset	/Sahil-A-Gowda-Resume.pdf		head or public	200
 sitemap	https://sahil-a-gowda-portfolio.vercel.app/		sitemap.xml	200
-sitemap	https://sahil-a-gowda-portfolio.vercel.app/projects/ingestion-pipelines		sitemap.xml	200
+sitemap	https://sahil-a-gowda-portfolio.vercel.app/projects/master-data-ingestion		sitemap.xml	200
+sitemap	https://sahil-a-gowda-portfolio.vercel.app/projects/bulk-store-upload		sitemap.xml	200
 sitemap	https://sahil-a-gowda-portfolio.vercel.app/projects/report-search		sitemap.xml	200
 sitemap	https://sahil-a-gowda-portfolio.vercel.app/projects/rag-chatbot		sitemap.xml	200
 sitemap	https://sahil-a-gowda-portfolio.vercel.app/projects/whatsapp-agent		sitemap.xml	200

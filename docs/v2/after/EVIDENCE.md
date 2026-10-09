@@ -89,7 +89,7 @@ Beyond the brief (Phase 0): the phone menu no longer covers headings and has a n
 
 ## Update, 9 October: case-study pages, 3D diagrams, search position
 
-Asked for after the first review (the changes are listed in the pull request and in the revision note at the end of [`../DESIGN_PLAN.md`](../DESIGN_PLAN.md)). This section holds the measurements. Same limits as above: local only, software WebGL only.
+Asked for after the first review (the changes are listed in the pull request and in the revision note at the end of [`../DESIGN_PLAN.md`](../DESIGN_PLAN.md)). This section holds the measurements. Same limits as above: local only, software WebGL only. (The "ingestion pipelines" page measured here was split into two pages later the same day, and the numbers below are from before that; the second update, after this one, has the current ones.)
 
 **Cost.** Main JavaScript 281.4 to 284.6 kB (92.0 to 93.0 kB gzip), CSS 21.2 to 23.8 kB (5.3 to 5.8 kB gzip). three.js and the scene are one chunk, `Flow3D-*.js`: 608.8 kB, 156.3 kB gzip, 128.8 kB brotli. It is requested only on a case-study page, when the diagram is within 400 px of the viewport and the browser is idle, and never on the home page. One more runtime dependency (`three`) and one more dev dependency (`@types/three`); `package-lock.json` and `bun.lockb` were both regenerated, and `bun install --frozen-lockfile` passes.
 
@@ -121,14 +121,51 @@ A first version also loaded the chunk 400 px ahead of the diagram on phones. Wit
 
 **What I could not test:** a real GPU, a real phone (frame rate, heat and battery under the 3D view), and the Vercel preview, which is also the first build with the new dependency.
 
+## Update, 9 October (second): the ingestion split and your account of the work
+
+Asked for after you corrected the ingestion case study (the changes are in the pull request and in the second revision note at the end of [`../DESIGN_PLAN.md`](../DESIGN_PLAN.md); every claim is traced in [`../SOURCES.md`](../SOURCES.md)). Same limits as above: local only, software WebGL only.
+
+**What changed on the site.** Six case studies instead of five: master-data ingestion and bulk store upload replace "ingestion pipelines". Report search, the RAG chatbot, the WhatsApp agent and GmailSage are rewritten with your account. Two new diagrams and new nodes on three old ones. The experience bullets and the hero line say "reworked" where your senior engineers wrote the first version.
+
+**Cost.** Main JavaScript 284.6 to 290.7 kB (93.0 to 95.1 kB gzip): the longer project summaries and the new diagram data. CSS is unchanged (23.9 kB, 5.8 kB gzip). The 3D chunk is unchanged (608.9 kB, 156.8 kB gzip). The case-study text is its own 34.7 kB chunk that loads on a case-study page.
+
+**Lighthouse, median of 3** (same local server and method as above):
+
+| Page | Form | Perf | A11y | BP | SEO | FCP | LCP | TBT | CLS | Transfer |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Home | Mobile | 99 | 100 | 100 | 100 | 1.40 s | 1.72 s | 78 ms | 0 | 134 kB |
+| Home | Desktop | 100 | 100 | 100 | 100 | 0.33 s | 0.38 s | 0 ms | 0 | 134 kB |
+| Master-data ingestion, flat diagram | Mobile | 99 | 100 | 100 | 100 | 1.45 s | 2.00 s | 0 ms | 0 | 149 kB |
+| Master-data ingestion, flat diagram | Desktop | 100 | 100 | 100 | 100 | 0.35 s | 0.45 s | 0 ms | 0 | 149 kB |
+| GmailSage, flat diagram | Mobile | 99 | 100 | 100 | 100 | 1.45 s | 2.00 s | 0 ms | 0 | 149 kB |
+| GmailSage, flat diagram | Desktop | 100 | 100 | 100 | 100 | 0.35 s | 0.45 s | 0 ms | 0 | 149 kB |
+| GmailSage, software WebGL on | Mobile | 99 | 100 | 100 | 100 | 1.45 s | 2.00 s | 0 ms | 0 | 149 kB |
+| GmailSage, software WebGL on (the 3D chunk loads) | Desktop | 95 | 100 | 100 | 100 | 0.35 s | 0.46 s | 188 ms | 0 | 293 kB |
+
+Two readings to be careful with. The home page's three mobile runs were 330, 78 and 27 ms of blocking time; the first ran while the machine's benchmark index read 2017 against about 3000 for every other run, so the median (78 ms) is the figure, and the spread is the machine. The last row is higher than the 80 ms I measured earlier the same day (runs of 76, 80 and 129 ms). To find out whether the change did it, I built the previous commit next to this one and alternated three runs of each on the same machine: the previous commit gave 228, 189 and 125 ms (median 189) and this one 139, 203 and 113 ms (median 139). The scene code is unchanged, so I read the difference as the machine, not the change. The software renderer's cost varies a lot from hour to hour, and I still could not test a real GPU.
+
+**Accessibility**
+- **axe-core: 0 violations** in 76 runs: the home page and the six case studies, each case study in three states (3D, 3D with a step selected, flat with a step selected), light and dark, at 1440 and 390 px. The only "needs review" item is colour contrast of text over SVG or WebGL, which is measured next.
+- **Rendered contrast of the 3D labels:** 370 labels (six case studies, both themes, both widths); the worst tenth of the pixels behind any label is 4.56:1, against a threshold of 4.5:1. One label failed on the way: "LLM answer" in the phone layout of the RAG diagram, in the dark theme, measured 3.78:1 once the layout had grown a node. The label stands above its node and ran over the front of the node above it, so that node got 16 more units of room, and it passes.
+- **Keyboard:** the RAG chatbot page, the longest tab order checked, has 30 tab stops in reading order and every one shows a ring; the canvas is not a tab stop.
+- No horizontal scroll on any page at 1440 or 390 px.
+
+**Behaviour checks** (all pass): the fallbacks, each with a clean console (no WebGL, a lost context, reduced motion, a chunk that fails to load); 12 case-study visits in a row and four "Next case study" hops in one tab, each with a settled scene and one canvas afterwards; the wheel scrolls the page over the diagram; the "Approach" link lands below the sticky strip and moves focus; "Back to work" lands on the Work section. Search finds the new content (a "4,000-store" blocker, `timeout`, `List-Unsubscribe`, `webhook`). The build-time checks pass for all twelve diagram layouts and every walkthrough step. Link check: 75 links, 5 unverifiable (the social profiles, as before), 0 problems; the sitemap lists the home page and the six case studies and no longer lists `ingestion-pipelines`.
+
+**What I could not test:** a real GPU, a real phone, and the Vercel preview (unchanged from above).
+
 ## Open items for Sahil
 
 1. **Resume PDF.** `public/Sahil-A-Gowda-Resume.pdf` is the file you sent. It still says "B.E. ... (Expected)" and "AWS Certified Cloud Practitioner (2024)", and it contains your phone number (+91-9945886311), so publishing the PDF publishes the number. Send a corrected PDF, or tell me to edit it.
 2. **Facts I could not confirm.** PUC 89%, SSLC 97% and the school names and years (from the old site); the Google Drive certificate link; LeetCode, HackerRank and CodeChef figures (the site shows links only, because those pages were unreachable). LinkedIn, LeetCode, HackerRank, CodeChef and Drive could not be checked from here.
-3. **The DIATOZ case studies hold only what the resume and your Facts say.** Each page now has places for "How I approached it" and "Blockers and how I got past them", but only these are filled: ingestion pipelines (one blocker, the heap), report search (two: the production timeout, then the audit mechanism), and nothing for the RAG chatbot and the WhatsApp agent, so that section is left out instead of padded. Send three to five lines per project in your words, inside the confidentiality line (what was hardest, what you tried that did not work, why you chose one thing over another) and they go into `src/data/caseStudies.ts`; I can write them in. Please also check that the RAG and WhatsApp diagrams and steps show the standard order, not necessarily yours, and the Excel line: the site says "streaming with Apache POI SXSSF" (the resume says "streaming read"; SXSSF is POI's streaming writer).
+3. **What the DIATOZ case studies still lack.** Your message of 9 October filled in master-data ingestion, bulk store upload, report search, the RAG chatbot and the WhatsApp agent. Still missing, one line each is enough: a measured figure for the reworked master-data flow (the page has only the 16 hours per million it started from, so it prints no "after"); the root cause of the stuck stopping state, which you said you found; blockers for the RAG chatbot (that section is left out) and for the WhatsApp agent beyond the duplicate-message check. Please also check that the RAG and WhatsApp diagrams and steps show the standard order, not necessarily yours.
 4. **GmailSage's README disagrees with its code.** The README says 12 categories, "80% hit", 16 newsletter domains and a digest of `high` mail only. The code has 13 categories, 13 newsletter domains and a digest of high plus non-"other" medium mail, and nothing measures the 80%. The site follows the code. On 9 October I also corrected five statements on the GmailSage page that the code did not support (they are listed in `SOURCES.md`); for example "every action can be undone" now reads "archiving can be undone".
 5. **Lockfiles.** I kept both and regenerated both for the new `three` dependency. Tell me which one Vercel should use and I will remove the other.
 6. **Checks on the Vercel preview.** I could not open it. Please try `/projects/gmailsage` directly, `/resume.html` and the old PDF URL (both redirect to the new PDF), and read the build log's "Installing dependencies" line. Preview deployments send `noindex`, so Lighthouse SEO on a preview URL flags "blocked from indexing"; production will not.
 7. **A client name.** The experience bullet names the client because the resume does; the case-study pages do not. Remove it in `src/data/experience.ts` if you would rather not.
 8. **After the merge:** refresh the LinkedIn preview with LinkedIn Post Inspector (LinkedIn caches link previews), and check whether the Lovable project is still connected to this repository, since a connected project can push over `main`.
 9. **The 3D view on a real phone.** I could only test it with software WebGL. Open a case study on your phone and check that the diagram turns smoothly and the page still scrolls past it. If it stutters, tell me and I will start phones on the flat diagram (it is a one-line change in `FlowDiagram.tsx`).
+10. **Where the site now differs from your resume PDF.** (a) "Reworked" instead of "Built" for the master-data ingestion and Excel bullets, because your senior engineers wrote the first versions. (b) The Excel heap fix is described as a validation-flow rework. The resume says "streaming with SXSSF"; SXSSF is POI's streaming writer, and the walkthrough you pasted has the upload parsed with an in-memory workbook and SXSSF only in the report exports. (c) The RAG chatbot is called a proof of concept, and its bullet mentions service APIs for tickets. (d) The report bullet says 7+ report APIs, each with a PDF and Excel download. Update the resume, or tell me which side is right and I will change the site.
+11. **The latency figure.** Your message says reads fell from 4 to 5 seconds to 200 to 400 ms; the resume says 1 s to 400 ms (60%). The site keeps the resume's figure everywhere and says only that multi-filter queries were slow before.
+12. **Multi-tenant.** The walkthrough says the WhatsApp agent's logic is single-tenant with a tenant-ready schema; the resume and the Facts say multi-tenant. The site follows the resume in three places (the project title, the experience bullet and the diagram label). If the walkthrough is right, say so and I will change them.
+13. **Figures and detail from your message that go beyond the resume.** Around 16 hours per million records, 4,000 stores and 7+ reports, plus mechanism-level detail (partitioned workers, a multi-row insert-or-update, validate once and save in the background, a signature and duplicate check). Left out on purpose: the client's name, class, endpoint and table names, the CSV's columns, and configuration values such as chunk sizes and thread counts. Tell me if any figure or mechanism should come out; each is one line.
