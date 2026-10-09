@@ -30,7 +30,7 @@ Rule from the brief: every title, date, number and claim traces to `resume-lates
 | Home hero and meta description: one RAG chatbot and one WhatsApp agent, both proofs of concept | Your accounts: one RAG chatbot and one WhatsApp agent, both proofs of concept. The first version said "RAG chatbots", which your accounts do not support |
 | Lexi, MuleSoft | Resume bullets; you said at Checkpoint A that what is on the resume can be mentioned. The client's name is no longer on the site or on the resume, at your request (second message); earlier commits on this branch still contain it |
 | Voice-agent bug fix and human transfer | Resume |
-| Valtren, AEGIS, Samsung Prism, Avarista Nexus | Not on the site, as you asked |
+| The in-progress company project you asked me to leave out, AEGIS, Samsung Prism, Avarista Nexus | Not on the site, as you asked |
 | B.E., Cambridge Institute of Technology North Campus, CGPA 9.25 / 10, coursework | Resume |
 | "Graduated May 2026" | Your answer at Checkpoint A. The updated resume no longer says "(Expected)" |
 | PUC 89%, SSLC 97%, school names and years | The previous site. Not on the resume. **check** |
