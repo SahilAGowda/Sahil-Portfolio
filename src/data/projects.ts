@@ -1,5 +1,5 @@
-// Sources: resume-latest.pdf, the Facts in the v2 brief, and the READMEs of the public repos linked below.
-// DIATOZ entries are employer work described at resume level: no code links.
+// Sources: resume-latest.pdf, the Facts in the v2 brief, the owner's account of the DIATOZ work (9 October 2026),
+// and the READMEs of the public repos linked below. DIATOZ entries are employer work described in general terms: no code links.
 
 export interface Project {
   /** Used by the /projects/:slug case-study route. */
@@ -19,12 +19,21 @@ export interface Project {
 // Display order.
 export const projects: Project[] = [
   {
-    slug: "ingestion-pipelines",
-    title: "Ingestion pipelines at 273 million records",
+    slug: "master-data-ingestion",
+    title: "Master-data ingestion at 273 million records",
     origin: "DIATOZ",
     summary:
-      "A Spring Batch pipeline ingests about 273 million records with multithreaded workers and JDBC batch inserts. A second pipeline validates Excel workbooks against 14+ rules and streams them with SXSSF instead of loading whole files into memory.",
-    stack: ["Java", "Spring Batch", "JDBC", "Apache POI"],
+      "A Spring Batch flow loads CSV files of device records into master data. The first version inserted one record at a time and needed around 16 hours per million. I reworked it with parallel workers and batch writes for a data set of about 273 million records, and fixed jobs that got stuck in a stopping state.",
+    stack: ["Java", "Spring Batch", "JDBC", "PostgreSQL", "Elasticsearch"],
+    caseStudy: true,
+  },
+  {
+    slug: "bulk-store-upload",
+    title: "Bulk store upload from Excel",
+    origin: "DIATOZ",
+    summary:
+      "Users create stores by uploading an Excel file. Loading the whole workbook into memory hung the application on a 4,000-store upload, and adding production space did not help. I reworked the validation flow to validate once and save in the background, and up to 4,000 stores now go in with one upload.",
+    stack: ["Java", "Spring Boot", "Apache POI", "JDBC"],
     caseStudy: true,
   },
   {
@@ -32,8 +41,8 @@ export const projects: Project[] = [
     title: "Report search on Elasticsearch",
     origin: "DIATOZ",
     summary:
-      "Report APIs serve multi-filter analytics over millions of records. Elasticsearch indexing cut query latency from 1 s to 400 ms while PostgreSQL stays the source of truth; updates run asynchronously and an audit mechanism checks that the two stay consistent.",
-    stack: ["Spring Boot", "Elasticsearch", "PostgreSQL"],
+      "7+ report APIs serve multi-filter analytics over millions of records, each with a PDF and Excel download. Moving report reads to Elasticsearch cut query latency from 1 s to 400 ms while PostgreSQL stays the source of truth; updates run asynchronously and an audit mechanism checks that the two stay consistent.",
+    stack: ["Spring Boot", "Elasticsearch", "PostgreSQL", "Apache POI"],
     caseStudy: true,
   },
   {
@@ -41,7 +50,7 @@ export const projects: Project[] = [
     title: "RAG chatbot over ingested documents",
     origin: "DIATOZ",
     summary:
-      "Automated Q&A over ingested documents with LangChain and LangGraph. I evaluated Milvus and Pinecone and implemented reranking, multi-representation indexing, query structuring and logical routing.",
+      "A proof-of-concept chatbot on LangChain and LangGraph. It answers from ingested documents and sends other questions, such as creating or checking a ticket, to service APIs. I evaluated Milvus and Pinecone and implemented reranking, multi-representation indexing, query structuring and logical routing.",
     stack: ["LangChain", "LangGraph", "Milvus", "Pinecone"],
     caseStudy: true,
   },
@@ -50,8 +59,8 @@ export const projects: Project[] = [
     title: "Multi-tenant WhatsApp agent",
     origin: "DIATOZ",
     summary:
-      "A WhatsApp automation agent on Meta's Cloud API that serves several tenants. Parts lookup uses LLM-as-selector RAG, slot-filling is deterministic, PDFs are delivered in chat, and Nginx fronts the webhook callbacks.",
-    stack: ["Meta WhatsApp Cloud API", "RAG", "Nginx"],
+      "A WhatsApp agent on Meta's Cloud API that serves several tenants. Parts lookup is LLM-as-selector RAG over an Elasticsearch shortlist, slot-filling and service booking are deterministic, PDFs are delivered in chat, and Nginx fronts the webhook callbacks.",
+    stack: ["Meta WhatsApp Cloud API", "RAG", "Elasticsearch", "Nginx"],
     caseStudy: true,
   },
   {
@@ -84,7 +93,7 @@ export const projects: Project[] = [
 ];
 
 const originLabel: Record<NonNullable<Project["origin"]>, string> = {
-  DIATOZ: "Built at DIATOZ",
+  DIATOZ: "Work at DIATOZ",
   Personal: "Personal project",
 };
 
