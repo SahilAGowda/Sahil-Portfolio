@@ -7,14 +7,14 @@ internal	/#skills	Skills	/ /projects/master-data-ingestion /projects/bulk-store-
 internal	/#credentials	Credentials	/ /projects/master-data-ingestion /projects/bulk-store-upload /projects/report-search /projects/rag-chatbot /projects/whatsapp-agent /projects/gmailsage	200, target exists
 internal	/#contact	Contact	/ /projects/master-data-ingestion /projects/bulk-store-upload /projects/report-search /projects/rag-chatbot /projects/whatsapp-agent /projects/gmailsage	200, target exists
 internal	/projects/master-data-ingestion	273 million records / Master-data ingestion at 273 million rec / Read the full case study for Master-data	/	200
-internal	/projects/report-search	from 1 s to 400 ms / Report search on Elasticsearch / Read the full case study for Report sear / Next case study: Report search on Elasti	/ /projects/bulk-store-upload	200
+internal	/projects/report-search	from 4–5 s to 400 ms / Report search on Elasticsearch / Read the full case study for Report sear / Next case study: Report search on Elasti	/ /projects/bulk-store-upload	200
 mailto	mailto:sahilgowda204@gmail.com	Email me	/	ok (not fetched)
 internal	/Sahil-A-Gowda-Resume.pdf	Open resume (opens in a new tab)	/	200
 external	https://www.linkedin.com/in/sahil-a-gowda-551b32270/	LinkedIn (opens in a new tab)	/	unverifiable: ENOTFOUND
 external	https://github.com/SahilAGowda	GitHub (opens in a new tab) / Open GitHub profile (opens in a new tab)	/	200
 internal	/projects/bulk-store-upload	Bulk store upload from Excel / Read the full case study for Bulk store  / Next case study: Bulk store upload from 	/ /projects/master-data-ingestion	200
 internal	/projects/rag-chatbot	RAG chatbot over ingested documents / Read the full case study for RAG chatbot / Next case study: RAG chatbot over ingest	/ /projects/report-search	200
-internal	/projects/whatsapp-agent	Multi-tenant WhatsApp agent / Read the full case study for Multi-tenan / Next case study: Multi-tenant WhatsApp a	/ /projects/rag-chatbot	200
+internal	/projects/whatsapp-agent	WhatsApp agent on Meta's Cloud API / Read the full case study for WhatsApp ag / Next case study: WhatsApp agent on Meta'	/ /projects/rag-chatbot	200
 internal	/projects/gmailsage	GmailSage / Read the full case study for GmailSage / Next case study: GmailSage	/ /projects/whatsapp-agent	200
 external	https://github.com/SahilAGowda/GmailSage	Open repository (opens in a new tab)	/ /projects/gmailsage	200
 external	https://github.com/SahilAGowda/Meet-Transcriber-Extension	Open repository (opens in a new tab)	/	200

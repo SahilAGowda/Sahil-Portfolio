@@ -75,7 +75,7 @@ Hero, 1024 px and wider:
 |  |                 |  systems. I built a Spring Batch pipeline that      |
 |  o Skills          |  ingests about 273 million records and an           |
 |  |                 |  Elasticsearch read path that cut report queries    |
-|  o Credentials     |  from 1 s to 400 ms.                                |
+|  o Credentials     |  from 4-5 s to 400 ms.                              |
 |  |                 |                                                     |
 |  o Contact         |  [ Email me ]  [ Open resume ]   LinkedIn   GitHub  |
 |                    |                                                     |
@@ -212,9 +212,9 @@ Hero, 1100 px and wider:
 |  ingests about 273 million             internship). Read the case        |
 |  records and an Elasticsearch          study.                            |
 |  read path that cut report                                               |
-|  queries from 1 s to 400 ms.           1 s to 400 ms                     |
+|  queries from 4-5 s to 400 ms.         4-5 s to 400 ms                   |
 |                                        Report-query latency after        |
-|  Email me     Open resume              Elasticsearch indexing (60%).     |
+|  Email me     Open resume              Elasticsearch indexing.           |
 +--------------------------------------------------------------------------+
 ```
 
@@ -228,9 +228,9 @@ A project entry (no card):
 |  Report APIs serve multi-filter        Spring Boot, Elasticsearch,       |
 |  analytics over millions of            PostgreSQL                        |
 |  records. Elasticsearch indexing                                         |
-|  cut query latency from 1 s to         400 ms                            |
+|  cut query latency from 4-5 s to       400 ms                            |
 |  400 ms while PostgreSQL stays         Query latency after indexing,     |
-|  the source of truth.                  down from 1 s (60%).              |
+|  the source of truth.                  down from 4-5 s.                  |
 |                                                                          |
 |  Read case study                                                         |
 |                                                                          |
@@ -257,8 +257,8 @@ Case-study page:
 |  Figure 1. Reads and writes take different paths.                        |
 |                                                                          |
 |  Decisions                                  Receipt                      |
-|  Paragraphs with the trade-offs.            1 s to 400 ms: resume,       |
-|                                             DIATOZ internship entry.     |
+|  Paragraphs with the trade-offs.            4-5 s to 400 ms: owner's     |
+|                                             account of the work.         |
 |  Results                                                                 |
 |  Verified numbers only.                                                  |
 +--------------------------------------------------------------------------+
@@ -266,7 +266,7 @@ Case-study page:
 
 ### The one memorable thing
 
-Receipts. Each number (273 million records, 14+ rules, 1 s to 400 ms, 50+ students, CGPA 9.25) is set in the serif's tabular figures at weight 600 and has a margin note naming what it measures and its source: a case study or the resume. It turns "no invented facts" into something a visitor can see.
+Receipts. Each number (273 million records, 14+ rules, 4-5 s to 400 ms, 50+ students, CGPA 9.25) is set in the serif's tabular figures at weight 600 and has a margin note naming what it measures and its source: a case study or the resume. It turns "no invented facts" into something a visitor can see.
 
 ### Deliberately quiet
 
@@ -339,7 +339,7 @@ Hero (all widths):
 |  building Java backends and applied-AI systems. I built a                |
 |  Spring Batch pipeline that ingests about 273 million records            |
 |  and an Elasticsearch read path that cut report queries from             |
-|  1 s to 400 ms.                                                          |
+|  4-5 s to 400 ms.                                                        |
 |                                                                          |
 |  +--------------------------------------------------------------+        |
 |  | Search this site                                          /  |        |
@@ -365,7 +365,7 @@ A project entry while a search is active:
 |  to 400 ms while PostgreSQL stays the source of truth.                   |
 |  Spring Boot, [Elasticsearch], PostgreSQL           Read case study      |
 |                                                                          |
-|  Multi-tenant WhatsApp agent                      Built at DIATOZ        |
+|  WhatsApp agent (proof of concept)                Built at DIATOZ        |
 |  (no match: shown dimmed, still in place, so nothing jumps)              |
 +--------------------------------------------------------------------------+
 ```
@@ -497,5 +497,6 @@ Sahil's reply to the request for "what was hardest" showed that the first case s
 
 - **Master-data ingestion** (the CSV of device records, about 273 million records, the Spring Batch flow) and **Bulk store upload** (the Excel upload that creates stores) each have their own page, diagram and walkthrough. The old `/projects/ingestion-pipelines` page is gone; it was never merged to `main`.
 - **Honest verbs.** The first ingestion flow was written by Sahil's senior engineers, so the pages and the home-page bullets say "reworked", with what was wrong, what was tried and what changed. The RAG chatbot is labelled a proof of concept. The work-row label under each title is "Work at DIATOZ" instead of "Built at DIATOZ".
-- **Where the content came from.** The pages describe mechanisms (partitioned workers, multi-row insert-or-update, validate once and save in the background, a duplicate-message check) and leave out class, endpoint and table names, the CSV's columns, configuration values and the client's name. `SOURCES.md` lists every claim and the three places where Sahil's account and the resume disagree.
+- **Where the content came from.** The pages describe mechanisms (partitioned workers, multi-row insert-or-update, validate once and save in the background, a duplicate-message check) and leave out class, endpoint and table names, the CSV's columns, configuration values and the client's name. `SOURCES.md` lists every claim and how each disagreement between his account and the resume was settled.
 - **Diagrams.** Two new ones, and new nodes on three old ones: a download node on report search, a service-API node on the RAG chatbot, and webhook checks, Elasticsearch and repair status on the WhatsApp agent. Lane captions that stood behind a node in the 3D view are now notes under the diagram.
+- **Corrections the same day.** A second reply from Sahil corrected the report-search approach (the reports read ticket data; the old tickets were backfilled into Elasticsearch, new ones are indexed asynchronously, and nothing is sent asynchronously to the database), replaced the latency figure with 4 to 5 s to 400 ms, added the speed results of the master-data load (a million records in about 1.5 to 2 minutes, from 16 hours), said why Milvus was chosen, and made the WhatsApp agent a single-tenant proof of concept that was not shipped. The client's name is off the site and the resume. The diagram for report search gained an indexing step and lost its "async updates to PostgreSQL" arrow. In the 3D scene the eight ridges of a diamond are now drawn at half the strength of its outline: with the corrected diagrams, the lines under the label of the small phone-layout diamond held its text under 4.5:1. That node is also as wide as its column now.

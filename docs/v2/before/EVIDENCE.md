@@ -83,7 +83,7 @@ Supports [`../AUDIT.md`](../AUDIT.md). Raw data sits next to this file: `capture
 2. Facts: "GDG AI/ML lead". Resume: "Tech Lead, GDSC", mentored 50+ students, no dates.
 3. Education years: the resume says 2022 to 2026 (Expected). The PDF was generated today (2026-10-06), so "Expected" may be stale.
 4. Confidentiality: the resume names a client in the WhatsApp bullet and an internal agent by name. The Facts say never to name clients. The site copy will not repeat them, but a published PDF would.
-5. Usable resume items missing from the Facts: report-query latency 1 s to 400 ms (60%), the UAT-versus-production migration-flag fix, and the Railway Reservation System project.
+5. Usable resume items missing from the Facts: report-query latency 1 s to 400 ms (60%) (the owner later corrected this to 4 to 5 s to 400 ms), the UAT-versus-production migration-flag fix, and the Railway Reservation System project.
 6. The Railway project's `[GitHub]` link goes to the profile root, not a repo. The closest public repo, `Train-Booking-App`, has 8 files (pom and docs, no `src/`) and its README mentions basic authentication, not JWT, RBAC or Hibernate, so the resume bullets cannot be backed with code.
 
 ## Project candidates
