@@ -114,7 +114,7 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         title: "Index outcomes for search",
-        body: "The job and the outcome of each record are also indexed into Elasticsearch, in the background on a thread pool of their own, so jobs and their records can be searched.",
+        body: "The job and the outcome of each record are also indexed into Elasticsearch, in the background on a thread pool of their own. The job index powers the search over jobs.",
       },
     ],
     steps: [
@@ -152,7 +152,7 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         title: "Outcomes are indexed for search",
-        body: "The job and the outcome of each record are indexed into Elasticsearch in the background, so they can be searched.",
+        body: "The job and the outcome of each record are indexed into Elasticsearch in the background. The job index powers the search over jobs.",
         nodes: ["work", "es"],
         edges: [["work", "es"]],
       },
@@ -591,7 +591,7 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         title: "Buttons return ids, not words",
-        body: "A tapped button comes back from Meta as an interactive reply id. The agent matches the id exactly and never tries to match typed text against an option, so a stored answer is always one of the options offered.",
+        body: "A tapped button comes back from Meta as an interactive reply id. The agent matches the id exactly and never tries to match typed text against an option, so the answer stored for a button question is always one of the options offered.",
       },
       {
         title: "The model only selects",
