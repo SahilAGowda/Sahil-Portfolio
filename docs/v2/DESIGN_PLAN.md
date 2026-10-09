@@ -472,9 +472,21 @@ Self-critique after the build, changes made before committing:
 
 ### Search, as built
 
-- A "Search" button sits under the nav in the rail (with a `/` hint) and next to "Menu" on phones. `/` opens it from anywhere except a text field.
+- A "Search" button sits under the nav in the rail (with a `/` hint) and next to "Menu" on phones. `/` opens it from anywhere except a text field. (Moved to the top right on desktop on 9 October, see the revision below.)
 - It is a native `<dialog>` loaded on demand: 2.7 kB gzipped, fetched when the button is hovered, focused or pressed. Focus is trapped, Esc and a click outside close it, and focus returns to the button.
 - Every word of the query has to appear in an entry. The index is built from the same `src/data` modules the pages render, including the case studies, so a result cannot disagree with its page. Results show the section name, a heading and a snippet with the hit marked.
 - Choosing a result goes to the page with `?q=` in the URL. The hits are painted on the page with the CSS Custom Highlight API instead of wrapping text in `<mark>`, so React never fights a changed text node. A browser without the API still gets the jump to the section. A small bar at the bottom says what is highlighted and has "Clear highlights"; Esc does the same.
 - Contrast: highlighted text is forced to the foreground colour, so a hit over a link or muted text still passes AA in both themes.
 - A term that is not on the site gets "No mention of “x” on this site." One letter gets "Type at least two letters."
+
+## Revision, 9 October 2026: case-study pages, live diagrams, search position
+
+Asked for by Sahil after the first review. It changes three rules in this plan, so it is written down here instead of left implicit.
+
+- **Motion.** "Nothing ambient or looping" no longer holds for diagrams.
+  - The five diagrams on the home page send one dot along each arrow, twice, when they scroll into view, and then stop (about five seconds; none under reduced motion).
+  - The diagrams on the case-study pages are a 3D scene in which dots keep travelling along the arrows. A "Pause the flow" button stops them, and while paused no frames are drawn at all. A visitor who asked for reduced motion (or data saving) starts on the flat diagram and can switch; so can anyone else, with "Show the flat diagram".
+- **Depth.** "No shadows" no longer holds inside the 3D scene: nodes have height, a contact shadow and a lit top face. The page around the scene is unchanged. The scene keeps the diagram language (box for a job, cylinder for a store, diamond for a model call, the same three colours) and is drawn from the same data as the flat diagrams, so it adds no component and no arrow.
+- **Search.** The button left the rail for the top right of the page: a strip at 1024 px and wider that stays at the top, has the page's own colour, and moves nothing. Phones keep it in the top bar.
+- **Case studies.** Each row on the home page ends in a "Read the full case study" button (and the title links there too). A case-study page now runs: the diagram with a step-by-step "Follow the data" list, the problem, constraints, how I approached it, blockers and how I got past them, results, stack. A section that has no sourced content is left out instead of padded.
+- **Cost.** three.js (about 157 kB gzipped) sits in its own chunk. It loads only on a case-study page, only when the diagram is within a screen of the viewport, and only once the browser is idle. The home page's JavaScript grew by about 1 kB gzipped.
