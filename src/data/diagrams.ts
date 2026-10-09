@@ -21,6 +21,9 @@ export interface DNode {
 }
 
 export interface DEdge {
+  /** Ids of the nodes the edge connects, so a walkthrough step and the 3D view can address it. */
+  from: string;
+  to: string;
   /** Polyline in diagram coordinates. The arrowhead is at the last point. */
   points: [number, number][];
   label?: string;
@@ -89,11 +92,11 @@ export const diagrams: Record<string, DiagramSpec> = {
         node("rules", "flow", "14+ validation\nrules", 440, 148, 150, 52),
       ],
       edges: [
-        { points: [[150, 54], [210, 54]] },
-        { points: [[370, 54], [430, 54]] },
-        { points: [[560, 54], [610, 54]] },
-        { points: [[150, 174], [210, 174]] },
-        { points: [[380, 174], [440, 174]] },
+        { from: "src", to: "batch", points: [[150, 54], [210, 54]] },
+        { from: "batch", to: "jdbc", points: [[370, 54], [430, 54]] },
+        { from: "jdbc", to: "db", points: [[560, 54], [610, 54]] },
+        { from: "xlsx", to: "stream", points: [[150, 174], [210, 174]] },
+        { from: "stream", to: "rules", points: [[380, 174], [440, 174]] },
       ],
     },
     compact: {
@@ -114,11 +117,11 @@ export const diagrams: Record<string, DiagramSpec> = {
         node("rules", "flow", "14+ validation\nrules", 170, 148, 150, 44),
       ],
       edges: [
-        { points: [[75, 64], [75, 86]] },
-        { points: [[75, 126], [75, 148]] },
-        { points: [[75, 188], [75, 210]] },
-        { points: [[245, 64], [245, 86]] },
-        { points: [[245, 126], [245, 148]] },
+        { from: "src", to: "batch", points: [[75, 64], [75, 86]] },
+        { from: "batch", to: "jdbc", points: [[75, 126], [75, 148]] },
+        { from: "jdbc", to: "db", points: [[75, 188], [75, 210]] },
+        { from: "xlsx", to: "stream", points: [[245, 64], [245, 86]] },
+        { from: "stream", to: "rules", points: [[245, 126], [245, 148]] },
       ],
     },
   },
@@ -140,17 +143,19 @@ export const diagrams: Record<string, DiagramSpec> = {
         node("audit", "flow", "Audit check", 580, 95, 140, 52, "verifies consistency"),
       ],
       edges: [
-        { points: [[90, 45], [150, 45]] },
-        { points: [[290, 45], [370, 45]], label: "queries", labelAt: [330, 37], labelAnchor: "middle" },
+        { from: "client", to: "api", points: [[90, 45], [150, 45]] },
+        { from: "api", to: "es", points: [[290, 45], [370, 45]], label: "queries", labelAt: [330, 37], labelAnchor: "middle" },
         {
+          from: "api",
+          to: "pg",
           points: [[220, 71], [220, 195], [370, 195]],
           dashed: true,
           label: "async updates",
           labelAt: [232, 187],
           labelAnchor: "start",
         },
-        { points: [[580, 121], [555, 121], [555, 45], [530, 45]], dashed: true },
-        { points: [[580, 121], [555, 121], [555, 195], [530, 195]], dashed: true },
+        { from: "audit", to: "es", points: [[580, 121], [555, 121], [555, 45], [530, 45]], dashed: true },
+        { from: "audit", to: "pg", points: [[580, 121], [555, 121], [555, 195], [530, 195]], dashed: true },
       ],
     },
     compact: {
@@ -165,22 +170,26 @@ export const diagrams: Record<string, DiagramSpec> = {
         node("audit", "flow", "Audit check", 80, 244, 160, 48, "verifies consistency"),
       ],
       edges: [
-        { points: [[160, 38], [160, 60]] },
+        { from: "client", to: "api", points: [[160, 38], [160, 60]] },
         {
+          from: "api",
+          to: "es",
           points: [[160, 104], [160, 121], [75, 121], [75, 138]],
           label: "queries",
           labelAt: [117, 114],
           labelAnchor: "middle",
         },
         {
+          from: "api",
+          to: "pg",
           points: [[160, 121], [245, 121], [245, 138]],
           dashed: true,
           label: "async updates",
           labelAt: [203, 114],
           labelAnchor: "middle",
         },
-        { points: [[120, 244], [120, 227], [75, 227], [75, 210]], dashed: true },
-        { points: [[200, 244], [200, 227], [245, 227], [245, 210]], dashed: true },
+        { from: "audit", to: "es", points: [[120, 244], [120, 227], [75, 227], [75, 210]], dashed: true },
+        { from: "audit", to: "pg", points: [[200, 244], [200, 227], [245, 227], [245, 210]], dashed: true },
       ],
     },
   },
@@ -210,15 +219,17 @@ export const diagrams: Record<string, DiagramSpec> = {
         node("llm", "model", "LLM\nanswer", 600, 152, 120, 80),
       ],
       edges: [
-        { points: [[110, 54], [150, 54]] },
-        { points: [[270, 54], [310, 54]] },
-        { points: [[486, 54], [510, 54]] },
-        { points: [[84, 192], [108, 192]] },
-        { points: [[208, 192], [232, 192]] },
-        { points: [[322, 192], [346, 192]] },
-        { points: [[436, 192], [460, 192]] },
-        { points: [[560, 192], [600, 192]] },
+        { from: "docs", to: "ingest", points: [[110, 54], [150, 54]] },
+        { from: "ingest", to: "index", points: [[270, 54], [310, 54]] },
+        { from: "index", to: "vdb", points: [[486, 54], [510, 54]] },
+        { from: "q", to: "struct", points: [[84, 192], [108, 192]] },
+        { from: "struct", to: "route", points: [[208, 192], [232, 192]] },
+        { from: "route", to: "retrieve", points: [[322, 192], [346, 192]] },
+        { from: "retrieve", to: "rerank", points: [[436, 192], [460, 192]] },
+        { from: "rerank", to: "llm", points: [[560, 192], [600, 192]] },
         {
+          from: "vdb",
+          to: "retrieve",
           points: [[615, 86], [615, 128], [391, 128], [391, 170]],
           label: "search",
           labelAt: [503, 122],
@@ -247,15 +258,15 @@ export const diagrams: Record<string, DiagramSpec> = {
         node("llm", "model", "LLM\nanswer", 190, 318, 110, 62),
       ],
       edges: [
-        { points: [[75, 60], [75, 82]] },
-        { points: [[75, 124], [75, 146]] },
-        { points: [[75, 188], [75, 210]] },
-        { points: [[245, 60], [245, 82]] },
-        { points: [[245, 118], [245, 142]] },
-        { points: [[245, 178], [245, 202]] },
-        { points: [[245, 238], [245, 262]] },
-        { points: [[245, 298], [245, 318]] },
-        { points: [[150, 236], [160, 236], [160, 220], [170, 220]] },
+        { from: "docs", to: "ingest", points: [[75, 60], [75, 82]] },
+        { from: "ingest", to: "index", points: [[75, 124], [75, 146]] },
+        { from: "index", to: "vdb", points: [[75, 188], [75, 210]] },
+        { from: "q", to: "struct", points: [[245, 60], [245, 82]] },
+        { from: "struct", to: "route", points: [[245, 118], [245, 142]] },
+        { from: "route", to: "retrieve", points: [[245, 178], [245, 202]] },
+        { from: "retrieve", to: "rerank", points: [[245, 238], [245, 262]] },
+        { from: "rerank", to: "llm", points: [[245, 298], [245, 318]] },
+        { from: "vdb", to: "retrieve", points: [[150, 236], [160, 236], [160, 220], [170, 220]] },
       ],
     },
   },
@@ -278,12 +289,12 @@ export const diagrams: Record<string, DiagramSpec> = {
         node("pdf", "flow", "In-chat PDF\ndelivery", 580, 150, 140, 52),
       ],
       edges: [
-        { points: [[120, 46], [160, 46]], bothWays: true },
-        { points: [[300, 46], [340, 46]] },
-        { points: [[500, 46], [540, 46]] },
-        { points: [[630, 72], [630, 100], [225, 100], [225, 150]] },
-        { points: [[630, 100], [440, 100], [440, 126]] },
-        { points: [[630, 100], [650, 100], [650, 150]] },
+        { from: "user", to: "api", points: [[120, 46], [160, 46]], bothWays: true },
+        { from: "api", to: "nginx", points: [[300, 46], [340, 46]] },
+        { from: "nginx", to: "agent", points: [[500, 46], [540, 46]] },
+        { from: "agent", to: "slot", points: [[630, 72], [630, 100], [225, 100], [225, 150]] },
+        { from: "agent", to: "lookup", points: [[630, 100], [440, 100], [440, 126]] },
+        { from: "agent", to: "pdf", points: [[630, 100], [650, 100], [650, 150]] },
       ],
     },
     compact: {
@@ -301,12 +312,12 @@ export const diagrams: Record<string, DiagramSpec> = {
         node("pdf", "flow", "In-chat PDF\ndelivery", 220, 262, 100, 44),
       ],
       edges: [
-        { points: [[160, 38], [160, 60]], bothWays: true },
-        { points: [[160, 102], [160, 124]] },
-        { points: [[160, 168], [160, 190]] },
-        { points: [[160, 232], [160, 248]] },
-        { points: [[160, 240], [50, 240], [50, 262]] },
-        { points: [[160, 240], [270, 240], [270, 262]] },
+        { from: "user", to: "api", points: [[160, 38], [160, 60]], bothWays: true },
+        { from: "api", to: "nginx", points: [[160, 102], [160, 124]] },
+        { from: "nginx", to: "agent", points: [[160, 168], [160, 190]] },
+        { from: "agent", to: "lookup", points: [[160, 232], [160, 248]] },
+        { from: "agent", to: "slot", points: [[160, 240], [50, 240], [50, 262]] },
+        { from: "agent", to: "pdf", points: [[160, 240], [270, 240], [270, 262]] },
       ],
     },
   },
@@ -314,7 +325,7 @@ export const diagrams: Record<string, DiagramSpec> = {
   gmailsage: {
     title: "GmailSage",
     description:
-      "A job runs every 15 minutes and fetches recent inbox mail from Gmail. A SQLite store of processed message IDs lets it skip mail it has already handled. Rules on sender domain and subject classify most mail; on a miss, an LLM classifier on Groq decides among 13 categories. Labels are applied and low-priority mail is archived, never deleted; every action goes into an undo log in the store, and a daily digest email is built from the store.",
+      "A job runs every 15 minutes and fetches recent inbox mail from Gmail. A SQLite store of processed message IDs lets it skip mail it has already handled. Rules on sender domain, subject and the List-Unsubscribe header come first; on a miss, an LLM classifier on Groq decides among 13 categories. Labels are applied and low-priority mail is archived, never deleted. Each handled message is recorded in the store, which the undo command reads, and a daily digest email is built from the store.",
     full: {
       width: 720,
       height: 300,
@@ -329,25 +340,29 @@ export const diagrams: Record<string, DiagramSpec> = {
         node("store", "store", "SQLite store", 419, 236, 170, 62, "processed IDs, undo log"),
       ],
       edges: [
-        { points: [[80, 44], [108, 44]] },
-        { points: [[224, 44], [256, 44]] },
-        { points: [[406, 44], [444, 44]], label: "hit", labelAt: [425, 36], labelAnchor: "middle" },
-        { points: [[331, 70], [331, 122]], label: "miss", labelAt: [341, 100], labelAnchor: "start" },
-        { points: [[421, 170], [470, 170], [470, 70]] },
+        { from: "inbox", to: "triage", points: [[80, 44], [108, 44]] },
+        { from: "triage", to: "rules", points: [[224, 44], [256, 44]] },
+        { from: "rules", to: "actions", points: [[406, 44], [444, 44]], label: "hit", labelAt: [425, 36], labelAnchor: "middle" },
+        { from: "rules", to: "llm", points: [[331, 70], [331, 122]], label: "miss", labelAt: [341, 100], labelAnchor: "start" },
+        { from: "llm", to: "actions", points: [[421, 170], [470, 170], [470, 70]] },
         {
+          from: "actions",
+          to: "store",
           points: [[530, 70], [530, 236]],
-          label: "logs for undo",
+          label: "records each message",
           labelAt: [540, 150],
           labelAnchor: "start",
         },
         {
+          from: "triage",
+          to: "store",
           points: [[166, 70], [166, 265], [419, 265]],
           dashed: true,
           label: "skips processed mail",
           labelAt: [290, 257],
           labelAnchor: "middle",
         },
-        { points: [[589, 267], [661, 267], [661, 70]], dashed: true },
+        { from: "store", to: "digest", points: [[589, 267], [661, 267], [661, 70]], dashed: true },
       ],
     },
     compact: {
@@ -365,13 +380,13 @@ export const diagrams: Record<string, DiagramSpec> = {
         node("digest", "flow", "Daily digest", 180, 400, 140, 44, "8 am email"),
       ],
       edges: [
-        { points: [[70, 38], [70, 60]] },
-        { points: [[70, 104], [70, 126]] },
-        { points: [[140, 148], [180, 148]], label: "hit", labelAt: [160, 140], labelAnchor: "middle" },
-        { points: [[70, 170], [70, 206]], label: "miss", labelAt: [80, 192], labelAnchor: "start" },
-        { points: [[140, 248], [225, 248], [225, 170]] },
-        { points: [[285, 170], [285, 300]] },
-        { points: [[250, 372], [250, 400]], dashed: true },
+        { from: "inbox", to: "triage", points: [[70, 38], [70, 60]] },
+        { from: "triage", to: "rules", points: [[70, 104], [70, 126]] },
+        { from: "rules", to: "actions", points: [[140, 148], [180, 148]], label: "hit", labelAt: [160, 140], labelAnchor: "middle" },
+        { from: "rules", to: "llm", points: [[70, 170], [70, 206]], label: "miss", labelAt: [80, 192], labelAnchor: "start" },
+        { from: "llm", to: "actions", points: [[140, 248], [225, 248], [225, 170]] },
+        { from: "actions", to: "store", points: [[285, 170], [285, 300]] },
+        { from: "store", to: "digest", points: [[250, 372], [250, 400]], dashed: true },
       ],
     },
   },
@@ -379,4 +394,36 @@ export const diagrams: Record<string, DiagramSpec> = {
 
 export function hasDiagram(slug: string): boolean {
   return slug in diagrams;
+}
+
+/** What a walkthrough step puts in focus: node ids, and edges as [from, to] pairs. */
+export interface DiagramFocus {
+  nodes: string[];
+  edges?: [string, string][];
+}
+
+/** True when the edge is one of the pairs. */
+export function edgeInFocus(edge: DEdge, focus: DiagramFocus | null | undefined): boolean {
+  return !!focus?.edges?.some(([from, to]) => from === edge.from && to === edge.to);
+}
+
+/**
+ * Build-time check, run from vite.config.ts: every edge names nodes that exist in its layout, and the full and
+ * compact layouts draw the same nodes, so a walkthrough step can address either one.
+ */
+export function checkDiagrams(): void {
+  for (const [slug, spec] of Object.entries(diagrams)) {
+    const ids = (layout: DiagramLayout) => layout.nodes.map((n) => n.id).sort();
+    if (ids(spec.full).join() !== ids(spec.compact).join()) {
+      throw new Error(`Diagram "${slug}": the full and compact layouts have different nodes`);
+    }
+    for (const name of ["full", "compact"] as const) {
+      const known = new Set(spec[name].nodes.map((n) => n.id));
+      for (const edge of spec[name].edges) {
+        if (!known.has(edge.from) || !known.has(edge.to)) {
+          throw new Error(`Diagram "${slug}" (${name}): edge ${edge.from} to ${edge.to} names an unknown node`);
+        }
+      }
+    }
+  }
 }

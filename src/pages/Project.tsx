@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ResponsiveProjectDiagram } from "@/components/diagrams/ProjectDiagram";
+import { FlowDiagram } from "@/components/diagrams/FlowDiagram";
 import { ExternalLink } from "@/components/site/ExternalLink";
 import { Rich } from "@/components/site/Rich";
 import { caseStudyMeta, employerNote, getCaseStudy, type CaseStudy } from "@/data/caseStudies";
@@ -11,7 +11,7 @@ import NotFound from "./NotFound";
 
 function Block({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return (
-    <section id={id} tabIndex={-1} aria-labelledby={`${id}-title`} className="mt-14 scroll-mt-20 outline-none lg:scroll-mt-10">
+    <section id={id} tabIndex={-1} aria-labelledby={`${id}-title`} className="mt-14 scroll-mt-20 outline-none">
       <h2 id={`${id}-title`} className="text-h2-sm font-semibold">
         {title}
       </h2>
@@ -26,6 +26,16 @@ function CaseStudyPage({ project, study }: { project: Project; study: CaseStudy 
   const index = caseStudyProjects.findIndex((entry) => entry.slug === project.slug);
   const next = caseStudyProjects[index + 1];
   const meta = projectMeta(project);
+
+  // The in-page links, in page order, for the sections this case study has.
+  const sections = [
+    hasDiagram(project.slug) && { id: "diagram", label: "How it fits together" },
+    study.problem && { id: "problem", label: "Problem" },
+    study.decisions && { id: "approach", label: "Approach" },
+    study.blockers && { id: "blockers", label: "Blockers" },
+    study.results && { id: "results", label: "Results" },
+    { id: "stack", label: "Stack" },
+  ].filter((section): section is { id: string; label: string } => !!section);
 
   return (
     <article className="enter pt-10 lg:pt-20">
@@ -58,9 +68,32 @@ function CaseStudyPage({ project, study }: { project: Project; study: CaseStudy 
         )}
       </header>
 
+      {study.glance && (
+        <div className="mt-8 border-t border-border pt-6">
+          <dl className="grid max-w-[64ch] gap-x-8 sm:grid-cols-[6rem_1fr] sm:gap-y-3">
+            {study.glance.map((item) => (
+              <div key={item.label} className="mb-3 last:mb-0 sm:contents">
+                <dt className="text-muted-foreground">{item.label}</dt>
+                <dd>
+                  <Rich text={item.value} />
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      )}
+
+      <nav aria-label="On this page" className="mt-6 flex flex-wrap gap-x-6 border-t border-border pt-2">
+        {sections.map((section) => (
+          <Link key={section.id} to={{ hash: `#${section.id}` }} className="link inline-flex min-h-11 items-center">
+            {section.label}
+          </Link>
+        ))}
+      </nav>
+
       {hasDiagram(project.slug) && (
         <Block id="diagram" title="How it fits together">
-          <ResponsiveProjectDiagram slug={project.slug} />
+          <FlowDiagram slug={project.slug} steps={study.steps} />
         </Block>
       )}
 
@@ -89,7 +122,7 @@ function CaseStudyPage({ project, study }: { project: Project; study: CaseStudy 
       )}
 
       {study.decisions && (
-        <Block id="decisions" title="Decisions and trade-offs">
+        <Block id="approach" title="How I approached it">
           <ul className="space-y-8">
             {study.decisions.map((decision) => (
               <li key={decision.title}>
@@ -97,6 +130,40 @@ function CaseStudyPage({ project, study }: { project: Project; study: CaseStudy 
                 <p className="mt-1 max-w-[64ch]">
                   <Rich text={decision.body} />
                 </p>
+              </li>
+            ))}
+          </ul>
+        </Block>
+      )}
+
+      {study.blockers && (
+        <Block id="blockers" title="Blockers and how I got past them">
+          <ul className="space-y-10">
+            {study.blockers.map((blocker) => (
+              <li key={blocker.title}>
+                <h3 className="text-lede font-semibold">{blocker.title}</h3>
+                <dl className="mt-3 max-w-[64ch] space-y-3">
+                  <div>
+                    <dt className="text-caption font-semibold text-muted-foreground">What went wrong</dt>
+                    <dd>
+                      <Rich text={blocker.problem} />
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="text-caption font-semibold text-muted-foreground">What I did</dt>
+                    <dd>
+                      <Rich text={blocker.fix} />
+                    </dd>
+                  </div>
+                  {blocker.result && (
+                    <div>
+                      <dt className="text-caption font-semibold text-muted-foreground">What changed</dt>
+                      <dd>
+                        <Rich text={blocker.result} />
+                      </dd>
+                    </div>
+                  )}
+                </dl>
               </li>
             ))}
           </ul>

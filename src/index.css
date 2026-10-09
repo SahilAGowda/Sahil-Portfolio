@@ -143,7 +143,8 @@
 
   code {
     @apply font-mono;
-    overflow-wrap: anywhere;
+    /* Break at spaces first, and inside a word only when the word alone is too wide. "anywhere" split "--undo" in two. */
+    overflow-wrap: break-word;
     font-size: 0.9em;
     background: hsl(var(--muted));
     border-radius: 3px;
@@ -160,6 +161,56 @@
   /* The single entrance: a 400 ms, 8 px settle. Nothing is hidden while it runs, so the text is readable (and counts as painted) from the first frame. */
   .enter {
     animation: enter 400ms ease-out both;
+  }
+
+  /* Labels in the 3D diagram: real text pinned to 3D points, so it stays sharp, in the site font, and follows the theme. */
+  .flow3d-label {
+    pointer-events: none;
+    user-select: none;
+    white-space: pre-line;
+    text-align: center;
+    line-height: 1.25;
+    color: hsl(var(--foreground));
+    text-shadow: 0 0 3px hsl(var(--background)), 0 0 3px hsl(var(--background)), 0 0 7px hsl(var(--background));
+  }
+  /* Node labels sit on the node's own face, so they need no halo. */
+  .flow3d-node {
+    text-shadow: none;
+  }
+  .flow3d-node-title {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  /* A node's second line is the full text colour, not the muted one: over the tinted faces the muted grey measured about 3:1. */
+  .flow3d-node-sub {
+    font-size: 0.6875rem;
+  }
+  .flow3d-edge,
+  .flow3d-caption {
+    font-size: 0.6875rem;
+    color: hsl(var(--muted-foreground));
+  }
+  .flow3d-node-sub {
+    display: block;
+  }
+  .flow3d-edge,
+  .flow3d-caption {
+    white-space: nowrap;
+    border-radius: 3px;
+    padding: 0 3px;
+    background: hsl(var(--muted) / 0.82);
+    text-shadow: none;
+  }
+  @media (min-width: 640px) {
+    .flow3d-node-title {
+      font-size: 0.8125rem;
+    }
+    .flow3d-node-sub,
+    .flow3d-edge,
+    .flow3d-caption {
+      font-size: 0.75rem;
+    }
   }
 }
 

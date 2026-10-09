@@ -1,5 +1,6 @@
-import { useId } from "react";
-import type { DEdge, DNode, DiagramLayout, NodeKind } from "@/data/diagrams";
+import { useEffect, useId, useRef } from "react";
+import { useReducedMotion } from "@/hooks/useMediaQuery";
+import { edgeInFocus, type DEdge, type DNode, type DiagramFocus, type DiagramLayout, type NodeKind } from "@/data/diagrams";
 
 const palette: Record<NodeKind, { stroke: string; fill: string }> = {
   flow: { stroke: "hsl(var(--flow))", fill: "hsl(var(--flow) / 0.1)" },
@@ -75,11 +76,15 @@ function NodeText({ node, size }: { node: DNode; size: number }) {
   );
 }
 
-function Edge({ edge, markerId, size }: { edge: DEdge; markerId: string; size: number }) {
+/** What a part of the diagram looks like while a walkthrough step is selected and it is not part of that step. */
+const DIMMED = 0.22;
+const fade = { transition: "opacity 200ms" };
+
+function Edge({ edge, markerId, size, dim }: { edge: DEdge; markerId: string; size: number; dim: boolean }) {
   const d = edge.points.map(([px, py], i) => `${i === 0 ? "M" : "L"} ${px} ${py}`).join(" ");
   const [lx, ly] = edge.labelAt ?? edge.points[0];
   return (
-    <g>
+    <g style={{ ...fade, opacity: dim ? DIMMED : 1 }}>
       <path
         d={d}
         fill="none"
@@ -108,21 +113,71 @@ function Edge({ edge, markerId, size }: { edge: DEdge; markerId: string; size: n
   );
 }
 
+/** How fast a dot travels along an arrow, in diagram units per second. */
+const DOT_SPEED = 90;
+const DOT_PASSES = 2;
+
+function polylineLength(points: [number, number][]): number {
+  return points.slice(1).reduce((sum, [x, y], i) => sum + Math.hypot(x - points[i][0], y - points[i][1]), 0);
+}
+
+/**
+ * A dot that runs along an arrow a couple of times. It starts on request (the diagram scrolls into view), so it
+ * never runs unseen, and it ends on its own: nothing keeps moving after about five seconds.
+ */
+function FlowDot({ edge }: { edge: DEdge }) {
+  const d = edge.points.map(([px, py], i) => `${i === 0 ? "M" : "L"} ${px} ${py}`).join(" ");
+  const dur = `${Math.max(0.9, polylineLength(edge.points) / DOT_SPEED).toFixed(2)}s`;
+  return (
+    <circle r={3.2} opacity={0} data-flow-dot style={{ fill: "hsl(var(--primary))" }}>
+      <animateMotion path={d} dur={dur} repeatCount={DOT_PASSES} begin="indefinite" />
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.12;0.88;1" dur={dur} repeatCount={DOT_PASSES} begin="indefinite" />
+    </circle>
+  );
+}
+
 interface DiagramProps {
   layout: DiagramLayout;
   title: string;
   description: string;
   className?: string;
+  /** While set, everything outside it is dimmed. Used by the walkthrough on case-study pages. */
+  focus?: DiagramFocus | null;
+  /** Send a dot along each arrow, twice, when the diagram first scrolls into view. Skipped under reduced motion. */
+  flow?: boolean;
 }
 
 /** Renders one diagram layout as inline SVG. Colours come from CSS variables, so both themes work. */
-export function Diagram({ layout, title, description, className }: DiagramProps) {
+export function Diagram({ layout, title, description, className, focus, flow }: DiagramProps) {
   const id = useId().replace(/:/g, "");
+  const svgRef = useRef<SVGSVGElement>(null);
+  const reduced = useReducedMotion();
+  const showFlow = !!flow && !reduced;
+
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!showFlow || !svg || typeof IntersectionObserver === "undefined") return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        observer.disconnect();
+        // Stagger the arrows, so the flow reads as one thing moving through, not everything at once.
+        svg.querySelectorAll("[data-flow-dot]").forEach((dot, index) => {
+          dot.querySelectorAll<SVGAnimationElement>("animateMotion, animate").forEach((animation) => animation.beginElementAt(index * 0.25));
+        });
+      },
+      { threshold: 0.6 },
+    );
+    observer.observe(svg);
+    return () => observer.disconnect();
+  }, [showFlow, layout]);
   const markerId = `${id}-arrow`;
   const { width, height, fontSize, nodes, edges, texts } = layout;
+  const focusNodes = focus ? new Set(focus.nodes) : null;
 
   return (
     <svg
+      ref={svgRef}
       viewBox={`-1 -1 ${width + 2} ${height + 2}`}
       role="img"
       aria-labelledby={`${id}-title ${id}-desc`}
@@ -156,14 +211,15 @@ export function Diagram({ layout, title, description, className }: DiagramProps)
         </text>
       ))}
       {edges.map((edge, i) => (
-        <Edge key={i} edge={edge} markerId={markerId} size={fontSize} />
+        <Edge key={i} edge={edge} markerId={markerId} size={fontSize} dim={!!focus && !edgeInFocus(edge, focus)} />
       ))}
       {nodes.map((n) => (
-        <g key={n.id}>
+        <g key={n.id} style={{ ...fade, opacity: focusNodes && !focusNodes.has(n.id) ? DIMMED : 1 }}>
           <Shape node={n} />
           <NodeText node={n} size={fontSize} />
         </g>
       ))}
+      {showFlow && edges.map((edge, i) => <FlowDot key={`dot${i}`} edge={edge} />)}
     </svg>
   );
 }

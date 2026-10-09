@@ -6,7 +6,7 @@ interface QuietBoundaryProps {
   onError: () => void;
 }
 
-/** Keeps a failure in an optional feature (the search dialog) from taking the whole page down. */
+/** Keeps a failure in an optional feature (the search dialog, the 3D diagram) from taking the whole page down. */
 export class QuietBoundary extends Component<QuietBoundaryProps, { failed: boolean }> {
   state = { failed: false };
 

@@ -68,7 +68,12 @@ function buildIndex(): SearchEntry[] {
     for (const paragraph of study.problem ?? []) add({ where, title: "Problem", text: paragraph, path, hash: "problem", weight: 3 });
     for (const item of study.constraints ?? []) add({ where, title: "Constraints", text: item, path, hash: "constraints", weight: 3 });
     for (const decision of study.decisions ?? []) {
-      add({ where, title: decision.title, text: decision.body, path, hash: "decisions", weight: 3 });
+      add({ where, title: decision.title, text: decision.body, path, hash: "approach", weight: 3 });
+    }
+    for (const item of study.glance ?? []) add({ where, title: item.label, text: item.value, path, weight: 2 });
+    for (const step of study.steps ?? []) add({ where, title: step.title, text: step.body, path, hash: "diagram", weight: 3 });
+    for (const blocker of study.blockers ?? []) {
+      add({ where, title: blocker.title, text: [blocker.problem, blocker.fix, blocker.result].filter(Boolean).join(" "), path, hash: "blockers", weight: 3 });
     }
     for (const item of study.terms ?? []) add({ where, title: item.term, text: item.meaning, path, hash: "terms", weight: 2 });
     for (const result of study.results ?? []) {

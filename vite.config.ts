@@ -1,8 +1,9 @@
 import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
-import { caseStudyMeta, getCaseStudy } from "./src/data/caseStudies";
+import { caseStudyMeta, checkCaseStudies, getCaseStudy } from "./src/data/caseStudies";
 import { education } from "./src/data/credentials";
+import { checkDiagrams } from "./src/data/diagrams";
 import { experience } from "./src/data/experience";
 import { SITE_URL, links, profile, themeColors } from "./src/data/profile";
 import { caseStudyProjects } from "./src/data/projects";
@@ -113,6 +114,11 @@ function siteFiles(): Plugin {
   return {
     name: "site-files",
     enforce: "post", // after Vite's own HTML plugin, so the built index.html exists in generateBundle
+    buildStart() {
+      // Fail the build, not the page, when diagram data and the walkthrough steps that point into it disagree.
+      checkDiagrams();
+      checkCaseStudies();
+    },
     transformIndexHtml(html, ctx) {
       const filled = html.replace(/\{\{\{(\w+)\}\}\}|\{\{(\w+)\}\}/g, (_match, rawKey: string, textKey: string) => {
         const value = rawKey ? raw[rawKey] : text[textKey];
@@ -146,6 +152,10 @@ export default defineConfig({
   server: {
     host: "::",
     port: 8080,
+  },
+  build: {
+    // The 3D diagram's chunk holds three.js. It is loaded on demand on case-study pages, never on the home page.
+    chunkSizeWarningLimit: 700,
   },
   plugins: [react(), siteFiles()],
   resolve: {
