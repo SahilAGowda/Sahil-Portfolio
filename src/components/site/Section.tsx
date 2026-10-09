@@ -15,7 +15,7 @@ export function Section({ id, title, children, className }: SectionProps) {
       id={id}
       tabIndex={-1}
       aria-labelledby={`${id}-title`}
-      className={cn("mt-20 scroll-mt-20 outline-none lg:mt-28 lg:scroll-mt-10", className)}
+      className={cn("mt-20 scroll-mt-20 outline-none lg:mt-28", className)}
     >
       <h2
         id={`${id}-title`}

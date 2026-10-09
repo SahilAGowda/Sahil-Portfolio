@@ -5,7 +5,7 @@ const preload = () => void import("./SearchDialog");
 
 interface SearchButtonProps {
   onClick: () => void;
-  /** Show the "/" shortcut hint (desktop rail). */
+  /** Show the "/" shortcut hint (desktop, top right). */
   hint?: boolean;
   className?: string;
 }

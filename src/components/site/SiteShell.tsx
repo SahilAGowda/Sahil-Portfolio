@@ -7,6 +7,7 @@ import { HighlightNotice } from "./HighlightNotice";
 import { MobileBar } from "./MobileBar";
 import { QuietBoundary } from "./QuietBoundary";
 import { Rail } from "./Rail";
+import { TopSearch } from "./TopSearch";
 
 const SearchDialog = lazy(() => import("./SearchDialog"));
 
@@ -80,11 +81,14 @@ export function SiteShell() {
       </a>
       <MobileBar active={active} onSearch={openSearch} />
       <div className="mx-auto min-h-screen max-w-[70rem] px-5 lg:grid lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-x-12 lg:px-8">
-        <Rail active={active} onSearch={openSearch} />
-        <main id="content" tabIndex={-1} className="min-w-0 pb-32 outline-none">
-          {highlight && <HighlightNotice query={highlight} onClear={clearHighlight} />}
-          <Outlet />
-        </main>
+        <Rail active={active} />
+        <div className="min-w-0">
+          <TopSearch onSearch={openSearch} />
+          <main id="content" tabIndex={-1} className="min-w-0 pb-32 outline-none">
+            {highlight && <HighlightNotice query={highlight} onClear={clearHighlight} />}
+            <Outlet />
+          </main>
+        </div>
       </div>
       {searchOpen && (
         <QuietBoundary onError={() => setSearchOpen(false)}>

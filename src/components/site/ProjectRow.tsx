@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import { hasDiagram } from "@/data/diagrams";
 import { projectMeta, type Project } from "@/data/projects";
 import { cn } from "@/lib/utils";
@@ -10,6 +11,7 @@ export function ProjectRow({ project }: { project: Project }) {
   const diagram = hasDiagram(project.slug);
   const meta = projectMeta(project);
   const hasLinks = project.caseStudy || project.repo || project.live;
+  const caseStudyPath = `/projects/${project.slug}`;
 
   return (
     <li className="md:grid md:grid-cols-[20rem_1fr] md:gap-x-10">
@@ -19,7 +21,15 @@ export function ProjectRow({ project }: { project: Project }) {
         </div>
       )}
       <div className={cn(!diagram && "md:col-start-2")}>
-        <h3 className="text-lede font-semibold">{project.title}</h3>
+        <h3 className="text-lede font-semibold">
+          {project.caseStudy ? (
+            <Link to={caseStudyPath} className="underline-offset-4 hover:underline">
+              {project.title}
+            </Link>
+          ) : (
+            project.title
+          )}
+        </h3>
         {meta && <p className="text-muted-foreground">{meta}</p>}
         <p className="mt-3 max-w-[64ch]">{project.summary}</p>
         <p className="mt-3 max-w-[64ch] text-caption text-muted-foreground">
@@ -27,11 +37,13 @@ export function ProjectRow({ project }: { project: Project }) {
           {project.stack.join(", ")}
         </p>
         {hasLinks && (
-          <p className="mt-2 flex flex-wrap gap-x-6">
+          <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-1">
             {project.caseStudy && (
-              <Link to={`/projects/${project.slug}`} className="link inline-flex min-h-11 items-center">
-                Read case study<span className="sr-only"> for {project.title}</span>
-              </Link>
+              <Button asChild size="lg" className="text-[0.9375rem]">
+                <Link to={caseStudyPath}>
+                  Read the full case study<span className="sr-only"> for {project.title}</span>
+                </Link>
+              </Button>
             )}
             {project.repo && (
               <ExternalLink href={project.repo} className="link inline-flex min-h-11 items-center">
@@ -43,7 +55,7 @@ export function ProjectRow({ project }: { project: Project }) {
                 Open live demo
               </ExternalLink>
             )}
-          </p>
+          </div>
         )}
       </div>
     </li>
