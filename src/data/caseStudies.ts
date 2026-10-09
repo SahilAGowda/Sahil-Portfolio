@@ -40,7 +40,7 @@ export interface Blocker {
 }
 
 export interface Result {
-  /** The number or short claim, for example "1 s to 400 ms". */
+  /** The number or short claim, for example "4–5 s to 400 ms". */
   figure: string;
   label: string;
   /** Where the number comes from, shown under it. */
@@ -77,7 +77,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "master-data-ingestion",
     outcome:
-      "Reworked a Spring Batch flow that loads device records from CSV into master data: one-by-one inserts became partitioned parallel workers with batch writes, for a data set of about 273 million records.",
+      "Reworked a Spring Batch flow that loads device records from CSV into master data: one-by-one inserts became partitioned parallel workers with batch writes, so a million records now load in about 1.5 to 2 minutes instead of 16 hours.",
     glance: [
       { label: "When", value: "Internship at DIATOZ, October 2025 to May 2026" },
       {
@@ -85,7 +85,10 @@ export const caseStudies: CaseStudy[] = [
         value:
           "My senior engineers wrote the first Spring Batch flow. I reviewed it, found what set its pace, and reworked it with batch inserts and parallel processing. I also traced and fixed why stopped jobs got stuck.",
       },
-      { label: "Scale", value: "About 273 million records to load. The first version took around 16 hours for each million." },
+      {
+        label: "Scale",
+        value: "About 273 million records, uploaded as 273 files in parts of 10 million. A million records took around 16 hours at first and now take about 1.5 to 2 minutes.",
+      },
     ],
     problem: [
       "Master data had to be loaded from CSV files of device records. The whole data set came to about 273 million records.",
@@ -184,6 +187,7 @@ export const caseStudies: CaseStudy[] = [
         problem:
           "Spreading the work across threads takes more than a thread pool. A file reader keeps its position, so threads cannot share one. A failed row still has to point at the right line of the original file, and a restarted job must neither redo finished work nor lose its place.",
         fix: "I split the CSV into part files and gave every part its own reader, so no locks are needed. Each part carries the line number of its first row, and the reader saves its position so line numbers stay right after a restart. The part files are named from the job's id, so a restart reuses them instead of splitting again.",
+        result: "With the batch writes, a million records now load in about 1.5 to 2 minutes, down from around 16 hours.",
       },
       {
         title: "Stopped jobs stayed in a stopping state",
@@ -199,12 +203,17 @@ export const caseStudies: CaseStudy[] = [
       { term: "Skip", meaning: "Carrying on after a bad row instead of failing the whole job." },
     ],
     results: [
-      { figure: "about 273 million", label: "records in the data set the flow was reworked to load", source: "my resume" },
       {
-        figure: "around 16 hours",
-        label: "to load a million records with the original one-by-one flow, before the rework",
+        figure: "16 hours to 1.5–2 minutes",
+        label: "to load a million records, with the original one-by-one flow and after the rework",
         source: "my account of the work, October 2026",
       },
+      {
+        figure: "10 million in 12–14 minutes",
+        label: "records loaded in one part of the upload, which went in as 273 files in parts of 10 million",
+        source: "my account of the work, October 2026",
+      },
+      { figure: "about 273 million", label: "records in the data set the flow was reworked to load", source: "my resume" },
     ],
   },
   {
@@ -329,30 +338,38 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "report-search",
     outcome:
-      "Built 7+ report APIs with PDF and Excel downloads, and cut read-heavy query latency from 1 s to 400 ms by serving reads from Elasticsearch, with PostgreSQL still the source of truth.",
+      "Built 7+ report APIs with PDF and Excel downloads over ticket data, and cut query latency from 4–5 s to 400 ms by moving report reads from multi-join database queries to Elasticsearch, with PostgreSQL still the source of truth.",
     glance: [
       { label: "When", value: "Internship at DIATOZ, October 2025 to May 2026" },
       {
         label: "My part",
         value:
-          "I built the Spring Boot report APIs and a download endpoint for each report. A senior engineer suggested Elasticsearch, so I learned it and moved report reads there. I also fixed a production timeout and added an audit mechanism.",
+          "I built the Spring Boot report APIs and a download endpoint for each report. A senior engineer suggested Elasticsearch, so I learned it, indexed the ticket data there (a backfill for old tickets, automatic async indexing for new ones) and moved report reads to it. I also made the indexing asynchronous after a production timeout, and added an audit mechanism.",
       },
-      { label: "Scale", value: "Millions of records and multi-filter queries. 7+ reports. Query latency from 1 s to 400 ms." },
+      { label: "Scale", value: "Millions of records and multi-filter queries over ticket data. 7+ reports. Query latency from 4–5 s to 400 ms." },
     ],
     problem: [
-      "Report APIs had to serve analytics over millions of records, with several filters at once. I first queried the database directly, and for questions that combined many filters that was slow. It was the bottleneck I found.",
+      "Report APIs had to serve analytics over ticket data, millions of records, with several filters at once. I first queried the database directly. Each query joined several tables and took around 4 to 5 seconds, which is very slow. It was the bottleneck I found.",
       "At that point I had not worked with Elasticsearch. One of my senior engineers suggested it, so I learned how it works.",
     ],
     constraints: [
-      "PostgreSQL stays the source of truth.",
+      "PostgreSQL already holds the ticket data and stays the source of truth.",
       "Queries are read-heavy and combine several filters.",
-      "Elasticsearch and PostgreSQL have to stay consistent.",
+      "Old tickets and new tickets both have to be in Elasticsearch, and the two stores have to stay consistent.",
       "Every report needs a file download as well as the screen view.",
     ],
     decisions: [
       {
         title: "Elasticsearch for reads, PostgreSQL for truth",
-        body: "Report data is indexed into Elasticsearch, and the report reads go there instead of to the source of truth. PostgreSQL remains the source of truth for the data. Elasticsearch is there only to make reads fast.",
+        body: "The ticket data is indexed into report indexes in Elasticsearch, and the report reads go there instead of to multi-join queries on the database. PostgreSQL already holds the ticket data and stays the source of truth, and nothing is written to it for the reports. Elasticsearch is there only to make reads fast.",
+      },
+      {
+        title: "Backfill the old tickets",
+        body: "Existing tickets were reindexed into the report indexes with a backfill method.",
+      },
+      {
+        title: "Index new tickets as they are created",
+        body: "Whenever a ticket is created, it is indexed into the report indexes automatically, and the indexing runs asynchronously.",
       },
       {
         title: "Two endpoints for every report",
@@ -376,7 +393,7 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         title: "Queries are answered from Elasticsearch",
-        body: "The read-heavy, multi-filter queries are served by Elasticsearch indexing. Query latency fell from 1 s to 400 ms.",
+        body: "The multi-filter report queries are answered from the report indexes in Elasticsearch. Query latency fell from 4–5 s, with multi-join queries on the database, to 400 ms.",
         nodes: ["es"],
         edges: [["api", "es"]],
       },
@@ -388,18 +405,21 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         title: "PostgreSQL stays the source of truth",
-        body: "PostgreSQL remains the source of truth for the data.",
+        body: "PostgreSQL already holds the ticket data and remains the source of truth. The reports do not write to it.",
         nodes: ["pg"],
       },
       {
-        title: "Updates run asynchronously",
-        body: "Updates to Elasticsearch and PostgreSQL run asynchronously, after a synchronous version caused a production server timeout.",
-        nodes: ["api", "pg"],
-        edges: [["api", "pg"]],
+        title: "Indexing keeps Elasticsearch current",
+        body: "Old tickets were reindexed into Elasticsearch with a backfill. A new ticket is indexed into the report indexes automatically, and asynchronously, when it is created.",
+        nodes: ["pg", "idx", "es"],
+        edges: [
+          ["pg", "idx"],
+          ["idx", "es"],
+        ],
       },
       {
         title: "An audit check compares the two",
-        body: "An audit mechanism verifies that Elasticsearch and PostgreSQL stay consistent.",
+        body: "An audit mechanism verifies that the report indexes and PostgreSQL stay consistent.",
         nodes: ["audit", "es", "pg"],
         edges: [
           ["audit", "es"],
@@ -409,31 +429,33 @@ export const caseStudies: CaseStudy[] = [
     ],
     blockers: [
       {
-        title: "Slow multi-filter queries",
-        problem: "Querying the database directly for questions with several filters was slow, and I had not used Elasticsearch before.",
-        fix: "A senior engineer pointed me to Elasticsearch. I learned how it works, indexed the report data and moved the report reads there, leaving PostgreSQL as the source of truth.",
-        result: "Query latency fell from 1 s to 400 ms.",
+        title: "Slow multi-join queries",
+        problem: "Each report query joined several tables in the database and took around 4 to 5 seconds, which is very slow. I had not used Elasticsearch before.",
+        fix: "A senior engineer pointed me to Elasticsearch. I learned how it works, indexed the ticket data into report indexes, reindexed the old tickets with a backfill and moved the report reads there, leaving PostgreSQL as the source of truth.",
+        result: "Query latency fell from 4–5 s to 400 ms.",
       },
       {
         title: "A production server timeout",
-        problem: "Updating Elasticsearch and PostgreSQL synchronously caused a production server timeout.",
-        fix: "I made the updates asynchronous.",
+        problem: "Indexing a new ticket into Elasticsearch synchronously caused a production server timeout.",
+        fix: "I made the indexing of new tickets asynchronous.",
       },
       {
-        title: "Two stores that are no longer written in one step",
-        problem: "With asynchronous updates, Elasticsearch and PostgreSQL are no longer written in one step, so they have to be kept in step another way.",
+        title: "An index that is written in a separate step",
+        problem:
+          "With asynchronous indexing, a ticket and its entry in the report indexes are no longer written in one step, so they have to be kept in step another way.",
         fix: "I added an audit mechanism that verifies write consistency between them.",
       },
     ],
     terms: [
       { term: "Source of truth", meaning: "The store whose data wins when two stores disagree." },
+      { term: "Backfill", meaning: "Loading data that already existed into a new store, such as an index, so it starts complete." },
       { term: "Streaming workbook", meaning: "An Excel file written row by row, with only the latest rows held in memory." },
     ],
     results: [
       {
-        figure: "1 s to 400 ms",
-        label: "read-heavy query latency, a 60% improvement",
-        source: "my resume",
+        figure: "4–5 s to 400 ms",
+        label: "query latency for the report queries, from multi-join database queries to Elasticsearch",
+        source: "my account of the work, October 2026",
       },
       {
         figure: "7+ reports",
@@ -445,7 +467,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "rag-chatbot",
     outcome:
-      "A proof-of-concept chatbot on LangChain and LangGraph that answers from ingested documents and sends other questions to service APIs, using reranking, multi-representation indexing, query structuring and logical routing.",
+      "A proof-of-concept chatbot on LangChain, LangGraph and Milvus that answers from ingested documents and sends other questions to service APIs, using reranking, multi-representation indexing, query structuring and logical routing.",
     glance: [
       { label: "When", value: "Full-time role at DIATOZ, since May 2026" },
       {
@@ -455,7 +477,7 @@ export const caseStudies: CaseStudy[] = [
       {
         label: "My part",
         value:
-          "I built the chatbot and its document-ingestion pipeline, wrote the routing logic, exposed the service APIs it calls, evaluated Milvus and Pinecone, and implemented reranking, multi-representation indexing, query structuring and logical routing.",
+          "I built the chatbot and its document-ingestion pipeline, wrote the routing logic, exposed the service APIs it calls, chose Milvus over Pinecone as the vector database, and implemented reranking, multi-representation indexing, query structuring and logical routing.",
       },
     ],
     problem: [
@@ -463,8 +485,8 @@ export const caseStudies: CaseStudy[] = [
     ],
     decisions: [
       {
-        title: "Evaluate Milvus and Pinecone",
-        body: "I evaluated both as the vector database for the ingested documents.",
+        title: "Milvus over Pinecone",
+        body: "I learned about both vector databases and chose Milvus because it is open source: I could pull its Docker image and run it locally quickly.",
       },
       {
         title: "Route each question",
@@ -502,7 +524,7 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         title: "A vector database holds the index",
-        body: "I evaluated Milvus and Pinecone as the vector database.",
+        body: "I chose Milvus over Pinecone: it is open source, and I could pull its Docker image and run it locally quickly.",
         nodes: ["vdb"],
         edges: [["index", "vdb"]],
       },
@@ -555,20 +577,21 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "whatsapp-agent",
     outcome:
-      "A multi-tenant WhatsApp agent on Meta's WhatsApp Cloud API: parts lookup with LLM-as-selector RAG, deterministic slot-filling, repair status and service booking, and in-chat PDF delivery.",
+      "A proof-of-concept WhatsApp agent on Meta's WhatsApp Cloud API: parts lookup with LLM-as-selector RAG, deterministic slot-filling, repair status and service booking, and in-chat PDF delivery. Built for a single tenant and configurable for more.",
     glance: [
       { label: "When", value: "Full-time role at DIATOZ, since May 2026" },
+      { label: "Status", value: "A proof of concept for a single tenant, configurable for more. It was not shipped." },
       {
         label: "My part",
         value:
-          "I built the webhook handling and the five conversation flows, and set up Nginx and the webhook callbacks on the Meta Developer Dashboard for a working MVP.",
+          "I built the webhook handling and the five conversation flows, and set up Nginx and the webhook callbacks on the Meta Developer Dashboard.",
       },
     ],
     problem: [
       "Customers message one WhatsApp number. A menu offers five things: buy a product, register one, find a spare part, check a repair or book a service, and get a catalogue. The agent has to handle each in the chat, and has to cope with the way WhatsApp delivers messages.",
     ],
     constraints: [
-      "Multi-tenant: one agent serves several tenants.",
+      "Single tenant: it is built for one tenant, and it is configurable.",
       "WhatsApp traffic arrives as webhook callbacks from Meta's Cloud API.",
       "Meta can deliver the same message more than once, and in parallel.",
     ],
@@ -623,7 +646,7 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         title: "The agent finds the conversation",
-        body: "The multi-tenant agent loads the user's conversation, saves the message and hands it to the flow that owns the conversation. A tap on the menu starts a new flow.",
+        body: "The agent loads the user's conversation, saves the message and hands it to the flow that owns the conversation. A tap on the menu starts a new flow.",
         nodes: ["agent"],
         edges: [["guard", "agent"]],
       },

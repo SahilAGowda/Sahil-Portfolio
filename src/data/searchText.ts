@@ -1,6 +1,6 @@
 // Text helpers shared by the search dialog and the on-page highlighter. Pure functions, no React.
 
-/** Lowercase and drop accents, so "karcher" matches "Kärcher". Text with precomposed letters keeps its length. */
+/** Lowercase and drop accents, so "cafe" matches "café". Text with precomposed letters keeps its length. */
 export function fold(text: string): string {
   return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 }

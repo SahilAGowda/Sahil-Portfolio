@@ -97,7 +97,7 @@
 \section{Professional Summary}
 \begin{onecolentry}
 {\fontsize{9.5pt}{13.5pt}\selectfont
-Software Development Engineer with production backend experience and hands-on applied AI: RESTful APIs and high-volume data pipelines (\textbf{Spring Boot}, \textbf{Spring Batch}, \textbf{PostgreSQL}) plus \textbf{RAG} and agentic systems (\textbf{LangChain}, \textbf{LangGraph}, \textbf{Elasticsearch}). Reworked a \textbf{273M+ record} ingestion pipeline, cut report-module query latency by \textbf{60\%}, and built a multi-tenant \textbf{WhatsApp} automation agent on Meta's Cloud API. Owns features end-to-end, from design through production debugging.
+Software Development Engineer with production backend experience and hands-on applied AI: RESTful APIs and high-volume data pipelines (\textbf{Spring Boot}, \textbf{Spring Batch}, \textbf{PostgreSQL}) plus \textbf{RAG} and agentic systems (\textbf{LangChain}, \textbf{LangGraph}, \textbf{Elasticsearch}). Reworked a \textbf{273M+ record} ingestion pipeline, cut report query latency from \textbf{4--5 s to 400 ms}, and built a \textbf{WhatsApp} agent proof of concept on Meta's Cloud API. Owns features end-to-end, from design through production debugging.
 }
 \end{onecolentry}
 
@@ -121,8 +121,8 @@ Software Development Engineer with production backend experience and hands-on ap
 
 \expentry{Software Development Engineer}{DIATOZ Solutions Pvt. Ltd.}{Bengaluru, India}{May 2026 -- Present}
 \begin{highlights}
-  \item Built a proof-of-concept \textbf{RAG} chatbot with document ingestion and routing to ticketing APIs; evaluated \textbf{Milvus} and \textbf{Pinecone}; implemented reranking, multi-representation indexing, query structuring, and semantic and logical routing.
-  \item Built a multi-tenant WhatsApp agent for client K\"archer on Meta's \textbf{WhatsApp Cloud API} (MVP): signature and duplicate checks, slot-filling, LLM-as-selector parts lookup, repair booking, in-chat PDFs; configured \textbf{Nginx} and webhook callbacks.
+  \item Built a proof-of-concept \textbf{RAG} chatbot with document ingestion and routing to ticketing APIs; chose \textbf{Milvus} over \textbf{Pinecone} (open source); implemented reranking, multi-representation indexing, query structuring, and semantic and logical routing.
+  \item Built a proof-of-concept WhatsApp agent on Meta's \textbf{WhatsApp Cloud API} (single tenant): signature and duplicate checks, slot-filling, LLM-as-selector parts lookup, repair booking, in-chat PDFs; configured \textbf{Nginx} and webhook callbacks.
   \item Fixed a broken audio issue on the inbound voice calling agent and built a \textbf{human-transfer} feature to hand off live calls to a human representative.
   \item Extended \textbf{Lexi}, an internal code-understanding agent, to parse and understand \textbf{MuleSoft} code.
 \end{highlights}
@@ -131,10 +131,10 @@ Software Development Engineer with production backend experience and hands-on ap
 
 \expentry{Software Engineering Intern}{DIATOZ Solutions Pvt. Ltd.}{Bengaluru, India}{Oct 2025 -- May 2026}
 \begin{highlights}
-  \item Reworked a \textbf{Spring Batch} ingestion pipeline for around \textbf{273 million records}, replacing one-by-one inserts with partitioned multithreading and JDBC batch inserts; fixed jobs stuck in a ``stopping'' state (backend and front end).
+  \item Reworked a \textbf{Spring Batch} ingestion pipeline for around \textbf{273 million records}, replacing one-by-one inserts with partitioned multithreading and JDBC batch inserts (a million records: 16 hours to \textbf{1.5--2 minutes}); fixed jobs stuck in a ``stopping'' state.
   \item Reworked the validation flow of a bulk Excel store upload (\textbf{14+ validation rules}) after loading whole workbooks into memory hung the app on a 4,000-store upload; it now validates once and saves in background batches: \textbf{4,000 stores} in one flow.
-  \item Built \textbf{7+ RESTful report APIs} (Spring Boot) over millions of records with multi-filter support, each with PDF and Excel (\textbf{Apache POI SXSSF}) downloads; moving reads to \textbf{Elasticsearch} cut query latency from \textbf{1s to 400ms (60\% improvement)}, with \textbf{PostgreSQL} as the source of truth.
-  \item Fixed a production server-timeout bug by converting synchronous Elasticsearch/PostgreSQL updates to \textbf{async}, and added an audit mechanism to verify write consistency.
+  \item Built \textbf{7+ RESTful report APIs} (Spring Boot) over ticket data with multi-filter support, each with PDF and Excel (\textbf{Apache POI SXSSF}) downloads; moved reads from multi-join database queries to \textbf{Elasticsearch} (backfill for old tickets, async indexing for new), cutting query latency from \textbf{4--5 s to 400 ms}, with \textbf{PostgreSQL} as the source of truth.
+  \item Fixed a production server-timeout bug by making the Elasticsearch indexing of new tickets \textbf{async}, and added an audit mechanism to verify write consistency.
   \item Root-caused a UAT-vs-production schema mismatch to a missing \texttt{liquibase.enabled} flag silently skipping migrations in prod; fixed the config and reconciled the schema.
 \end{highlights}
 

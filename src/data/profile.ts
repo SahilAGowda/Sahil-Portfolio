@@ -40,11 +40,11 @@ export const profile = {
   /** The home page's <title> and meta description; also used by index.html and the social card. */
   title: "Sahil A Gowda, backend and AI engineer",
   description:
-    "Backend and AI engineer in Bengaluru. Spring Batch ingestion at 273 million records, Elasticsearch search, RAG chatbots and a multi-tenant WhatsApp agent.",
+    "Backend and AI engineer in Bengaluru. Spring Batch ingestion at 273 million records, Elasticsearch search, a RAG chatbot and a WhatsApp agent.",
   summary:
     "I'm a software development engineer at DIATOZ in Bengaluru, building Java backends and applied-AI systems. " +
-    "I reworked a Spring Batch pipeline to load about 273 million records, and moved report reads to Elasticsearch, which cut report queries from 1 s to 400 ms. " +
-    "I also build RAG chatbots with LangChain and LangGraph, and a multi-tenant WhatsApp agent on Meta's Cloud API.",
+    "I reworked a Spring Batch pipeline to load about 273 million records, and moved report reads to Elasticsearch, which cut report queries from 4–5 s to 400 ms. " +
+    "I also built two proofs of concept: a RAG chatbot with LangChain and LangGraph, and a WhatsApp agent on Meta's Cloud API.",
   contact: {
     email: "sahilgowda204@gmail.com",
     location: "Bengaluru, India",
@@ -69,5 +69,5 @@ export type SectionId = (typeof sections)[number]["id"];
 /** Phrases in the summary that link to the case study holding the proof. */
 export const summaryLinks: { text: string; slug: string }[] = [
   { text: "273 million records", slug: "master-data-ingestion" },
-  { text: "from 1 s to 400 ms", slug: "report-search" },
+  { text: "from 4–5 s to 400 ms", slug: "report-search" },
 ];

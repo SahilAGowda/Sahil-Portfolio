@@ -58,6 +58,8 @@ const FIT_MARGIN = 0.95;
 const HEADROOM = 0.6; // room above the board, for the nodes and the diamond
 const INTRO_TURN = 0.36; // how far the camera starts from its resting angle
 
+const RIDGE_STRENGTH = 0.5; // how much of the outline colour a diamond's ridges get
+
 const DIM_NODE = 0.2;
 const DIM_EDGE = 0.16;
 
@@ -76,6 +78,8 @@ interface NodeItem {
   body: Mesh;
   bodyMat: MeshStandardMaterial;
   lineMats: LineBasicMaterial[];
+  /** The ridges of a diamond, drawn softer than its outline so they do not cut across the label. */
+  ridgeMat?: LineBasicMaterial;
   base: Color;
   stroke: Color;
   label: CSS2DObject;
@@ -387,6 +391,7 @@ export class FlowScene {
 
     const bodyMat = new MeshStandardMaterial({ roughness: 0.6, metalness: 0 });
     const lineMat = new LineBasicMaterial();
+    let ridgeMat: LineBasicMaterial | undefined;
     let body: Mesh;
     let top = height;
 
@@ -411,7 +416,20 @@ export class FlowScene {
       body.scale.set(w, height, d);
       body.position.y = height / 2 + 0.05;
       top = height + 0.05;
-      body.add(new LineSegments(new EdgesGeometry(geometry), lineMat));
+      // The rim round the middle keeps the full outline colour; the eight ridges to the tips are softer.
+      const edges = new EdgesGeometry(geometry).getAttribute("position");
+      const rim: Vector3[] = [];
+      const ridges: Vector3[] = [];
+      for (let i = 0; i < edges.count; i += 2) {
+        const a = new Vector3().fromBufferAttribute(edges, i);
+        const b = new Vector3().fromBufferAttribute(edges, i + 1);
+        (Math.abs(a.y) < 1e-4 && Math.abs(b.y) < 1e-4 ? rim : ridges).push(a, b);
+      }
+      ridgeMat = new LineBasicMaterial();
+      body.add(
+        new LineSegments(new BufferGeometry().setFromPoints(rim), lineMat),
+        new LineSegments(new BufferGeometry().setFromPoints(ridges), ridgeMat),
+      );
     } else {
       const geometry = slab(w, d, height, 0.09);
       body = new Mesh(geometry, bodyMat);
@@ -448,6 +466,7 @@ export class FlowScene {
       body,
       bodyMat,
       lineMats: [lineMat],
+      ridgeMat,
       base: new Color(),
       stroke: new Color(),
       label,
@@ -836,6 +855,7 @@ export class FlowScene {
       const strength = item.dim * appear;
       item.bodyMat.color.copy(plate).lerp(item.base, strength);
       for (const line of item.lineMats) line.color.copy(plate).lerp(item.stroke, strength);
+      item.ridgeMat?.color.copy(plate).lerp(item.stroke, strength * RIDGE_STRENGTH);
       item.bodyMat.emissive.copy(item.stroke);
       item.bodyMat.emissiveIntensity = Math.max(item.pulse * 0.45, item.hover * 0.3, item.emphasis * 0.14) * appear;
       item.group.position.y = -(1 - appear) * 0.6 + item.hover * 0.05;
