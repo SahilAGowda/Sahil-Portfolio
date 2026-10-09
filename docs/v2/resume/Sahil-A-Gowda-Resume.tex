@@ -1,0 +1,181 @@
+\documentclass[10pt, letterpaper]{article}
+
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[
+    top=0.22cm, bottom=0.22cm,
+    left=1.15cm, right=1.15cm,
+    ignoreheadfoot
+]{geometry}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{adjustbox}
+\usepackage{changepage}
+\usepackage{setspace}
+
+\definecolor{navy}{RGB}{15, 65, 120}
+\definecolor{navymid}{RGB}{30, 90, 160}
+\definecolor{muted}{RGB}{90, 95, 110}
+\definecolor{bodytext}{RGB}{18, 22, 30}
+
+\hypersetup{colorlinks=true, urlcolor=navymid, linkcolor=navymid, pdftitle={Sahil A Gowda - Resume}, pdfauthor={Sahil A Gowda}}
+
+\raggedright
+\pagestyle{empty}
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\pagenumbering{gobble}
+\setstretch{1.0}
+\color{bodytext}
+
+\titleformat{\section}
+  {\fontsize{9pt}{9pt}\selectfont\bfseries\color{navy}}
+  {}{0pt}{}
+  [\vspace{1pt}{\color{navy}\hrule height 0.5pt}\vspace{2pt}]
+\titlespacing{\section}{0pt}{0.13cm}{0.02cm}
+
+\newenvironment{onecolentry}{%
+  \begin{adjustwidth}{0cm}{0cm}}{%
+  \end{adjustwidth}}
+
+\newcommand{\expentry}[4]{%
+  \vspace{2pt}%
+  \noindent{\fontsize{9.5pt}{11pt}\selectfont\textbf{#1}}\hfill{\fontsize{9pt}{11pt}\selectfont\textcolor{muted}{#4}}\\[1pt]%
+  {\fontsize{9pt}{11pt}\selectfont\textcolor{navymid}{\textit{#2}}\textcolor{muted}{\enspace|\enspace #3}}%
+  \vspace{-1pt}%
+}
+
+\newcommand{\projentry}[4]{%
+  \vspace{2pt}%
+  \noindent{\fontsize{9.5pt}{11pt}\selectfont\textbf{#1}\enspace\textcolor{navymid}{\fontsize{9pt}{11pt}\selectfont[#2]}}\hfill{\fontsize{9pt}{11pt}\selectfont\textcolor{muted}{#4}}\\[1pt]%
+  {\fontsize{9pt}{11pt}\selectfont\textcolor{muted}{\textit{Tech: #3}}}%
+  \vspace{-1pt}%
+}
+
+\newcommand{\skillrow}[2]{%
+  \noindent\makebox[3.05cm][l]{\fontsize{9pt}{11pt}\selectfont\textbf{\textcolor{navy}{#1}}}\hspace{8pt}%
+  {\fontsize{9pt}{11pt}\selectfont #2}\\[2pt]%
+}
+
+\newenvironment{highlights}{%
+  \begin{itemize}[
+    topsep=0.5pt, parsep=0pt, partopsep=0pt,
+    itemsep=0.5pt, leftmargin=12pt,
+    label={\textcolor{navy}{\small$\circ$}}
+  ]%
+  \fontsize{9.5pt}{12pt}\selectfont
+}{%
+  \end{itemize}%
+}
+
+\begin{document}
+
+%% ── HEADER ───────────────────────────────────────────────────────────────────
+\begin{center}
+  {\fontsize{20pt}{20pt}\selectfont\bfseries\color{navy} Sahil A Gowda}\\[4pt]
+  {\fontsize{9pt}{11pt}\selectfont
+    \textcolor{bodytext}{Bengaluru, India}
+    \enspace\textcolor{navy}{|}\enspace
+    \href{mailto:sahilgowda204@gmail.com}{sahilgowda204@gmail.com}
+    \enspace\textcolor{navy}{|}\enspace
+    \textcolor{bodytext}{+91-9945886311}
+    \enspace\textcolor{navy}{|}\enspace
+    \href{https://www.linkedin.com/in/sahil-a-gowda-551b32270/}{LinkedIn}
+    \enspace\textcolor{navy}{|}\enspace
+    \href{https://github.com/SahilAGowda}{GitHub}
+  }
+\end{center}
+
+\vspace{1pt}
+
+%% ── PROFESSIONAL SUMMARY ─────────────────────────────────────────────────────
+\section{Professional Summary}
+\begin{onecolentry}
+{\fontsize{9.5pt}{13.5pt}\selectfont
+Software Development Engineer with production backend experience and hands-on applied AI: RESTful APIs and high-volume data pipelines (\textbf{Spring Boot}, \textbf{Spring Batch}, \textbf{PostgreSQL}) plus \textbf{RAG} and agentic systems (\textbf{LangChain}, \textbf{LangGraph}, \textbf{Elasticsearch}). Reworked a \textbf{273M+ record} ingestion pipeline, cut report-module query latency by \textbf{60\%}, and built a multi-tenant \textbf{WhatsApp} automation agent on Meta's Cloud API. Owns features end-to-end, from design through production debugging.
+}
+\end{onecolentry}
+
+\vspace{1.2mm}
+%% ── TECHNICAL SKILLS ─────────────────────────────────────────────────────────
+\section{Technical Skills}
+\begin{onecolentry}
+\skillrow{Languages}{Java, Python (FastAPI), C, SQL}
+\skillrow{Java Tech Stack}{Spring (Boot, Batch, MVC, Security, Data JPA), Hibernate, REST APIs, Servlets, JDBC}
+\skillrow{AI/ML Stack}{LangChain, LangGraph, RAG, Vector DBs (Milvus, Pinecone), Meta WhatsApp Cloud API, Nginx}
+\skillrow{Databases \& Tools}{PostgreSQL, MySQL, MongoDB, Elasticsearch, Redis (basics), Liquibase, Apache POI, Maven, Git}
+\skillrow{AWS Services}{EC2, S3, RDS, Lambda, API Gateway, SQS, SNS, DynamoDB, EventBridge}
+\skillrow{Testing \& DevOps}{JUnit, Mockito, Docker (familiar), Postman, Swagger}
+\skillrow{Core Concepts}{OOP, Design Patterns, Microservices, MVC, ACID, Agile, CI/CD basics}
+\end{onecolentry}
+
+\vspace{1.2mm}
+
+%% ── PROFESSIONAL EXPERIENCE ──────────────────────────────────────────────────
+\section{Professional Experience}
+
+\expentry{Software Development Engineer}{DIATOZ Solutions Pvt. Ltd.}{Bengaluru, India}{May 2026 -- Present}
+\begin{highlights}
+  \item Built a proof-of-concept \textbf{RAG} chatbot with document ingestion and routing to ticketing APIs; evaluated \textbf{Milvus} and \textbf{Pinecone}; implemented reranking, multi-representation indexing, query structuring, and semantic and logical routing.
+  \item Built a multi-tenant WhatsApp agent for client K\"archer on Meta's \textbf{WhatsApp Cloud API} (MVP): signature and duplicate checks, slot-filling, LLM-as-selector parts lookup, repair booking, in-chat PDFs; configured \textbf{Nginx} and webhook callbacks.
+  \item Fixed a broken audio issue on the inbound voice calling agent and built a \textbf{human-transfer} feature to hand off live calls to a human representative.
+  \item Extended \textbf{Lexi}, an internal code-understanding agent, to parse and understand \textbf{MuleSoft} code.
+\end{highlights}
+
+\vspace{3pt}
+
+\expentry{Software Engineering Intern}{DIATOZ Solutions Pvt. Ltd.}{Bengaluru, India}{Oct 2025 -- May 2026}
+\begin{highlights}
+  \item Reworked a \textbf{Spring Batch} ingestion pipeline for around \textbf{273 million records}, replacing one-by-one inserts with partitioned multithreading and JDBC batch inserts; fixed jobs stuck in a ``stopping'' state (backend and front end).
+  \item Reworked the validation flow of a bulk Excel store upload (\textbf{14+ validation rules}) after loading whole workbooks into memory hung the app on a 4,000-store upload; it now validates once and saves in background batches: \textbf{4,000 stores} in one flow.
+  \item Built \textbf{7+ RESTful report APIs} (Spring Boot) over millions of records with multi-filter support, each with PDF and Excel (\textbf{Apache POI SXSSF}) downloads; moving reads to \textbf{Elasticsearch} cut query latency from \textbf{1s to 400ms (60\% improvement)}, with \textbf{PostgreSQL} as the source of truth.
+  \item Fixed a production server-timeout bug by converting synchronous Elasticsearch/PostgreSQL updates to \textbf{async}, and added an audit mechanism to verify write consistency.
+  \item Root-caused a UAT-vs-production schema mismatch to a missing \texttt{liquibase.enabled} flag silently skipping migrations in prod; fixed the config and reconciled the schema.
+\end{highlights}
+
+\vspace{1.2mm}
+%% ── KEY PROJECTS ─────────────────────────────────────────────────────────────
+\section{Key Projects}
+
+\projentry{Railway Reservation System}{\href{https://github.com/SahilAGowda}{GitHub}}{Java, Spring Boot, MySQL, Hibernate, JWT, Maven}{2024}
+\begin{highlights}
+  \item Built a full CRUD ticket booking system using \textbf{Spring Boot MVC} with layered architecture (Controller--Service--Repository), covering train search, booking, and cancellation.
+  \item Implemented \textbf{Role-Based Access Control (RBAC)} with JWT-based authentication for secure user/admin access; used \textbf{Hibernate/JPA} for database interactions.
+  \item Applied core backend patterns: request validation, exception handling, and entity relationship design.
+\end{highlights}
+
+\vspace{1.2mm}
+
+%% ── EDUCATION ────────────────────────────────────────────────────────────────
+\section{Education}
+\begin{onecolentry}
+\noindent{\fontsize{9.5pt}{11pt}\selectfont\textbf{B.E. Computer Science \& Engineering}}\hfill{\fontsize{9pt}{11pt}\selectfont\textcolor{muted}{2022 -- 2026}}\\[1pt]
+{\fontsize{9pt}{11pt}\selectfont\textcolor{navymid}{Cambridge Institute of Technology North Campus, Bengaluru}}\hfill{\fontsize{9pt}{11pt}\selectfont\textbf{CGPA: 9.25 / 10.0}}\\[2pt]
+{\fontsize{9pt}{11pt}\selectfont\textcolor{muted}{Coursework: DSA, DBMS, Operating Systems, Computer Networks, OOP, System Design}}
+\end{onecolentry}
+
+\vspace{1.2mm}
+%% ── CERTIFICATIONS ───────────────────────────────────────────────────────────
+\section{Certifications}
+\begin{onecolentry}
+{\fontsize{9pt}{11pt}\selectfont
+  \textbf{AWS Cloud Practitioner} -- Udemy course certificate (2024)
+  \enspace\textcolor{navy}{|}\enspace
+  \textbf{Selenium WebDriver with Java} -- Simplilearn (2024)
+}
+\end{onecolentry}
+\vspace{1.2mm}
+%% ── ACHIEVEMENTS & LEADERSHIP ────────────────────────────────────────────────
+\section{Achievements \& Leadership}
+\begin{highlights}
+  \item \textbf{Hackathons:} 2nd Place -- GDSC Quizzard 2024 | Finalist -- Smart India Hackathon (SIH) 2025.
+  \item \textbf{Tech Lead, GDSC:} Mentored 50+ students in AI/ML concepts and organized technical workshops.
+  \item \textbf{Competitive Programming:} HackerRank 5-Star Java | LeetCode \textbf{450+ problems solved} | Active on CodeChef.
+\end{highlights}
+
+\end{document}
