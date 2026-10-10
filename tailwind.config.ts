@@ -2,24 +2,40 @@ import type { Config } from "tailwindcss";
 
 export default {
 	darkMode: ["class"],
-	content: [
-		"./pages/**/*.{ts,tsx}",
-		"./components/**/*.{ts,tsx}",
-		"./app/**/*.{ts,tsx}",
-		"./src/**/*.{ts,tsx}",
-	],
+	content: ["./index.html", "./src/**/*.{ts,tsx}"],
 	prefix: "",
 	theme: {
-		container: {
-			center: true,
-			padding: '2rem',
-			screens: {
-				'2xl': '1400px'
-			}
-		},
 		extend: {
 			fontFamily: {
-				poppins: ['Poppins', 'sans-serif'],
+				sans: [
+					'"Atkinson Hyperlegible Next"',
+					'ui-sans-serif',
+					'system-ui',
+					'-apple-system',
+					'"Segoe UI"',
+					'Roboto',
+					'Helvetica',
+					'Arial',
+					'sans-serif',
+				],
+				mono: [
+					'ui-monospace',
+					'SFMono-Regular',
+					'Menlo',
+					'Consolas',
+					'"Liberation Mono"',
+					'monospace',
+				],
+			},
+			// Type scale: ratio 1.25 from 17 px.
+			fontSize: {
+				caption: ['0.875rem', { lineHeight: '1.5' }],
+				body: ['1.0625rem', { lineHeight: '1.6' }],
+				lede: ['1.3125rem', { lineHeight: '1.5' }],
+				'h2-sm': ['1.625rem', { lineHeight: '1.2' }],
+				h2: ['2.0625rem', { lineHeight: '1.15' }],
+				'h1-sm': ['2.5625rem', { lineHeight: '1.15' }],
+				h1: ['3.25rem', { lineHeight: '1.1' }],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -55,60 +71,17 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
-				},
-				// Portfolio specific colors
-				'hero-bg': 'hsl(var(--hero-bg))',
-				'hero-accent': 'hsl(var(--hero-accent))',
-				'section-bg': 'hsl(var(--section-bg))',
-				'code-bg': 'hsl(var(--code-bg))',
-				'hover-bg': 'hsl(var(--hover-bg))',
-				'text-primary': 'hsl(var(--text-primary))',
-				'text-secondary': 'hsl(var(--text-secondary))',
-				'text-muted': 'hsl(var(--text-muted))',
-			},
-			boxShadow: {
-				'sm': 'var(--shadow-sm)',
-				'md': 'var(--shadow-md)',
-				'lg': 'var(--shadow-lg)',
-				'glow': 'var(--shadow-glow)',
+				// Diagram and flowline colours: each one carries a meaning.
+				flow: 'hsl(var(--flow))',
+				store: 'hsl(var(--store))',
+				model: 'hsl(var(--model))',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
 			},
-			keyframes: {
-				'accordion-down': {
-					from: {
-						height: '0'
-					},
-					to: {
-						height: 'var(--radix-accordion-content-height)'
-					}
-				},
-				'accordion-up': {
-					from: {
-						height: 'var(--radix-accordion-content-height)'
-					},
-					to: {
-						height: '0'
-					}
-				}
-			},
-			animation: {
-				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
-			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [],
 } satisfies Config;

@@ -1,0 +1,73 @@
+// Single source for identity, contact details and every outbound link.
+// Components read from here; do not repeat these values in JSX.
+
+export const SITE_URL = "https://sahil-a-gowda-portfolio.vercel.app";
+
+/** Colours for the browser chrome (the theme-color meta tags). They match --background in src/index.css. */
+export const themeColors = { light: "#F5F6F3", dark: "#101519" } as const;
+
+export type LinkKey = "github" | "linkedin" | "leetcode" | "hackerrank" | "codechef";
+
+export interface ProfileLink {
+  label: string;
+  href: string;
+  /** Account name, where one is useful next to the label. */
+  handle?: string;
+}
+
+export const links: Record<LinkKey, ProfileLink> = {
+  github: { label: "GitHub", href: "https://github.com/SahilAGowda", handle: "SahilAGowda" },
+  linkedin: { label: "LinkedIn", href: "https://www.linkedin.com/in/sahil-a-gowda-551b32270/" },
+  leetcode: { label: "LeetCode", href: "https://leetcode.com/u/sahilgowda204/", handle: "sahilgowda204" },
+  hackerrank: {
+    label: "HackerRank",
+    href: "https://www.hackerrank.com/profile/sahilgowda204",
+    handle: "sahilgowda204",
+  },
+  codechef: {
+    label: "CodeChef",
+    href: "https://www.codechef.com/users/sahilgowda204",
+    handle: "sahilgowda204",
+  },
+};
+
+export const profile = {
+  name: "Sahil A Gowda",
+  /** Short role line, used under the name and in metadata. */
+  role: "Backend and AI engineer",
+  /** The hero line: what I do. */
+  headline: "I build data pipelines, search and RAG systems.",
+  /** The home page's <title> and meta description; also used by index.html and the social card. */
+  title: "Sahil A Gowda, backend and AI engineer",
+  description:
+    "Backend and AI engineer in Bengaluru. Spring Batch ingestion at 273 million records, Elasticsearch search, a RAG chatbot and a WhatsApp agent.",
+  summary:
+    "I'm a software development engineer at DIATOZ in Bengaluru, building Java backends and applied-AI systems. " +
+    "I reworked a Spring Batch pipeline to load about 273 million records, and moved report reads to Elasticsearch, which cut report queries from 4–5 s to 400 ms. " +
+    "I also built two proofs of concept: a RAG chatbot with LangChain and LangGraph, and a WhatsApp agent on Meta's Cloud API.",
+  contact: {
+    email: "sahilgowda204@gmail.com",
+    location: "Bengaluru, India",
+  },
+  photo: { base: "/portrait", alt: "Portrait of Sahil A Gowda", width: 96, height: 120 },
+  /** One label for the one action, wherever the resume link appears. */
+  resume: { href: "/Sahil-A-Gowda-Resume.pdf", label: "Open resume" },
+};
+
+/** The page sections, in order. The nav, the flowline and the scroll-spy all read this. */
+export const sections = [
+  { id: "about", label: "About" },
+  { id: "experience", label: "Experience" },
+  { id: "work", label: "Work" },
+  { id: "skills", label: "Skills" },
+  { id: "credentials", label: "Credentials" },
+  { id: "contact", label: "Contact" },
+] as const;
+
+export type SectionId = (typeof sections)[number]["id"];
+
+/** Phrases in the summary that link to the case study holding the proof. */
+export const summaryLinks: { text: string; slug: string }[] = [
+  { text: "273 million records", slug: "master-data-ingestion" },
+  { text: "from 4–5 s to 400 ms", slug: "report-search" },
+];
