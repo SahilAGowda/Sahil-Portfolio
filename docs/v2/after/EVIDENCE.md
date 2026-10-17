@@ -158,6 +158,34 @@ Two readings to be careful with. The home page's three mobile runs were 330, 78 
 
 **What I could not test:** a real GPU, a real phone, and the Vercel preview (unchanged from above).
 
+## Update, 17 October: the Digital Banking System
+
+Asked for after `portfolio-v2` was merged into `main` and deployed. The change is on its own branch, `feature/digital-banking-system`, started from the merged `main`. Nothing is merged and no pull request is open. Every claim is traced in [`../SOURCES.md`](../SOURCES.md), last section. Same limits as above: local only, software WebGL only.
+
+**What changed.** One personal project, "Digital banking system with a transfer saga": a row in Selected work (first among the personal projects), a case-study page with a diagram and nine "Follow the data" steps, and a link to the repository. Seven case studies instead of six. The page has three blockers, in your words of 17 October, and no Results section, because nothing in the repository is a measured outcome. The files changed are `src/data/projects.ts`, `caseStudies.ts` and `diagrams.ts`, the README's case-study count, and these notes. No component, dependency or config file.
+
+**Cost.** Main JavaScript 291.5 to 295.7 kB (95.3 to 96.6 kB gzip): the new text and diagram data. CSS and the 3D chunk are unchanged (23.9 kB; 609.3 kB, 157.0 kB gzip). I did not run Lighthouse again for a change of that size.
+
+**Accessibility and behaviour**
+- **axe-core: 0 violations** in 40 runs: the home page, and the new page, the WhatsApp page (it now ends with a link to the new page) and the GmailSage page, each in three states (3D, 3D with a step selected, flat), light and dark, at 1440 and 390 px. The home page and the new page were run again after the last text change, with the same result.
+- **Rendered contrast:** all 56 labels of the new diagram, both themes and both widths; the worst tenth of the pixels behind any label is 5.13:1, against 4.5:1.
+- **Keyboard:** 33 tab stops on the new page, every one with a ring; the canvas is not a tab stop.
+- **3D behaviour on the new diagram** (all pass, console clean): hover gives a pointer, clicking a block selects its step ("Step 1 of 9"), step buttons set `aria-pressed`, turn, reset and drag change the view, no frames are drawn while paused, the flat toggle removes the canvas and a step still dims the rest, and 3D comes back.
+- **No horizontal scroll** on the new page or the home page at 320, 360, 390, 430, 768, 1024, 1440 and 1920 px. The first version of step 7 named the full verify path as inline code, and that one unbreakable string pushed the page wider than a 320 or 360 px screen; it now says "the `verify` endpoint".
+- **Search** finds the new content (`saga`, `kafka`, `otp`, `razorpay`, `velocity`, `banking`).
+- **Link check:** 82 links, 5 unverifiable (the profile sites, as before), 0 problems; the repository link answers 200.
+- **Build-time checks** pass: both layouts of the diagram have the same nodes, and every walkthrough step names nodes and arrows the diagram draws.
+
+**Diagram.** Five services in a row over one Kafka bar, the client and the gateway above, Razorpay beside the payment service; dashed arrows are Kafka, solid are REST. The first try (Kafka as a drum, two rows of services) crowded its labels in 3D and left gaps where arrows met the drum, so the second is wider and shorter and Kafka is a box. Redis and MySQL are not drawn (SOURCES.md says why).
+
+**What I could not test.** The Vercel preview of this branch (it builds on every push, but I could not open it from here), a real GPU or phone, and the services themselves: I did not run them, so the page says what the code does, not what I saw it do.
+
+**Open items for this change**
+1. **Read the blockers.** They are my wording of your message (the saga pattern, how Kafka works, what a real bank checks for). Change anything that does not sound like you. "When" says "about 29 September to 15 October 2026", keeping your "I guess".
+2. **Resume.** Not changed. It is one page and full, so adding this would mean cutting something (GmailSage did not fit either). Say if you want it swapped in.
+3. **Things I noticed in the repository** (the full list is in SOURCES.md; none is on the site): `verifyOtp` has no status check, so verifying a completed transfer refunds the sender again; the Razorpay webhook handler reads `orderId` and `paymentId` where Razorpay, I believe, sends `order_id` and `id`, and it does not check signatures; the OTP is made with `Math.random()`; the daily limit is stored but not enforced; the only tests are the generated ones.
+4. **Next, the design.** Splitting company work from personal projects is the next change, and it comes after this one.
+
 ## Open items for Sahil
 
 1. **Resume PDF.** Updated on 9 October from the LaTeX you sent (see item 8): `public/Sahil-A-Gowda-Resume.pdf` is the compiled result and `docs/v2/resume/Sahil-A-Gowda-Resume.tex` is the source, one page. The client's name is off it, as you asked. It still contains your phone number (+91-9945886311), as before, and the site serves this file, so the number is public once this is merged. Tell me if the web copy should leave it out.
