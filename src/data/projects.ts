@@ -1,5 +1,5 @@
 // Sources: resume-latest.pdf, the Facts in the v2 brief, the owner's account of the DIATOZ work (9 October 2026),
-// and the READMEs of the public repos linked below. DIATOZ entries are employer work described in general terms: no code links.
+// and the READMEs and code of the public repos linked below. DIATOZ entries are employer work described in general terms: no code links.
 
 export interface Project {
   /** Used by the /projects/:slug case-study route. */
@@ -62,6 +62,16 @@ export const projects: Project[] = [
       "A proof-of-concept WhatsApp agent on Meta's Cloud API, built for a single tenant and configurable for more. Parts lookup is LLM-as-selector RAG over an Elasticsearch shortlist, slot-filling and service booking are deterministic, PDFs are delivered in chat, and Nginx fronts the webhook callbacks.",
     stack: ["Meta WhatsApp Cloud API", "RAG", "Elasticsearch", "Nginx"],
     caseStudy: true,
+  },
+  {
+    slug: "digital-banking-system",
+    title: "Digital banking system with a transfer saga",
+    origin: "Personal",
+    summary:
+      "A banking backend of six Spring Boot services behind an API gateway. A transfer runs as a saga over Kafka: the sender is debited at once, a fraud service applies three rules, a suspicious transfer waits for an OTP kept in Redis, and a wrong or expired OTP refunds the sender. Each service that owns data has its own MySQL database, and a payment service creates Razorpay orders.",
+    stack: ["Java", "Spring Boot", "Spring Cloud Gateway", "Apache Kafka", "Redis", "MySQL"],
+    caseStudy: true,
+    repo: "https://github.com/SahilAGowda/Digital-Banking-System",
   },
   {
     slug: "gmailsage",
