@@ -158,6 +158,83 @@ Two readings to be careful with. The home page's three mobile runs were 330, 78 
 
 **What I could not test:** a real GPU, a real phone, and the Vercel preview (unchanged from above).
 
+## Update, 17 October: the Digital Banking System
+
+Asked for after `portfolio-v2` was merged into `main` and deployed. The change is on its own branch, `feature/digital-banking-system`, started from the merged `main`. Nothing is merged and no pull request is open. Every claim is traced in [`../SOURCES.md`](../SOURCES.md), last section. Same limits as above: local only, software WebGL only.
+
+**What changed.** One personal project, "Digital banking system with a transfer saga": a row in Selected work (first among the personal projects), a case-study page with a diagram and nine "Follow the data" steps, and a link to the repository. Seven case studies instead of six. The page has three blockers, in your words of 17 October, and no Results section, because nothing in the repository is a measured outcome. The files changed are `src/data/projects.ts`, `caseStudies.ts` and `diagrams.ts`, the README's case-study count, and these notes. No component, dependency or config file.
+
+**Cost.** Main JavaScript 291.5 to 295.7 kB (95.3 to 96.6 kB gzip): the new text and diagram data. CSS and the 3D chunk are unchanged (23.9 kB; 609.3 kB, 157.0 kB gzip). I did not run Lighthouse again for a change of that size.
+
+**Accessibility and behaviour**
+- **axe-core: 0 violations** in 40 runs: the home page, and the new page, the WhatsApp page (it now ends with a link to the new page) and the GmailSage page, each in three states (3D, 3D with a step selected, flat), light and dark, at 1440 and 390 px. The home page and the new page were run again after the last text change, with the same result.
+- **Rendered contrast:** all 56 labels of the new diagram, both themes and both widths; the worst tenth of the pixels behind any label is 5.13:1, against 4.5:1.
+- **Keyboard:** 33 tab stops on the new page, every one with a ring; the canvas is not a tab stop.
+- **3D behaviour on the new diagram** (all pass, console clean): hover gives a pointer, clicking a block selects its step ("Step 1 of 9"), step buttons set `aria-pressed`, turn, reset and drag change the view, no frames are drawn while paused, the flat toggle removes the canvas and a step still dims the rest, and 3D comes back.
+- **No horizontal scroll** on the new page or the home page at 320, 360, 390, 430, 768, 1024, 1440 and 1920 px. The first version of step 7 named the full verify path as inline code, and that one unbreakable string pushed the page wider than a 320 or 360 px screen; it now says "the `verify` endpoint".
+- **Search** finds the new content (`saga`, `kafka`, `otp`, `razorpay`, `velocity`, `banking`).
+- **Link check:** 82 links, 5 unverifiable (the profile sites, as before), 0 problems; the repository link answers 200.
+- **Build-time checks** pass: both layouts of the diagram have the same nodes, and every walkthrough step names nodes and arrows the diagram draws.
+
+**Diagram.** Five services in a row over one Kafka bar, the client and the gateway above, Razorpay beside the payment service; dashed arrows are Kafka, solid are REST. The first try (Kafka as a drum, two rows of services) crowded its labels in 3D and left gaps where arrows met the drum, so the second is wider and shorter and Kafka is a box. Redis and MySQL are not drawn (SOURCES.md says why).
+
+**What I could not test.** The Vercel preview of this branch (it builds on every push, but I could not open it from here), a real GPU or phone, and the services themselves: I did not run them, so the page says what the code does, not what I saw it do.
+
+**Open items for this change**
+1. **Read the blockers.** They are my wording of your message (the saga pattern, how Kafka works, what a real bank checks for). Change anything that does not sound like you. "When" says "about 29 September to 15 October 2026", keeping your "I guess".
+2. **Resume.** Not changed. It is one page and full, so adding this would mean cutting something (GmailSage did not fit either). Say if you want it swapped in.
+3. **Things I noticed in the repository** (the full list is in SOURCES.md; none is on the site): `verifyOtp` has no status check, so verifying a completed transfer refunds the sender again; the Razorpay webhook handler reads `orderId` and `paymentId` where Razorpay, I believe, sends `order_id` and `id`, and it does not check signatures; the OTP is made with `Math.random()`; the daily limit is stored but not enforced; the only tests are the generated ones.
+4. **Next, the design.** Done, on its own branch: see the next section.
+
+## Update, 17 October (second): Company work and Personal projects
+
+Asked for by you on 17 October ("distinguish between personal projects and company work ... rather than adding everything in a single scroll"). It is on its own branch, `design/split-company-work-and-personal-projects`, which starts from `feature/digital-banking-system` and builds on it. Nothing is merged and no pull request is open. The reasoning, the options and the wireframes are in [`../DESIGN_PLAN.md`](../DESIGN_PLAN.md) (last revision); the text and choices that are new are in [`../SOURCES.md`](../SOURCES.md) (last section). Same limits as above: local only.
+
+**What changed.** "Selected work" is now two sections. **Company work** holds the five DIATOZ projects as rows with their diagrams, as before, under a line that says what they are. **Personal projects** holds the four others as cards without diagrams. The rail and the phone menu have seven entries. Back links, search labels and the back links on the static pages follow the group. The files changed are `src/data/projects.ts` (the groups, a shorter text for the banking card, and `employerNote`, moved here from `caseStudies.ts`), `profile.ts` (the section list), `search.ts`, `vite.config.ts`, `Project.tsx`, `Index.tsx`, `Section.tsx`, `ProjectRow.tsx` and `WorkSection.tsx`, with three new components: `PersonalSection.tsx`, `ProjectCard.tsx` and `ProjectLinks.tsx` (the links a row and a card share). No dependency, and no file under `src/components/ui`.
+
+**Length.** Heights measured in Chromium on the previous commit and on this branch:
+
+| Width | Before: Selected work | After: Company work + Personal projects | Page before | Page after |
+|---|---|---|---|---|
+| 1440 px | 4,088 px | 2,529 + 936 = 3,465 px | 8,504 px | 7,992 px |
+| 768 px | 4,518 px | 2,608 + 1,000 = 3,608 px | 9,049 px | 8,219 px |
+| 390 px | 7,385 px | 4,754 + 1,861 = 6,615 px | 13,665 px | 12,975 px |
+
+The company rows are the same size. The saving comes from the four personal projects (rows with diagrams before, cards now) and from the "Work at DIATOZ" lines. At 1440 px the page is 512 px (6%) shorter, and the personal projects are now a section of their own, one click from the rail.
+
+**Cost.** Main JavaScript 295.5 to 297.5 kB (96.5 to 97.0 kB gzip), CSS 23.9 to 24.0 kB (5.83 to 5.85 kB gzip); the 3D and case-study chunks are unchanged. Lighthouse 13.5 on the home page, median of 3, with the previous commit and this branch built and measured back to back on the same machine and the same static server:
+
+| Build | Form | Perf | A11y | BP | SEO | FCP | LCP | TBT | CLS | Transfer |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Previous commit | Mobile | 98 | 100 | 100 | 100 | 1.35 s | 1.80 s | 129 ms | 0 | 135.0 kB |
+| Previous commit | Desktop | 100 | 100 | 100 | 100 | 0.34 s | 0.38 s | 0 ms | 0 | 135.0 kB |
+| This branch | Mobile | 99 | 100 | 100 | 100 | 1.40 s | 1.70 s | 67 ms | 0 | 135.5 kB |
+| This branch | Desktop | 100 | 100 | 100 | 100 | 0.34 s | 0.39 s | 0 ms | 0 | 135.5 kB |
+
+I read this as no change: the machine's benchmark index ranged from 1,725 to 2,742 across the twelve runs, and mobile blocking time ranged from 64 to 148 ms across the six mobile runs.
+
+**Accessibility and behaviour**
+- **axe-core: 0 violations** in 28 runs: the home page, the banking page and a company case study (master-data ingestion), each case study in three states (3D, 3D with a step selected, flat with a step selected), light and dark, at 1440 and 390 px. The only "needs review" item is colour contrast of text over SVG or WebGL, measured in the sections above.
+- **Contrast of the new elements**, from computed styles in both themes: every piece of text in a card and every intro line is 6.01:1 or better against the page (the card text itself 15.3 to 16.1:1); the outline button's text is 15.3 to 16.1:1 and its border 3.46:1 in light and 4.24:1 in dark (3:1 needed). The card's own border is decorative: 1.28:1 and 1.37:1.
+- **49 behaviour checks pass** with a clean console. Both sections have the right projects, no diagram sits in a card, and no "Selected work" or repeated origin line is left. The rail lists the seven sections in order, and each rail link lands on its section with focus moved to it. Scroll-spy names each section with its top at 30% of the window, and Contact at the page bottom. The link under the Company work heading jumps to Personal projects. The phone menu has seven items of 44 px, fits the window, lands on the section and closes. "Back to company work" and "Back to personal projects" work from four case studies, at the top and at the bottom, and the "Next case study" chain still visits all seven in order. Search finds the two sections by name ("personal projects", "company work", "employer"), labels every project result with its group, shows no "Selected work" anywhere, and a "railway" result lands on `#personal` with the hit highlighted. Keyboard: the company section has 11 tab stops (the intro link, then a title and a button for each of five rows) and the personal section 8 (banking 3, GmailSage 3, the Meet transcriber 1, the GitHub profile 1; the railway card has no link), and the first four stops after an anchor show the 2 px ring. Tap targets in both sections are 44 px; the exceptions are text links inside a sentence and project titles that link to a page that also has a 44 px button.
+- **Rail on short windows:** it fits at 1440 by 900, 1280 by 720, 1024 by 768 and 1024 by 600. At 1100 by 480 it needs 518 px, so the rail scrolls itself and the theme toggle is still reachable (it was about 475 px with six entries).
+- **No horizontal scroll** at 320, 360, 390, 414, 600, 768, 900, 1024, 1180, 1280, 1440, 1600 and 1920 px on the home page, the banking page and a company page.
+- **Link check:** 84 links, 5 unverifiable (the profile sites, as before), 0 problems; `#work` and `#personal` both have targets. `link-check.tsv` was regenerated: the previous file predated the banking page's "Blockers" link.
+- **Static pages:** the built `projects/*.html` files link back to `/#work` ("Back to company work") for the five company studies and to `/#personal` ("Back to personal projects") for the two personal ones.
+- **Unused code:** knip finds no unused file; the one new unused type export it flagged was un-exported.
+
+**Screenshots** (`*.webp` in this folder): the home page at three widths in both themes (retaken), `home-before-split-*` for comparison (light, 1440 and 390 px), `split-work-*` and `split-personal-*` (the view after following each section's anchor), and the search screenshots (retaken: the results now say "Company work").
+
+**What I could not test.** Pinterest: the container's network policy denies it and there is no browser here to log into, so the references were the text of four public portfolios (see the design plan). The Vercel preview of this branch, a real phone, and a screen reader: I checked accessible names, order and focus through the page, not by listening to it.
+
+**Open items for this change**
+1. **The railway system.** It sits under Personal projects because it is not company work and it predates DIATOZ. If you built it for college, say so and I will move it or rename the section; its card shows only "2024", not the words "personal project".
+2. **Read the new words.** The line under each heading ("Employer work, described in general terms. Code and data are not public. My public code is under Personal projects." and "Built outside work. Where a project has a repository, it is public.") and the banking card's shorter text. They are in `src/data/projects.ts`.
+3. **Pinterest.** If you want me to compare against pins you like, send two or three as screenshots or links, or allow the host under the environment's Network access. I would still need you to log in for anything behind a login.
+4. **Merge order.** This branch builds on `feature/digital-banking-system`. Merge that one first (an ordinary merge commit), then this one. Merging this one alone brings the banking commits with it.
+5. **Noticed, not changed.** If you paste a section link such as `/#personal` into the address bar of a tab that is already on the home page, the page stays at the top instead of jumping to the section. The previous commit does the same with `/#work`, so it is not from this change, and I did not look into it further. Clicking a link, the rail, the phone menu, a "Back to" link, a search result and opening a section link in a new tab all land correctly.
+6. **Left for you:** hiding the diagrams on phones (about 2,070 of the company list's 4,750 px) and moving the personal projects above the company work are small changes (two lines each in `Index.tsx` and `profile.ts` for the move) if you want a shorter or a different first impression.
+
 ## Open items for Sahil
 
 1. **Resume PDF.** Updated on 9 October from the LaTeX you sent (see item 8): `public/Sahil-A-Gowda-Resume.pdf` is the compiled result and `docs/v2/resume/Sahil-A-Gowda-Resume.tex` is the source, one page. The client's name is off it, as you asked. It still contains your phone number (+91-9945886311), as before, and the site serves this file, so the number is public once this is merged. Tell me if the web copy should leave it out.
@@ -169,6 +246,6 @@ Two readings to be careful with. The home page's three mobile runs were 330, 78 
 7. **The 3D view on a real phone.** I could only test it with software WebGL. Open a case study on your phone and check that the diagram turns smoothly and the page still scrolls past it. If it stutters, tell me and I will start phones on the flat diagram (it is a one-line change in `FlowDiagram.tsx`).
 8. **The resume now says what the site says.** "Reworked" instead of "Built" for the master-data ingestion and the Excel upload, because your senior engineers wrote the first versions; the Excel heap fix as a validation-flow rework (the old resume said "streaming with SXSSF", which your walkthrough shows only in the report exports); the master-data speed-up; the report latency as 4 to 5 s to 400 ms with the backfill and async indexing; the RAG chatbot as a proof of concept that chose Milvus over Pinecone; the WhatsApp agent as a single-tenant proof of concept, without the client's name; 4,000 stores. Check the wording in `docs/v2/resume/Sahil-A-Gowda-Resume.tex`, and tell me if any of it should go back. GmailSage did not fit on the one page without cutting the Railway entry, so it is not on the resume.
 9. **Figures and detail from your messages that go beyond the old resume.** Around 16 hours and about 1.5 to 2 minutes per million records, 10 million records in 12 to 14 minutes, 273 files, 4,000 stores, 4 to 5 seconds and 7+ reports, plus mechanism-level detail (partitioned workers, a multi-row insert-or-update, validate once and save in the background, a signature and duplicate check). I read your "1.30 to 2 minutes" as 1 minute 30 seconds to 2 minutes. I could not make "273 files" and "parts of 10 million" agree (273 files of 10 million records each would be 2.73 billion), so the pages say the data went in as 273 files, in parts of 10 million records, and that 10 million records took 12 to 14 minutes, and claim nothing more. Tell me how many records a file held. Left out on purpose: the client's name, class, endpoint and table names, the CSV's columns, and configuration values. Tell me if any figure or mechanism should come out; each is one line.
-10. **History.** The repository is public, and earlier commits on this branch still contain what you have since corrected or asked me to leave out: the client's name (the old experience bullet, the resume source and PDF), the old latency figure and "multi-tenant", and, in their notes, the name of the in-progress company project. The current files do not. A squash merge keeps all of that out of `main`'s history, but the branch, this pull request and its commit pages show it until the branch is removed, and GitHub can keep rewritten commits reachable by their addresses for a while. Rewriting the branch would change commits that you may have checked out, and it is outward-facing, so I have not done it; say if you want it, and whether to start the pull request again from a clean branch instead.
+10. **History (cleaned on 17 October).** The repository is public, and the commits of pull request #1 carried what you had asked me to leave out: the client's name (the old experience bullet, the resume source and PDF, screenshots), the name of the in-progress company project in the notes, and old figures. With your go-ahead I replaced those 25 commits on `main` with one commit that has exactly the same files, checked that no commit, PDF or commit message in the remaining history names either, and moved the work after it onto the new `main`. Three things are still yours, because I could not do them from here. (a) Delete the branches `portfolio-v2` and `claude/nifty-hawking-v9c403` in GitHub: they still point at the old commits, and the git proxy refuses branch deletion. (b) Ask GitHub Support to remove the cached views of pull request #1 and run garbage collection: the old commits are still reachable through the pull request's refs. (c) Delete the old preview deployments of those commits in Vercel. A clone made before 17 October has to be reset: `git fetch origin`, `git checkout main`, `git reset --hard origin/main`.
 
 **After the merge:** refresh the LinkedIn preview with LinkedIn Post Inspector (LinkedIn caches link previews), and check whether the Lovable project is still connected to this repository, since a connected project can push over `main`.

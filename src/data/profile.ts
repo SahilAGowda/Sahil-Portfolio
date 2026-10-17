@@ -58,7 +58,8 @@ export const profile = {
 export const sections = [
   { id: "about", label: "About" },
   { id: "experience", label: "Experience" },
-  { id: "work", label: "Work" },
+  { id: "work", label: "Company work" },
+  { id: "personal", label: "Personal projects" },
   { id: "skills", label: "Skills" },
   { id: "credentials", label: "Credentials" },
   { id: "contact", label: "Contact" },

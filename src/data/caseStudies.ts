@@ -1,6 +1,7 @@
 // Case-study content. Every line traces to resume-latest.pdf, the Facts in the v2 brief, the owner's own account of
 // the DIATOZ work (his message of 9 October 2026, which is the source for what each piece of work was and how it went),
-// or, for GmailSage, the public repo's README and code. See docs/v2/SOURCES.md for the line-by-line ledger.
+// or, for GmailSage and the Digital Banking System, the public repos' README and code. See docs/v2/SOURCES.md for the
+// line-by-line ledger.
 // A section with no sourced content is left out, not padded.
 //
 // DIATOZ entries are employer work, described in general terms: no client names, internal tool, class, endpoint or
@@ -70,8 +71,6 @@ export interface CaseStudy {
   terms?: Term[];
   results?: Result[];
 }
-
-export const employerNote = "Employer work, described in general terms. Code and data are not public.";
 
 export const caseStudies: CaseStudy[] = [
   {
@@ -694,6 +693,177 @@ export const caseStudies: CaseStudy[] = [
       { term: "Deterministic", meaning: "The same input gives the same result, and no model decides it." },
       { term: "Webhook", meaning: "A URL on the agent's server that Meta calls whenever something happens, such as a new message." },
       { term: "Deduplication", meaning: "Making sure the same message, delivered twice, is handled once." },
+    ],
+  },
+  {
+    slug: "digital-banking-system",
+    outcome:
+      "A banking backend of six Spring Boot services behind an API gateway, where a transfer runs as a Kafka saga: the sender is debited at once, a fraud service checks the transfer, a suspicious one waits for an OTP, and a transfer that cannot stand is refunded.",
+    glance: [
+      { label: "When", value: "A personal project, built from about 29 September to 15 October 2026." },
+      {
+        label: "My part",
+        value: "I built the six services, the gateway routes and the Docker Compose setup for Redis, ZooKeeper, Kafka and MySQL.",
+      },
+      {
+        label: "Scope",
+        value: "Six services, nine Kafka topics and three fraud rules. It runs locally, and the settings in the repository are meant for local development.",
+      },
+      {
+        label: "Next",
+        value: "I am thinking of adding machine learning to the fraud service, to find mule accounts and the networks they form, and to make its checks better.",
+      },
+    ],
+    problem: [
+      "A transfer moves money between two accounts, and the account data belongs to one service while the transfer belongs to another. Each service has its own database, so no single database transaction can cover the debit, the credit and everything in between. A transfer therefore runs as a saga with a compensating step instead of a distributed transaction.",
+      "Around the transfer there are three more jobs: check every transfer for fraud before it completes, ask the sender to confirm one that looks suspicious, and give the money back when a transfer cannot stand.",
+    ],
+    constraints: [
+      "The account service and the transaction service each own a MySQL database, so a transfer cannot be one transaction.",
+      "The debit has to succeed or fail before the client gets an answer. The fraud check, the OTP and the alerts can happen after it.",
+      "A transfer that does not stand has to give the sender's money back.",
+      "A fraud result that arrives twice must not complete a transfer twice.",
+    ],
+    decisions: [
+      {
+        title: "A saga with a compensating step",
+        body: "The transaction service debits the sender first and lets events decide the rest. If the transfer cannot stand, it credits the sender back through the account service and marks the transfer `FLAGGED`. No database transaction spans the services.",
+      },
+      {
+        title: "REST where the answer is needed, Kafka for the rest",
+        body: "The debit is a REST call (OpenFeign) from the transaction service to the account service, so a blocked account or too little money fails the request before anything else happens. The fraud check, the OTP, the credit and the alerts travel as JSON events on Kafka, so the services do not wait on each other.",
+      },
+      {
+        title: "Suspicious is not the same as rejected",
+        body: "A transfer the rules flag is not refused. The sender is asked for a six-digit OTP, kept in Redis for five minutes, and the transfer waits as `PENDING_VERIFICATION`. A right OTP completes it. A wrong OTP blocks the sender's account and refunds the sender. An expired OTP refunds the sender.",
+      },
+      {
+        title: "Three fraud rules in a fixed order",
+        body: "Velocity, unusual amount, then balance. The first rule that matches sends the transfer to OTP verification. The limits (5 transfers a minute, 5 times the average, 90% of the balance) are settings in the fraud service, not code.",
+      },
+      {
+        title: "Redis for three small jobs",
+        body: "The gateway's rate limiter, the fraud counters and the OTPs all live in Redis. An OTP expires on its own after five minutes.",
+      },
+      {
+        title: "A database for each service that owns data",
+        body: "The account, transaction and payment services each have their own MySQL database, created on the first start. The fraud service keeps its counters in Redis, and the notification service only reads events.",
+      },
+      {
+        title: "A repeated event does nothing",
+        body: "Before the transaction service completes a transfer or asks for an OTP, it checks that the transfer is still `PROCESSING` and skips the event if it is not. The comment in the code names the risk: a double credit.",
+      },
+    ],
+    steps: [
+      {
+        title: "A request reaches the gateway",
+        body: "Clients call one address, the API gateway, which routes accounts, transactions and payments to their services. A Redis-backed rate limiter caps each client address: 10 requests a second with a burst of 20 for accounts and transactions, and 5 with a burst of 10 for payments.",
+        nodes: ["client", "gateway", "acct", "txn", "pay"],
+        edges: [
+          ["client", "gateway"],
+          ["gateway", "acct"],
+          ["gateway", "txn"],
+          ["gateway", "pay"],
+        ],
+      },
+      {
+        title: "A transfer debits the sender at once",
+        body: "A transfer is a `POST` to the transaction service. It calls the account service over REST to debit the sender, so a blocked account or too little money fails the request there. Then it saves the transfer as `PROCESSING`, publishes an event and answers the client.",
+        nodes: ["txn", "acct"],
+        edges: [["txn", "acct"]],
+      },
+      {
+        title: "An event starts the fraud check",
+        body: "The transaction service publishes `transaction.initiated` to Kafka. The fraud detection service consumes it and reads the sender's balance from the account service over REST.",
+        nodes: ["txn", "bus", "fraud"],
+        edges: [
+          ["txn", "bus"],
+          ["bus", "fraud"],
+        ],
+      },
+      {
+        title: "Three rules decide",
+        body: "The fraud service applies three rules in order, and the first match sends the transfer to OTP verification. Velocity: more than 5 transfers from one account within 60 seconds, counted in Redis. Unusual amount: more than 5 times a running average of that sender's transfers, also kept in Redis; the first transfer is never flagged. Balance: an amount above 90% of the sender's balance when the check runs.",
+        nodes: ["fraud"],
+      },
+      {
+        title: "A clean transfer completes",
+        body: "The fraud service publishes `fraud.clean.check`. The transaction service marks the transfer `COMPLETED`, but only if it is still `PROCESSING`, and publishes `transaction.completed`. The account service consumes that and credits the receiver, and the notification service logs the debit and credit alerts.",
+        nodes: ["bus", "fraud", "txn", "acct", "notify"],
+        edges: [
+          ["bus", "fraud"],
+          ["txn", "bus"],
+          ["bus", "acct"],
+          ["bus", "notify"],
+        ],
+      },
+      {
+        title: "A suspicious transfer asks for an OTP",
+        body: "The fraud service publishes `verification.required` with the reason. The transaction service makes a six-digit OTP, keeps it in Redis for five minutes, sets the transfer to `PENDING_VERIFICATION` and publishes the OTP. The notification service logs it for now.",
+        nodes: ["bus", "fraud", "txn", "notify"],
+        edges: [
+          ["bus", "fraud"],
+          ["txn", "bus"],
+          ["bus", "notify"],
+        ],
+      },
+      {
+        title: "The OTP decides the outcome",
+        body: "The user sends the OTP to the transaction service's `verify` endpoint. A right OTP completes the transfer as above. A wrong OTP publishes `fraud.detected`, which makes the account service block the sender's account, and refunds the sender. An expired OTP refunds the sender without blocking the account.",
+        nodes: ["txn", "bus", "acct"],
+        edges: [
+          ["txn", "bus"],
+          ["bus", "acct"],
+          ["txn", "acct"],
+        ],
+      },
+      {
+        title: "A refund undoes the debit",
+        body: "Refunding is the saga's compensating step. The transaction service credits the sender back through the account service over REST, sets the transfer to `FLAGGED` and publishes `transaction.refunded`, which the notification service turns into a refund alert.",
+        nodes: ["txn", "acct", "bus", "notify"],
+        edges: [
+          ["txn", "acct"],
+          ["txn", "bus"],
+          ["bus", "notify"],
+        ],
+      },
+      {
+        title: "Payments go through Razorpay",
+        body: "The payment service creates a Razorpay order (the amount in paise, in INR), saves a payment as `CREATED` and returns the order to the client. Razorpay's webhook then reports the result: a captured payment becomes `COMPLETED` and a failed one `FAILED`, and each is published to Kafka for the notification service. The Razorpay keys in the repository are placeholders.",
+        nodes: ["gateway", "pay", "rzp", "bus", "notify"],
+        edges: [
+          ["gateway", "pay"],
+          ["pay", "rzp"],
+          ["pay", "bus"],
+          ["bus", "notify"],
+        ],
+      },
+    ],
+    blockers: [
+      {
+        title: "I did not know the saga pattern",
+        problem: "I had no idea how a distributed system works, how microservices talk to each other, or what to do when one of them fails.",
+        fix: "I learned the saga pattern. The transfer debits the sender first, and a transfer that cannot stand is undone by a compensating credit through the account service.",
+      },
+      {
+        title: "Understanding how Kafka works",
+        problem: "The saga runs on Kafka events, and I needed to understand how Kafka works.",
+        fix: "I learned how Kafka works.",
+        result: "Understanding it properly helped.",
+      },
+      {
+        title: "What a real bank checks for",
+        problem: "A fraud service has to know what to look for, and I did not know what a real bank considers when it protects an account from an attacker.",
+        fix: "I learned how banks protect accounts today and built the fraud service around three rules: velocity, unusual amount and balance.",
+      },
+    ],
+    terms: [
+      { term: "Saga", meaning: "A way to keep several services consistent without one big transaction: a series of local steps, each with a step that undoes it." },
+      { term: "Compensating step", meaning: "The step that undoes an earlier one, for example crediting back a debit." },
+      { term: "Choreography", meaning: "Each service reacts to events and publishes its own, with no central coordinator." },
+      { term: "OTP step-up", meaning: "Asking for one more proof, a one-time password, only when something looks wrong." },
+      { term: "Idempotency guard", meaning: "A check that makes handling the same event twice give the same result as handling it once." },
+      { term: "OpenFeign", meaning: "A Spring library that turns a Java interface into a REST client." },
     ],
   },
   {

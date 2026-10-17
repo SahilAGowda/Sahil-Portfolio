@@ -4,12 +4,14 @@ import { cn } from "@/lib/utils";
 interface SectionProps {
   id: string;
   title: string;
+  /** One line under the heading that says what the section holds. */
+  intro?: ReactNode;
   children: ReactNode;
   className?: string;
 }
 
 /** A home-page section: anchor target, labelled region, and a heading with a flowline dot on phones. */
-export function Section({ id, title, children, className }: SectionProps) {
+export function Section({ id, title, intro, children, className }: SectionProps) {
   return (
     <section
       id={id}
@@ -23,6 +25,7 @@ export function Section({ id, title, children, className }: SectionProps) {
       >
         {title}
       </h2>
+      {intro && <p className="mt-3 max-w-[64ch] text-muted-foreground">{intro}</p>}
       {children}
     </section>
   );

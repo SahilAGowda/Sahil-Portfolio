@@ -1,5 +1,8 @@
 // Sources: resume-latest.pdf, the Facts in the v2 brief, the owner's account of the DIATOZ work (9 October 2026),
-// and the READMEs of the public repos linked below. DIATOZ entries are employer work described in general terms: no code links.
+// and the READMEs and code of the public repos linked below. DIATOZ entries are employer work described in general terms: no code links.
+// The home page shows two groups (see `groups` below): DIATOZ work as case-study rows, everything else as cards.
+
+import type { SectionId } from "./profile";
 
 export interface Project {
   /** Used by the /projects/:slug case-study route. */
@@ -8,6 +11,8 @@ export interface Project {
   origin?: "DIATOZ" | "Personal";
   year?: string;
   summary: string;
+  /** A shorter `summary` for the cards in Personal projects. Only shortens the summary; adds no fact. */
+  blurb?: string;
   stack: string[];
   /** True when src/data/caseStudies.ts has content for this slug, which turns on its /projects/:slug page and links. */
   caseStudy?: boolean;
@@ -64,6 +69,18 @@ export const projects: Project[] = [
     caseStudy: true,
   },
   {
+    slug: "digital-banking-system",
+    title: "Digital banking system with a transfer saga",
+    origin: "Personal",
+    summary:
+      "A banking backend of six Spring Boot services behind an API gateway. A transfer runs as a saga over Kafka: the sender is debited at once, a fraud service applies three rules, a suspicious transfer waits for an OTP kept in Redis, and a wrong or expired OTP refunds the sender. Each service that owns data has its own MySQL database, and a payment service creates Razorpay orders.",
+    blurb:
+      "Six Spring Boot services behind an API gateway. A transfer runs as a saga over Kafka: a fraud service checks it, and a suspicious one waits for an OTP.",
+    stack: ["Java", "Spring Boot", "Spring Cloud Gateway", "Apache Kafka", "Redis", "MySQL"],
+    caseStudy: true,
+    repo: "https://github.com/SahilAGowda/Digital-Banking-System",
+  },
+  {
     slug: "gmailsage",
     title: "GmailSage",
     origin: "Personal",
@@ -97,10 +114,31 @@ const originLabel: Record<NonNullable<Project["origin"]>, string> = {
   Personal: "Personal project",
 };
 
-/** The short line under a project title: where it was built, or its year. */
+/** The short line under a project title on its case-study page, and in search: where it was built, or its year. */
 export function projectMeta(project: Project): string | undefined {
   return project.origin ? originLabel[project.origin] : project.year;
 }
 
 /** Projects that have a case-study page, in display order. */
 export const caseStudyProjects = projects.filter((project) => project.caseStudy);
+
+/** Shown under every DIATOZ case study, and under the Company work heading on the home page. */
+export const employerNote = "Employer work, described in general terms. Code and data are not public.";
+
+type ProjectGroup = "company" | "personal";
+
+/** Work built at DIATOZ is company work. Everything else, including the 2024 railway system, is shown as a personal project. */
+export const groupOf = (project: Project): ProjectGroup => (project.origin === "DIATOZ" ? "company" : "personal");
+
+/** The two home-page sections: the id is the anchor and the rail entry (see `sections` in profile.ts). */
+export const groups: Record<ProjectGroup, { id: SectionId; title: string; intro: string }> = {
+  company: { id: "work", title: "Company work", intro: employerNote },
+  personal: {
+    id: "personal",
+    title: "Personal projects",
+    intro: "Built outside work. Where a project has a repository, it is public.",
+  },
+};
+
+export const companyProjects = projects.filter((project) => groupOf(project) === "company");
+export const personalProjects = projects.filter((project) => groupOf(project) === "personal");

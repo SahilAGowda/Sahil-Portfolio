@@ -500,3 +500,138 @@ Sahil's reply to the request for "what was hardest" showed that the first case s
 - **Where the content came from.** The pages describe mechanisms (partitioned workers, multi-row insert-or-update, validate once and save in the background, a duplicate-message check) and leave out class, endpoint and table names, the CSV's columns, configuration values and the client's name. `SOURCES.md` lists every claim and how each disagreement between his account and the resume was settled.
 - **Diagrams.** Two new ones, and new nodes on three old ones: a download node on report search, a service-API node on the RAG chatbot, and webhook checks, Elasticsearch and repair status on the WhatsApp agent. Lane captions that stood behind a node in the 3D view are now notes under the diagram.
 - **Corrections the same day.** A second reply from Sahil corrected the report-search approach (the reports read ticket data; the old tickets were backfilled into Elasticsearch, new ones are indexed asynchronously, and nothing is sent asynchronously to the database), replaced the latency figure with 4 to 5 s to 400 ms, added the speed results of the master-data load (a million records in about 1.5 to 2 minutes, from 16 hours), said why Milvus was chosen, and made the WhatsApp agent a single-tenant proof of concept that was not shipped. The client's name is off the site and the resume. The diagram for report search gained an indexing step and lost its "async updates to PostgreSQL" arrow. In the 3D scene the eight ridges of a diamond are now drawn at half the strength of its outline: with the corrected diagrams, the lines under the label of the small phone-layout diamond held its text under 4.5:1. That node is also as wide as its column now.
+
+## Revision, 17 October 2026: a bus diagram for the banking project
+
+Added with the Digital Banking System case study (branch `feature/digital-banking-system`). It changes no rule above; it records two drawing choices.
+
+- **Kafka is a box.** The grammar says a cylinder is a store and a box is a job or service. A message broker is drawn as a box, a wide one under the five services, so every service reaches it with a short vertical arrow. A first version drew it as a drum; at 360 units wide, the arrows that met it off-centre stopped short of it in 3D, and two rows of services pushed the labels into each other.
+- **Dashed means Kafka, solid means REST.** The legend still says "asynchronous or a check", which is true here. Redis and MySQL are named in the steps and the text, not drawn, because Redis serves three services and MySQL three, and their arrows would cross the bus.
+
+## Revision, 17 October 2026 (second): Company work and Personal projects
+
+Asked for by Sahil on 17 October: "as the work is growing, can we distinguish between personal projects and company work ... rather than adding everything in a single scroll", and to design it "like a proper UI/UX designer". It is on its own branch, `design/split-company-work-and-personal-projects`, which starts from `feature/digital-banking-system` and so builds on it. It changes the home page's structure. A case-study page changes only in its back links.
+
+### What was wrong
+
+- "Selected work" was one list of nine projects: about half of the home page (4,088 of 8,504 px at 1440 wide; 7,385 of 13,665 px on a phone). The only sign of which were employer projects was a grey line under each title ("Work at DIATOZ", "Personal project"), which is easy to skip.
+- The two kinds answer different questions with different evidence. A reader of the company work wants scale and outcomes, and the evidence is a case study and a diagram, because the code is not public. A reader of the personal projects wants to read code, and the evidence is a repository. Both got the same row and the same button.
+- It would not scale. Each new project added a row with a diagram to one list, and the rail had a single "Work" stop for all of it.
+
+### References
+
+The brief suggested Pinterest. The container's network policy denies `pinterest.com` (and the portfolio sites I tried to open directly: `brittanychiang.com`, `leerob.io`, `rauno.me`, `awwwards.com`, `dribbble.com`), and there is no browser here to log into, so I could not look at Pinterest. What I could do is read the text of four public engineer portfolios through a page-reading tool. Text only, no screenshots, so they informed the structure and not the styling:
+
+- **brittanychiang.com**: experience as a dated list of roles, then a separate "Projects" section of cards, then a link to a full project archive.
+- **emilkowal.ski**: the employer in one sentence under "Today", then "Projects" (own products, one short entry each), then "Writing".
+- **rauno.me**: a short menu of destinations (Projects, Craft, Field notes), one per kind of thing.
+- **leerob.com**: the employer history in the bio, then plain lists of notes and posts.
+
+What they share: what happened at work is kept apart from what the person built on their own, each part is named for what a reader finds in it, and none hides one part behind a switch. If you can send two or three Pinterest pins (a screenshot or a link each), I will compare them with this page and change what they argue for.
+
+### Options
+
+1. **Tabs, or a switch ("Company work | Personal projects") in one section.** Shortest page. But the hidden half cannot be found by scrolling or Ctrl+F, a crawler that does not run script never sees it, the search and the rail would have to open the right tab, and a link to it needs state. Rejected.
+2. **Two sections with the same row.** Fixes wayfinding, but the page stays one long list of equal items. Too little.
+3. **Two sections, each with the presentation its evidence needs.** Chosen.
+4. **Two pages (`/work`, `/projects`).** Shortest home page, but it splits nine items across routes, adds a click for every reader, and moves the sitemap and the search targets, for little gain at this size. Worth revisiting if the list grows to a dozen or more.
+
+### Decision
+
+The home page now runs About, Experience, **Company work**, **Personal projects**, Skills, Credentials, Contact. The rail and the phone menu have seven entries, in that order.
+
+- **Company work** (`#work`, so old links still land here). A heading and one line: "Employer work, described in general terms. Code and data are not public. My public code is under Personal projects." (the last sentence links to the next section, so "not public" is not a dead end). Below, the five projects as before: diagram on the left, text and a filled "Read the full case study" button on the right. The "Work at DIATOZ" line under each title is gone, because the heading says it once.
+- **Personal projects** (`#personal`). A heading and one line: "Built outside work. Where a project has a repository, it is public." Below, a grid of cards, two across from 768 px and one on a phone. A card has the title (a link when there is a case study), the text, the stack, and its links at the bottom: an outline "Read the full case study" button and "Open repository". There are no diagrams on the cards: they are on the case-study pages, and the cards are what keeps this list short as it grows. "Open GitHub profile" moved here from the end of the old list, because the personal code is what it leads to.
+- **Weight.** Filled blue buttons and diagrams belong to the company work; outline buttons and bordered cards to the personal projects. Each group is recognisable from its shape without reading a label, and the label is not colour-only.
+- **Digital banking card.** Its card uses a shorter text (`blurb` in `projects.ts`): the first sentence of its summary, then one line about the saga. The full summary (three sentences, about 420 characters) would make this card much taller than the other three, which use their full summaries.
+- **Back links.** A company case study says "Back to company work" and a personal one "Back to personal projects", at the top and at the bottom, and each lands on its own section. The static page for each case study (the text shown without script) does the same. "Next case study" still follows one order through all seven.
+- **Search.** A result is labelled "Company work" or "Personal projects" instead of "Selected work", and the two sections can be found by name (try "personal projects", "company work" or "employer").
+
+### Wireframes
+
+Desktop, 1024 px and wider (the rail has seven stops; the page is 512 px shorter at 1440 wide):
+
+```
++--------------------------------------------------------------------------+
+|  Sahil A Gowda                                              [ Search /  ]|
+|                    |                                                     |
+|  o About           |  Company work                                       |
+|  |                 |  Employer work, described in general terms. Code    |
+|  o Experience      |  and data are not public. My public code is under   |
+|  |                 |  Personal projects.                                 |
+|  o Company work    |                                                     |
+|  |                 |  +-----------+  Master-data ingestion at 273        |
+|  o Personal        |  | diagram   |  million records                     |
+|    projects        |  |           |  Summary, four sentences             |
+|  |                 |  |           |  Stack: Java, Spring Batch, ...      |
+|  o Skills          |  +-----------+  [ Read the full case study ]  filled |
+|  |                 |                                                     |
+|  o Credentials     |  ... four more rows ...                             |
+|  |                 |                                                     |
+|  o Contact         |  Personal projects                                  |
+|                    |  Built outside work. Where a project has a          |
+|                    |  repository, it is public.                          |
+|                    |                                                     |
+|                    |  +--------------------+  +--------------------+     |
+|                    |  | Digital banking... |  | GmailSage          |     |
+|                    |  | short text         |  | summary            |     |
+|                    |  | Stack: ...         |  | Stack: ...         |     |
+|                    |  | [ Read the full    |  | [ Read the full    |     |
+|                    |  |   case study ]     |  |   case study ]     |     |
+|                    |  | Open repository    |  | Open repository    |     |
+|                    |  +--------------------+  +--------------------+     |
+|                    |  +--------------------+  +--------------------+     |
+|                    |  | Meet transcriber   |  | Railway Reservation|     |
+|                    |  | ...                |  | 2024  ...          |     |
+|  Theme: Light Dark |  | Open repository    |  |                    |     |
+|                    |  +--------------------+  +--------------------+     |
+|                    |  Open GitHub profile                                |
++--------------------------------------------------------------------------+
+```
+
+Phone (the flowline runs down the left edge; the menu has the same seven entries):
+
+```
++----------------------------+
+|  Sahil A Gowda  [Search][Menu]
+|  |
+|  o Company work
+|  | Employer work, ... My public
+|  | code is under Personal projects.
+|  | +------------------------+
+|  | | diagram, 344 wide      |
+|  | +------------------------+
+|  | Master-data ingestion ...
+|  | text, stack
+|  | [ Read the full case study ]
+|  | ... four more rows ...
+|  |
+|  o Personal projects
+|  | Built outside work. ...
+|  | +------------------------+
+|  | | Digital banking ...    |
+|  | | text, stack            |
+|  | | [ Read the full case   |
+|  | |   study ]              |
+|  | | Open repository        |
+|  | +------------------------+
+|  | ... three more cards, one under the other ...
+|  | Open GitHub profile
++----------------------------+
+```
+
+### Left out on purpose
+
+- **Diagrams on the cards.** The compact diagrams are drawn 320 to 344 units wide and 350 to 530 tall so that their labels stay legible. A card's text column is about as wide as that on a phone and narrower on a desktop, so a diagram would either shrink until its labels cannot be read or make the card as tall as a row.
+- **Dates on the cards.** Only two projects have a source for one (the banking project and the 2024 railway system), so a date on some cards and not others looks like an error. The railway card keeps its year.
+- **A "featured" banking card.** The banking project is first in the grid, as you asked, and its page is the richest of the four. A wider card would break the grid for one item.
+- **Aligning the text across a row of cards (subgrid).** It would tie the markup to the number of cards. The first row's titles differ by one line, which reads as ordinary card behaviour.
+- **Counts in the headings ("5 case studies").** One more number to keep in step with the data.
+- **Hiding the diagrams on phones.** It would take about 2,070 of the company list's 4,750 px off a phone, but the diagrams are the home page's strongest evidence, so I left the call to you.
+
+### Accessibility
+
+- Each section is a labelled region with an `h2`; every project title is an `h3`. The new intro line sits right after the `h2`.
+- A card is not one big link: it holds ordinary text, so it can be selected and read, and each action is its own link. Links to the same page (title and button) stay, as in the rows. "Open repository" now carries the project's title for screen readers ("Open repository for GmailSage"), because there are three on the page.
+- The outline button's border is 3.46:1 against the page in light and 4.24:1 in dark (3:1 needed). The card's own border is decorative and faint (1.28:1 and 1.37:1); the cards are told apart by spacing, not by the line, and every piece of text in them is measured in `EVIDENCE.md`.
+- Scroll-spy, the anchors and the move of focus to the section work for all seven stops. The rail needs about 520 px of window height (about 475 px with six entries); in a shorter window the rail itself scrolls, and the theme toggle is still reachable by keyboard.
