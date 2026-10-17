@@ -64,7 +64,7 @@ Source: the public repository `SahilAGowda/Digital-Banking-System`, read from a 
 
 | On the site | Source |
 |---|---|
-| The project, its place in Selected work as a personal project, the repository link | Your message of 17 October ("as a personal project I have built the Digital-banking-system", with the GitHub link). It is first among the personal projects because it is the newest and the most on-stack; one line in `src/data/projects.ts` moves it |
+| The project, its place among the personal projects, the repository link | Your message of 17 October ("as a personal project I have built the Digital-banking-system", with the GitHub link). It is first among the personal projects because it is the newest and the most on-stack; one line in `src/data/projects.ts` moves it |
 | "Built from about 29 September to 15 October 2026" | Your message of 17 October ("I started working from September 29 I guess, I completed it on October 15"); "about" keeps your "I guess". The repository's single commit is dated 15 October |
 | "I built the six services, the gateway routes and the Docker Compose setup" | Your message ("I have built"), the repository's single author, and `docker-compose.yml` (Redis 7.4, ZooKeeper, Kafka, MySQL 8.4); you confirmed it ("yes I know it's correct") |
 | Six services (gateway, account, transaction, payment, fraud detection, notification) | The six modules and the README's service table. Ports are not on the site |
@@ -90,3 +90,17 @@ Source: the public repository `SahilAGowda/Digital-Banking-System`, read from a 
 - **Unusual-amount rule.** The running average is updated as (old average + amount) / 2. The reason string in the code says "3 times" while the setting is 5; the site uses the setting.
 - **Not on the site, because the code does not do it.** The daily transaction limit is stored and returned but never enforced. The payment webhook does not check Razorpay's signature (a `webhook-secret` setting exists but nothing reads it). The payment and notification services declare a mail starter that nothing uses. The only tests are the generated `contextLoads` ones.
 - **Noticed while reading, for you, not on the site.** (1) `TransactionService.verifyOtp` never checks the transfer's status, so calling it for a transfer that already completed (no OTP key exists) takes the "expired" path and refunds the sender a second time. (2) The webhook handler reads `orderId` and `paymentId` from Razorpay's payload; as far as I know Razorpay's names are `order_id` and `id`, which I did not test. (3) The OTP comes from `Math.random()`. (4) `AccountController.blockAccount` has a `@PutMapping` with no `{accountNumber}` in its path, so that endpoint cannot work; the blocking that matters goes through Kafka.
+
+## Company work and Personal projects (added 17 October 2026)
+
+This change adds structure, not facts: the project texts are the ones above. The rows below are the text and the choices that are new. "Your message of 17 October" is the one that asks to "distinguish between personal projects and company work which I did".
+
+| On the site | Source |
+|---|---|
+| The two groups, "Company work" and "Personal projects", and which project is in which | Your message of 17 October. A project built at DIATOZ is company work (`origin: "DIATOZ"`, as it already was); every other project is a personal project |
+| **check** The Railway Reservation System (2024) under Personal projects | The resume lists it as a 2024 project with no employer, and it is older than the DIATOZ internship (October 2025). No source says whether you built it on your own or for college. Its card shows only the year, not the words "personal project", but the section heading is what calls it personal. Tell me if it should be labelled differently and I will move it or rename the section |
+| Under Company work: "Employer work, described in general terms. Code and data are not public." | The sentence every DIATOZ case study already carries (`employerNote`), which follows from your confidentiality instructions. It now also sits under the heading |
+| Under Company work: "My public code is under Personal projects." | A pointer to the next section, whose cards link the public repositories. It claims nothing about the employer's code |
+| Under Personal projects: "Built outside work. Where a project has a repository, it is public." | "Public repositories only" is the rule in `projects.ts`, and the three linked repositories answer 200 without signing in (`link-check.tsv`). "Built outside work": GmailSage (your message of 9 October: "a fun project", unrelated to work), the Digital Banking System (your message of 17 October: "as a personal project"), the Meet transcriber (labelled personal when it was added), and the railway system (the **check** above) |
+| The Digital banking card's shorter text: "Six Spring Boot services behind an API gateway. A transfer runs as a saga over Kafka: a fraud service checks it, and a suspicious one waits for an OTP." | A shortening of the project's summary, which is traced in the section above. It adds no fact. The other three cards use their full summaries |
+| "Back to company work", "Back to personal projects", the two names in the rail, the phone menu and the search | Labels |

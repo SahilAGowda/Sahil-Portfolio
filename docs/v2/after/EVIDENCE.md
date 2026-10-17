@@ -184,7 +184,56 @@ Asked for after `portfolio-v2` was merged into `main` and deployed. The change i
 1. **Read the blockers.** They are my wording of your message (the saga pattern, how Kafka works, what a real bank checks for). Change anything that does not sound like you. "When" says "about 29 September to 15 October 2026", keeping your "I guess".
 2. **Resume.** Not changed. It is one page and full, so adding this would mean cutting something (GmailSage did not fit either). Say if you want it swapped in.
 3. **Things I noticed in the repository** (the full list is in SOURCES.md; none is on the site): `verifyOtp` has no status check, so verifying a completed transfer refunds the sender again; the Razorpay webhook handler reads `orderId` and `paymentId` where Razorpay, I believe, sends `order_id` and `id`, and it does not check signatures; the OTP is made with `Math.random()`; the daily limit is stored but not enforced; the only tests are the generated ones.
-4. **Next, the design.** Splitting company work from personal projects is the next change, and it comes after this one.
+4. **Next, the design.** Done, on its own branch: see the next section.
+
+## Update, 17 October (second): Company work and Personal projects
+
+Asked for by you on 17 October ("distinguish between personal projects and company work ... rather than adding everything in a single scroll"). It is on its own branch, `design/split-company-work-and-personal-projects`, which starts from `feature/digital-banking-system` and builds on it. Nothing is merged and no pull request is open. The reasoning, the options and the wireframes are in [`../DESIGN_PLAN.md`](../DESIGN_PLAN.md) (last revision); the text and choices that are new are in [`../SOURCES.md`](../SOURCES.md) (last section). Same limits as above: local only.
+
+**What changed.** "Selected work" is now two sections. **Company work** holds the five DIATOZ projects as rows with their diagrams, as before, under a line that says what they are. **Personal projects** holds the four others as cards without diagrams. The rail and the phone menu have seven entries. Back links, search labels and the back links on the static pages follow the group. The files changed are `src/data/projects.ts` (the groups, a shorter text for the banking card, and `employerNote`, moved here from `caseStudies.ts`), `profile.ts` (the section list), `search.ts`, `vite.config.ts`, `Project.tsx`, `Index.tsx`, `Section.tsx`, `ProjectRow.tsx` and `WorkSection.tsx`, with three new components: `PersonalSection.tsx`, `ProjectCard.tsx` and `ProjectLinks.tsx` (the links a row and a card share). No dependency, and no file under `src/components/ui`.
+
+**Length.** Heights measured in Chromium on the previous commit and on this branch:
+
+| Width | Before: Selected work | After: Company work + Personal projects | Page before | Page after |
+|---|---|---|---|---|
+| 1440 px | 4,088 px | 2,529 + 936 = 3,465 px | 8,504 px | 7,992 px |
+| 768 px | 4,518 px | 2,608 + 1,000 = 3,608 px | 9,049 px | 8,219 px |
+| 390 px | 7,385 px | 4,754 + 1,861 = 6,615 px | 13,665 px | 12,975 px |
+
+The company rows are the same size. The saving comes from the four personal projects (rows with diagrams before, cards now) and from the "Work at DIATOZ" lines. At 1440 px the page is 512 px (6%) shorter, and the personal projects are now a section of their own, one click from the rail.
+
+**Cost.** Main JavaScript 295.5 to 297.5 kB (96.5 to 97.0 kB gzip), CSS 23.9 to 24.0 kB (5.83 to 5.85 kB gzip); the 3D and case-study chunks are unchanged. Lighthouse 13.5 on the home page, median of 3, with the previous commit and this branch built and measured back to back on the same machine and the same static server:
+
+| Build | Form | Perf | A11y | BP | SEO | FCP | LCP | TBT | CLS | Transfer |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Previous commit | Mobile | 98 | 100 | 100 | 100 | 1.35 s | 1.80 s | 129 ms | 0 | 135.0 kB |
+| Previous commit | Desktop | 100 | 100 | 100 | 100 | 0.34 s | 0.38 s | 0 ms | 0 | 135.0 kB |
+| This branch | Mobile | 99 | 100 | 100 | 100 | 1.40 s | 1.70 s | 67 ms | 0 | 135.5 kB |
+| This branch | Desktop | 100 | 100 | 100 | 100 | 0.34 s | 0.39 s | 0 ms | 0 | 135.5 kB |
+
+I read this as no change: the machine's benchmark index ranged from 1,725 to 2,742 across the twelve runs, and mobile blocking time ranged from 64 to 148 ms across the six mobile runs.
+
+**Accessibility and behaviour**
+- **axe-core: 0 violations** in 28 runs: the home page, the banking page and a company case study (master-data ingestion), each case study in three states (3D, 3D with a step selected, flat with a step selected), light and dark, at 1440 and 390 px. The only "needs review" item is colour contrast of text over SVG or WebGL, measured in the sections above.
+- **Contrast of the new elements**, from computed styles in both themes: every piece of text in a card and every intro line is 6.01:1 or better against the page (the card text itself 15.3 to 16.1:1); the outline button's text is 15.3 to 16.1:1 and its border 3.46:1 in light and 4.24:1 in dark (3:1 needed). The card's own border is decorative: 1.28:1 and 1.37:1.
+- **49 behaviour checks pass** with a clean console. Both sections have the right projects, no diagram sits in a card, and no "Selected work" or repeated origin line is left. The rail lists the seven sections in order, and each rail link lands on its section with focus moved to it. Scroll-spy names each section with its top at 30% of the window, and Contact at the page bottom. The link under the Company work heading jumps to Personal projects. The phone menu has seven items of 44 px, fits the window, lands on the section and closes. "Back to company work" and "Back to personal projects" work from four case studies, at the top and at the bottom, and the "Next case study" chain still visits all seven in order. Search finds the two sections by name ("personal projects", "company work", "employer"), labels every project result with its group, shows no "Selected work" anywhere, and a "railway" result lands on `#personal` with the hit highlighted. Keyboard: the company section has 11 tab stops (the intro link, then a title and a button for each of five rows) and the personal section 8 (banking 3, GmailSage 3, the Meet transcriber 1, the GitHub profile 1; the railway card has no link), and the first four stops after an anchor show the 2 px ring. Tap targets in both sections are 44 px; the exceptions are text links inside a sentence and project titles that link to a page that also has a 44 px button.
+- **Rail on short windows:** it fits at 1440 by 900, 1280 by 720, 1024 by 768 and 1024 by 600. At 1100 by 480 it needs 518 px, so the rail scrolls itself and the theme toggle is still reachable (it was about 475 px with six entries).
+- **No horizontal scroll** at 320, 360, 390, 414, 600, 768, 900, 1024, 1180, 1280, 1440, 1600 and 1920 px on the home page, the banking page and a company page.
+- **Link check:** 84 links, 5 unverifiable (the profile sites, as before), 0 problems; `#work` and `#personal` both have targets. `link-check.tsv` was regenerated: the previous file predated the banking page's "Blockers" link.
+- **Static pages:** the built `projects/*.html` files link back to `/#work` ("Back to company work") for the five company studies and to `/#personal` ("Back to personal projects") for the two personal ones.
+- **Unused code:** knip finds no unused file; the one new unused type export it flagged was un-exported.
+
+**Screenshots** (`*.webp` in this folder): the home page at three widths in both themes (retaken), `home-before-split-*` for comparison (light, 1440 and 390 px), `split-work-*` and `split-personal-*` (the view after following each section's anchor), and the search screenshots (retaken: the results now say "Company work").
+
+**What I could not test.** Pinterest: the container's network policy denies it and there is no browser here to log into, so the references were the text of four public portfolios (see the design plan). The Vercel preview of this branch, a real phone, and a screen reader: I checked accessible names, order and focus through the page, not by listening to it.
+
+**Open items for this change**
+1. **The railway system.** It sits under Personal projects because it is not company work and it predates DIATOZ. If you built it for college, say so and I will move it or rename the section; its card shows only "2024", not the words "personal project".
+2. **Read the new words.** The line under each heading ("Employer work, described in general terms. Code and data are not public. My public code is under Personal projects." and "Built outside work. Where a project has a repository, it is public.") and the banking card's shorter text. They are in `src/data/projects.ts`.
+3. **Pinterest.** If you want me to compare against pins you like, send two or three as screenshots or links, or allow the host under the environment's Network access. I would still need you to log in for anything behind a login.
+4. **Merge order.** This branch builds on `feature/digital-banking-system`. Merge that one first (an ordinary merge commit), then this one. Merging this one alone brings the banking commits with it.
+5. **Noticed, not changed.** If you paste a section link such as `/#personal` into the address bar of a tab that is already on the home page, the page stays at the top instead of jumping to the section. The previous commit does the same with `/#work`, so it is not from this change, and I did not look into it further. Clicking a link, the rail, the phone menu, a "Back to" link, a search result and opening a section link in a new tab all land correctly.
+6. **Left for you:** hiding the diagrams on phones (about 2,070 of the company list's 4,750 px) and moving the personal projects above the company work are small changes (two lines each in `Index.tsx` and `profile.ts` for the move) if you want a shorter or a different first impression.
 
 ## Open items for Sahil
 
