@@ -6,7 +6,7 @@ import { education } from "./src/data/credentials";
 import { checkDiagrams } from "./src/data/diagrams";
 import { experience } from "./src/data/experience";
 import { SITE_URL, links, profile, themeColors } from "./src/data/profile";
-import { caseStudyProjects } from "./src/data/projects";
+import { caseStudyProjects, groupOf, groups } from "./src/data/projects";
 import { skillGroups } from "./src/data/skills";
 
 const esc = (value: string) =>
@@ -81,6 +81,7 @@ function siteFiles(): Plugin {
     const project = caseStudyProjects.find((entry) => entry.slug === slug);
     const study = getCaseStudy(slug);
     if (!meta || !project || !study) throw new Error(`No case study for ${slug}`);
+    const group = groups[groupOf(project)];
     const url = `${SITE_URL}${meta.path}`;
     const swap = (from: string, to: string) => {
       if (!html.includes(from)) throw new Error(`index.html is missing "${from}", so ${slug} cannot get its own head`);
@@ -104,7 +105,7 @@ function siteFiles(): Plugin {
         <p><a href="/">${esc(profile.name)}</a></p>
         <h1>${esc(project.title)}</h1>
         <p>${esc(meta.description)}</p>
-        <p><a href="/#work">Back to work</a></p>
+        <p><a href="/#${group.id}">Back to ${esc(group.title.toLowerCase())}</a></p>
         <p>Turn on JavaScript to read the rest of this case study.</p>
       </div>
     </noscript>`,

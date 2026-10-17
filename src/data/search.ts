@@ -5,7 +5,7 @@ import { caseStudies } from "./caseStudies";
 import { achievements, certifications, codingProfiles, education } from "./credentials";
 import { experience } from "./experience";
 import { profile } from "./profile";
-import { projectMeta, projects } from "./projects";
+import { groupOf, groups, projectMeta, projects } from "./projects";
 import { fold, segment, tokenize, type Segment } from "./searchText";
 import { skillGroups } from "./skills";
 
@@ -48,13 +48,19 @@ function buildIndex(): SearchEntry[] {
     add({ where: "Experience", title: job.title, text: `Stack: ${job.stack.join(", ")}`, path: "/", hash: "experience", weight: 4 });
   }
 
+  // The two project sections are findable by name, and by what their intro line says.
+  for (const group of Object.values(groups)) {
+    add({ where: group.title, title: group.title, text: group.intro, path: "/", hash: group.id, weight: 1 });
+  }
+
   for (const project of projects) {
+    const group = groups[groupOf(project)];
     add({
-      where: "Selected work",
+      where: group.title,
       title: project.title,
       text: [projectMeta(project), project.summary, `Stack: ${project.stack.join(", ")}`].filter(Boolean).join(". "),
       path: project.caseStudy ? `/projects/${project.slug}` : "/",
-      hash: project.caseStudy ? undefined : "work",
+      hash: project.caseStudy ? undefined : group.id,
       weight: 4,
     });
   }

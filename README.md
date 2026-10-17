@@ -20,12 +20,12 @@ All text lives in `src/data`. Components read from there, and nothing is repeate
 |---|---|
 | `profile.ts` | Name, role, hero line, summary, page title and description, every outbound link, the resume link |
 | `experience.ts` | The DIATOZ roles and their bullets |
-| `projects.ts` | The project list. Set `caseStudy: true` once a page exists |
+| `projects.ts` | The project list and the two home-page groups. A project built at DIATOZ (`origin: "DIATOZ"`) is a row with its diagram under Company work; any other is a card under Personal projects. Set `caseStudy: true` once a page exists |
 | `caseStudies.ts` | The case-study pages: outcome, at a glance, problem, constraints, approach, the steps that walk through the diagram, blockers, results with their sources |
 | `diagrams.ts` | The architecture diagrams: nodes, edges (each names the two nodes it joins) and a layout for wide and narrow screens. The flat and the 3D view are both drawn from it |
 | `skills.ts`, `credentials.ts` | Skill groups; education, certifications, achievements and coding profiles |
 
-To add a case study, add the project to `projects.ts`, write its page in `caseStudies.ts`, optionally draw a diagram in `diagrams.ts`, and set `caseStudy: true`. The page, its links, the search and the sitemap pick it up. The build fails if an edge or a walkthrough step names a node that the diagram does not have.
+To add a case study, add the project to `projects.ts`, write its page in `caseStudies.ts`, optionally draw a diagram in `diagrams.ts`, and set `caseStudy: true`. The page, its links, the search and the sitemap pick it up. A personal project's card shows its `summary`, or a shorter `blurb` if you give one. The build fails if an edge or a walkthrough step names a node that the diagram does not have.
 
 The rules the content follows: every number traces to the resume or a README, employer work stays at resume level, and a section without a source is left out. `docs/v2/SOURCES.md` lists where each claim comes from.
 

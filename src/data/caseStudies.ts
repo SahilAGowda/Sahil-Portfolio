@@ -72,8 +72,6 @@ export interface CaseStudy {
   results?: Result[];
 }
 
-export const employerNote = "Employer work, described in general terms. Code and data are not public.";
-
 export const caseStudies: CaseStudy[] = [
   {
     slug: "master-data-ingestion",

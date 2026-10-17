@@ -3,9 +3,9 @@ import { Link, useParams } from "react-router-dom";
 import { FlowDiagram } from "@/components/diagrams/FlowDiagram";
 import { ExternalLink } from "@/components/site/ExternalLink";
 import { Rich } from "@/components/site/Rich";
-import { caseStudyMeta, employerNote, getCaseStudy, type CaseStudy } from "@/data/caseStudies";
+import { caseStudyMeta, getCaseStudy, type CaseStudy } from "@/data/caseStudies";
 import { hasDiagram } from "@/data/diagrams";
-import { caseStudyProjects, projectMeta, type Project } from "@/data/projects";
+import { caseStudyProjects, employerNote, groupOf, groups, projectMeta, type Project } from "@/data/projects";
 import { usePageMeta } from "@/hooks/usePageMeta";
 import NotFound from "./NotFound";
 
@@ -26,6 +26,8 @@ function CaseStudyPage({ project, study }: { project: Project; study: CaseStudy 
   const index = caseStudyProjects.findIndex((entry) => entry.slug === project.slug);
   const next = caseStudyProjects[index + 1];
   const meta = projectMeta(project);
+  const group = groups[groupOf(project)];
+  const backLabel = `Back to ${group.title.toLowerCase()}`;
 
   // The in-page links, in page order, for the sections this case study has.
   const sections = [
@@ -39,8 +41,8 @@ function CaseStudyPage({ project, study }: { project: Project; study: CaseStudy 
 
   return (
     <article className="enter pt-10 lg:pt-20">
-      <Link to={{ pathname: "/", hash: "#work" }} className="link inline-flex min-h-11 items-center">
-        Back to work
+      <Link to={{ pathname: "/", hash: `#${group.id}` }} className="link inline-flex min-h-11 items-center">
+        {backLabel}
       </Link>
 
       <header className="mt-4">
@@ -207,8 +209,8 @@ function CaseStudyPage({ project, study }: { project: Project; study: CaseStudy 
       </Block>
 
       <nav aria-label="More case studies" className="mt-16 flex flex-wrap gap-x-8 border-t border-border pt-4">
-        <Link to={{ pathname: "/", hash: "#work" }} className="link inline-flex min-h-11 items-center">
-          Back to work
+        <Link to={{ pathname: "/", hash: `#${group.id}` }} className="link inline-flex min-h-11 items-center">
+          {backLabel}
         </Link>
         {next && (
           <Link to={`/projects/${next.slug}`} className="link inline-flex min-h-11 items-center">
