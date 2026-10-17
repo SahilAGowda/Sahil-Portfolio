@@ -1,6 +1,6 @@
 // Architecture diagrams, drawn only from facts in resume-latest.pdf, the Facts in the v2 brief, the owner's own
-// account of the DIATOZ work (9 October 2026) and the README of the public repo. Where the sources do not name a
-// component it is drawn generically, and internal names (classes, endpoints, tables, services) are left out.
+// account of the DIATOZ work (9 October 2026) and the README and code of the public repos. Where the sources do not
+// name a component it is drawn generically, and internal names (classes, endpoints, tables, services) are left out.
 //
 // Shapes carry the meaning, colour repeats it: box = job or service (flow), cylinder = data store (store),
 // diamond = model call (model), grey box = input or output (plain).
@@ -397,6 +397,78 @@ export const diagrams: Record<string, DiagramSpec> = {
         { from: "agent", to: "slot", points: [[160, 320], [160, 438], [170, 438]] },
         { from: "agent", to: "pdf", points: [[160, 320], [160, 506], [170, 506]] },
         { from: "lookup", to: "es", points: [[75, 428], [75, 452]], bothWays: true },
+      ],
+    },
+  },
+
+  "digital-banking-system": {
+    title: "Digital banking system",
+    description:
+      "Clients call an API gateway, which routes accounts, transactions and payments to their services and rate-limits each client. The transaction service debits the sender through the account service over REST, then publishes events to Kafka. The fraud detection service consumes them and answers with a clean result or a request for an OTP. A completed transfer makes the account service credit the receiver and the notification service log the alerts. A wrong or expired OTP refunds the sender, and a wrong one also blocks the sender's account. The payment service creates Razorpay orders and publishes payment results to Kafka for the notification service.",
+    full: {
+      width: 720,
+      height: 306,
+      fontSize: 14,
+      nodes: [
+        node("client", "plain", "Client", 50, 4, 100, 48),
+        node("gateway", "flow", "API gateway", 313, 0, 160, 56, "routes, rate limits"),
+        node("rzp", "plain", "Razorpay", 480, 4, 110, 48),
+        node("fraud", "flow", "Fraud\ndetection", 4, 120, 118, 66, "three rules"),
+        node("acct", "flow", "Account\nservice", 136, 120, 118, 66, "balances"),
+        node("txn", "flow", "Transaction\nservice", 334, 120, 118, 66, "runs the saga"),
+        node("pay", "flow", "Payment\nservice", 466, 120, 118, 66, "Razorpay orders"),
+        node("notify", "flow", "Notification\nservice", 598, 120, 118, 66, "logs alerts"),
+        node("bus", "flow", "Kafka", 0, 244, 720, 52, "event bus"),
+      ],
+      edges: [
+        { from: "client", to: "gateway", points: [[150, 28], [313, 28]] },
+        { from: "gateway", to: "acct", points: [[333, 56], [333, 88], [195, 88], [195, 120]] },
+        { from: "gateway", to: "txn", points: [[393, 56], [393, 120]] },
+        { from: "gateway", to: "pay", points: [[453, 56], [453, 88], [500, 88], [500, 120]] },
+        { from: "pay", to: "rzp", points: [[560, 120], [560, 52]], bothWays: true },
+        { from: "txn", to: "acct", points: [[334, 153], [254, 153]], label: "debit, refund", labelAt: [294, 143], labelAnchor: "middle" },
+        { from: "bus", to: "fraud", points: [[63, 244], [63, 186]], dashed: true, bothWays: true },
+        {
+          from: "bus",
+          to: "acct",
+          points: [[195, 244], [195, 186]],
+          dashed: true,
+          label: "credit, block",
+          labelAt: [205, 216],
+          labelAnchor: "start",
+        },
+        { from: "txn", to: "bus", points: [[393, 186], [393, 244]], dashed: true, bothWays: true },
+        { from: "pay", to: "bus", points: [[525, 186], [525, 244]], dashed: true },
+        { from: "bus", to: "notify", points: [[657, 244], [657, 186]], dashed: true },
+      ],
+    },
+    compact: {
+      width: 344,
+      height: 352,
+      fontSize: 12.5,
+      nodes: [
+        node("client", "plain", "Client", 0, 8, 100, 36),
+        node("gateway", "flow", "API\ngateway", 122, 0, 100, 52),
+        node("rzp", "plain", "Razorpay", 244, 8, 100, 36),
+        node("acct", "flow", "Account\nservice", 0, 104, 100, 52),
+        node("txn", "flow", "Transaction\nservice", 122, 104, 100, 52),
+        node("pay", "flow", "Payment\nservice", 244, 104, 100, 52),
+        node("bus", "flow", "Kafka", 0, 204, 344, 48, "event bus"),
+        node("fraud", "flow", "Fraud\ndetection", 0, 300, 100, 52),
+        node("notify", "flow", "Notification\nservice", 244, 300, 100, 52),
+      ],
+      edges: [
+        { from: "client", to: "gateway", points: [[100, 26], [122, 26]] },
+        { from: "gateway", to: "acct", points: [[140, 52], [140, 78], [50, 78], [50, 104]] },
+        { from: "gateway", to: "txn", points: [[172, 52], [172, 104]] },
+        { from: "gateway", to: "pay", points: [[204, 52], [204, 78], [280, 78], [280, 104]] },
+        { from: "pay", to: "rzp", points: [[330, 104], [330, 44]], bothWays: true },
+        { from: "txn", to: "acct", points: [[122, 130], [100, 130]] },
+        { from: "bus", to: "acct", points: [[50, 204], [50, 156]], dashed: true },
+        { from: "txn", to: "bus", points: [[172, 156], [172, 204]], dashed: true, bothWays: true },
+        { from: "pay", to: "bus", points: [[294, 156], [294, 204]], dashed: true },
+        { from: "bus", to: "fraud", points: [[50, 252], [50, 300]], dashed: true, bothWays: true },
+        { from: "bus", to: "notify", points: [[294, 252], [294, 300]], dashed: true },
       ],
     },
   },
