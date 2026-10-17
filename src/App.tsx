@@ -1,27 +1,40 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { SiteShell } from "@/components/site/SiteShell";
+import { ThemeProvider } from "@/components/site/ThemeProvider";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import RouteError from "./pages/RouteError";
 
-const queryClient = new QueryClient();
+const router = createBrowserRouter(
+  [
+    {
+      element: <SiteShell />,
+      children: [
+        { path: "/", element: <Index />, errorElement: <RouteError /> },
+        // Loaded before the navigation completes, so hash jumps and scroll restoration find the page's content.
+        {
+          path: "/projects/:slug",
+          lazy: async () => {
+            try {
+              return { Component: (await import("./pages/Project")).default };
+            } catch {
+              // The file could not be loaded (a stale tab after a redeploy, or no connection): show the error page in the shell.
+              return { Component: RouteError };
+            }
+          },
+          errorElement: <RouteError />,
+        },
+        { path: "*", element: <NotFound /> },
+      ],
+    },
+  ],
+  { future: { v7_relativeSplatPath: true, v7_fetcherPersist: true, v7_normalizeFormMethod: true, v7_partialHydration: true, v7_skipActionErrorRevalidation: true } },
+);
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <ThemeProvider>
+    <RouterProvider router={router} future={{ v7_startTransition: true }} />
+  </ThemeProvider>
 );
 
 export default App;

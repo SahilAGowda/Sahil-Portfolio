@@ -1,0 +1,14 @@
+{
+  "name": "Sahil A Gowda",
+  "short_name": "Sahil A Gowda",
+  "description": "Backend and AI engineer in Bengaluru.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#F5F6F3",
+  "theme_color": "#F5F6F3",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

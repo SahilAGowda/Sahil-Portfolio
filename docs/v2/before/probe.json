@@ -1,0 +1,753 @@
+{
+  "sidebarDesktop": {
+    "atTop": {
+      "top": 0,
+      "height": 797,
+      "position": "static",
+      "docHeight": 2802
+    },
+    "afterScroll1200": {
+      "scrollY": 1200,
+      "asideTop": -1200,
+      "asideBottom": -403,
+      "firstNavTop": -996,
+      "navVisibleInViewport": false
+    },
+    "verdict": "scrolls away (nav not reachable without scrolling back up)"
+  },
+  "navSettleMs": {
+    "headingChanged": 1233,
+    "opaque": 2180
+  },
+  "dots": {
+    "count": 8,
+    "cursor": "auto",
+    "tag": "DIV",
+    "hasRole": false,
+    "hasHandler": false,
+    "clickChangedSection": false,
+    "before": "Professional Experience",
+    "after": "Professional Experience"
+  },
+  "scrollResetMobile": {
+    "scrollYBefore": 1500,
+    "after": {
+      "scrollY": 1500,
+      "docHeight": 3437,
+      "heading": "Certifications & Learning"
+    },
+    "reset": false
+  },
+  "hamburger": {
+    "ariaLabel": null,
+    "ariaExpanded": null,
+    "accessibleText": "",
+    "rect": {
+      "width": 40,
+      "height": 40
+    }
+  },
+  "mobileTabOrder": {
+    "stops": [
+      {
+        "tag": "BUTTON",
+        "text": "",
+        "offscreen": false
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Home",
+        "offscreen": true
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Experience",
+        "offscreen": true
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Education",
+        "offscreen": true
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Projects",
+        "offscreen": true
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Skills",
+        "offscreen": true
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Achievements",
+        "offscreen": true
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Certifications",
+        "offscreen": true
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Contact",
+        "offscreen": true
+      },
+      {
+        "tag": "A",
+        "text": "GitHub",
+        "offscreen": true
+      },
+      {
+        "tag": "A",
+        "text": "LinkedIn",
+        "offscreen": true
+      },
+      {
+        "tag": "A",
+        "text": "LeetCode",
+        "offscreen": true
+      },
+      {
+        "tag": "A",
+        "text": "CodeChef",
+        "offscreen": true
+      },
+      {
+        "tag": "BUTTON",
+        "text": "View My Work",
+        "offscreen": false
+      }
+    ],
+    "focusReachedOffscreen": true
+  },
+  "desktopTabOrder": [
+    {
+      "tag": "BUTTON",
+      "text": "Home",
+      "outline": "auto 0px",
+      "ring": "box-shadow"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Experience",
+      "outline": "auto 0px",
+      "ring": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Education",
+      "outline": "auto 0px",
+      "ring": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Projects",
+      "outline": "auto 0px",
+      "ring": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Skills",
+      "outline": "auto 0px",
+      "ring": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Achievements",
+      "outline": "auto 0px",
+      "ring": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Certifications",
+      "outline": "auto 0px",
+      "ring": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Contact",
+      "outline": "auto 0px",
+      "ring": ""
+    },
+    {
+      "tag": "A",
+      "text": "GitHub",
+      "outline": "auto 0px",
+      "ring": ""
+    },
+    {
+      "tag": "A",
+      "text": "LinkedIn",
+      "outline": "auto 0px",
+      "ring": ""
+    },
+    {
+      "tag": "A",
+      "text": "LeetCode",
+      "outline": "auto 0px",
+      "ring": ""
+    },
+    {
+      "tag": "A",
+      "text": "CodeChef",
+      "outline": "auto 0px",
+      "ring": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "View My Work",
+      "outline": "solid 0px",
+      "ring": "box-shadow"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Download Resume",
+      "outline": "solid 0px",
+      "ring": "box-shadow"
+    },
+    {
+      "tag": "A",
+      "text": "GitHub",
+      "outline": "auto 0px",
+      "ring": ""
+    },
+    {
+      "tag": "A",
+      "text": "LinkedIn",
+      "outline": "auto 0px",
+      "ring": ""
+    },
+    {
+      "tag": "A",
+      "text": "LeetCode",
+      "outline": "auto 0px",
+      "ring": ""
+    },
+    {
+      "tag": "A",
+      "text": "HackerRank",
+      "outline": "auto 0px",
+      "ring": ""
+    },
+    {
+      "tag": "A",
+      "text": "CodeChef",
+      "outline": "auto 0px",
+      "ring": ""
+    },
+    {
+      "tag": "BODY",
+      "text": "SGSahil A GowdaFull Stac",
+      "outline": "none 0px",
+      "ring": ""
+    }
+  ],
+  "landmarks": {
+    "main": 1,
+    "nav": 1,
+    "header": 0,
+    "footer": 0,
+    "aside": 1,
+    "skipLink": false,
+    "h1": 1,
+    "headingOrder": [
+      "H2:Sahil A Gowda",
+      "H1:Sahil A Gowda|",
+      "H2:"
+    ],
+    "title": "Sahil A Gowda - Full Stack Developer & AI/ML Enthusiast",
+    "lang": "en",
+    "h1Text": "Sahil A Gowda|"
+  },
+  "axe": {
+    "1440x900": {
+      "Home": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 5,
+          "sample": ".mb-4.text-center"
+        }
+      ],
+      "Experience": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 4,
+          "sample": ".text-center.text-text-muted"
+        },
+        {
+          "id": "page-has-heading-one",
+          "impact": "moderate",
+          "nodes": 1,
+          "sample": "html"
+        }
+      ],
+      "Education": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 1,
+          "sample": ".text-text-muted"
+        },
+        {
+          "id": "page-has-heading-one",
+          "impact": "moderate",
+          "nodes": 1,
+          "sample": "html"
+        }
+      ],
+      "Projects": [
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "nodes": 6,
+          "sample": ".card-hover.border-border.hover\\:shadow-2xl:nth-child(1) > .p-6 > .flex.gap-2 > "
+        },
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 7,
+          "sample": ".text-center.text-text-muted"
+        },
+        {
+          "id": "page-has-heading-one",
+          "impact": "moderate",
+          "nodes": 1,
+          "sample": "html"
+        }
+      ],
+      "Skills": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 1,
+          "sample": ".text-text-muted"
+        },
+        {
+          "id": "page-has-heading-one",
+          "impact": "moderate",
+          "nodes": 1,
+          "sample": "html"
+        }
+      ],
+      "Achievements": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 1,
+          "sample": ".mb-4.text-text-muted.text-center"
+        },
+        {
+          "id": "page-has-heading-one",
+          "impact": "moderate",
+          "nodes": 1,
+          "sample": "html"
+        }
+      ],
+      "Certifications": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 6,
+          "sample": ".text-text-muted.text-center.mb-4"
+        },
+        {
+          "id": "page-has-heading-one",
+          "impact": "moderate",
+          "nodes": 1,
+          "sample": "html"
+        }
+      ],
+      "Contact": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 1,
+          "sample": ".text-text-muted"
+        },
+        {
+          "id": "page-has-heading-one",
+          "impact": "moderate",
+          "nodes": 1,
+          "sample": "html"
+        }
+      ]
+    },
+    "390x844": {
+      "Home": [
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "nodes": 1,
+          "sample": ".left-4"
+        },
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 4,
+          "sample": ".text-card-foreground.shadow-sm.hover\\:border-primary\\/50:nth-child(1) > .text-t"
+        }
+      ],
+      "Experience": [
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "nodes": 1,
+          "sample": ".inline-flex"
+        },
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 3,
+          "sample": ".text-card-foreground.shadow-sm.card-hover:nth-child(1) > .pt-4.border-t.border-"
+        },
+        {
+          "id": "page-has-heading-one",
+          "impact": "moderate",
+          "nodes": 1,
+          "sample": "html"
+        }
+      ],
+      "Education": [
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "nodes": 1,
+          "sample": ".inline-flex"
+        },
+        {
+          "id": "page-has-heading-one",
+          "impact": "moderate",
+          "nodes": 1,
+          "sample": "html"
+        }
+      ],
+      "Projects": [
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "nodes": 7,
+          "sample": ".w-10"
+        },
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 6,
+          "sample": ".card-hover.border-border.hover\\:shadow-2xl:nth-child(1) > .p-6 > .mb-4:nth-chil"
+        },
+        {
+          "id": "page-has-heading-one",
+          "impact": "moderate",
+          "nodes": 1,
+          "sample": "html"
+        }
+      ],
+      "Skills": [
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "nodes": 1,
+          "sample": ".w-10"
+        },
+        {
+          "id": "page-has-heading-one",
+          "impact": "moderate",
+          "nodes": 1,
+          "sample": "html"
+        }
+      ],
+      "Achievements": [
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "nodes": 1,
+          "sample": ".inline-flex"
+        },
+        {
+          "id": "page-has-heading-one",
+          "impact": "moderate",
+          "nodes": 1,
+          "sample": "html"
+        }
+      ],
+      "Certifications": [
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "nodes": 1,
+          "sample": ".hover\\:bg-accent"
+        },
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 5,
+          "sample": ".cursor-pointer.p-4.card-hover:nth-child(1) > .block > .text-xs.mb-2.text-text-m"
+        },
+        {
+          "id": "page-has-heading-one",
+          "impact": "moderate",
+          "nodes": 1,
+          "sample": "html"
+        }
+      ],
+      "Contact": [
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "nodes": 1,
+          "sample": ".w-10"
+        },
+        {
+          "id": "page-has-heading-one",
+          "impact": "moderate",
+          "nodes": 1,
+          "sample": "html"
+        }
+      ]
+    },
+    "360x800": {}
+  },
+  "tapTargets": {
+    "1440x900": {
+      "Home": {
+        "interactive": 7,
+        "under44": 0,
+        "sample": []
+      },
+      "Experience": {
+        "interactive": 0,
+        "under44": 0,
+        "sample": []
+      },
+      "Education": {
+        "interactive": 0,
+        "under44": 0,
+        "sample": []
+      },
+      "Projects": {
+        "interactive": 29,
+        "under44": 29,
+        "sample": [
+          "All 49x40",
+          "Web 64x40",
+          "AI 45x40",
+          "Full Stack 99x40"
+        ]
+      },
+      "Skills": {
+        "interactive": 7,
+        "under44": 7,
+        "sample": [
+          "All 49x40",
+          "Programming Language 214x40",
+          "Frontend Development 196x40",
+          "Backend Development 194x40"
+        ]
+      },
+      "Achievements": {
+        "interactive": 0,
+        "under44": 0,
+        "sample": []
+      },
+      "Certifications": {
+        "interactive": 9,
+        "under44": 4,
+        "sample": [
+          "View Certificate 466x36",
+          "View Certificate 466x36",
+          "View Certificate 466x36",
+          "View Certificate 466x36"
+        ]
+      },
+      "Contact": {
+        "interactive": 14,
+        "under44": 5,
+        "sample": [
+          "INPUT 313x40",
+          "INPUT 313x40",
+          "INPUT 646x40",
+          "Send 484x40"
+        ]
+      }
+    },
+    "390x844": {
+      "Home": {
+        "interactive": 8,
+        "under44": 1,
+        "sample": [
+          "BUTTON 40x40"
+        ]
+      },
+      "Experience": {
+        "interactive": 1,
+        "under44": 1,
+        "sample": [
+          "BUTTON 40x40"
+        ]
+      },
+      "Education": {
+        "interactive": 1,
+        "under44": 1,
+        "sample": [
+          "BUTTON 40x40"
+        ]
+      },
+      "Projects": {
+        "interactive": 30,
+        "under44": 30,
+        "sample": [
+          "BUTTON 40x40",
+          "All 49x40",
+          "Web 64x40",
+          "AI 45x40"
+        ]
+      },
+      "Skills": {
+        "interactive": 8,
+        "under44": 8,
+        "sample": [
+          "BUTTON 40x40",
+          "All 49x40",
+          "Programming Language 214x40",
+          "Frontend Development 196x40"
+        ]
+      },
+      "Achievements": {
+        "interactive": 1,
+        "under44": 1,
+        "sample": [
+          "BUTTON 40x40"
+        ]
+      },
+      "Certifications": {
+        "interactive": 10,
+        "under44": 5,
+        "sample": [
+          "BUTTON 40x40",
+          "View Certificate 292x36",
+          "View Certificate 307x38",
+          "View Certificate 292x36"
+        ]
+      },
+      "Contact": {
+        "interactive": 15,
+        "under44": 6,
+        "sample": [
+          "BUTTON 40x40",
+          "INPUT 292x40",
+          "INPUT 292x40",
+          "INPUT 292x40"
+        ]
+      }
+    },
+    "360x800": {
+      "Home": {
+        "interactive": 8,
+        "under44": 1,
+        "sample": [
+          "BUTTON 40x40"
+        ]
+      },
+      "Experience": {
+        "interactive": 1,
+        "under44": 1,
+        "sample": [
+          "BUTTON 40x40"
+        ]
+      },
+      "Education": {
+        "interactive": 1,
+        "under44": 1,
+        "sample": [
+          "BUTTON 40x40"
+        ]
+      },
+      "Projects": {
+        "interactive": 30,
+        "under44": 30,
+        "sample": [
+          "BUTTON 40x40",
+          "All 49x40",
+          "Web 64x40",
+          "AI 45x40"
+        ]
+      },
+      "Skills": {
+        "interactive": 8,
+        "under44": 8,
+        "sample": [
+          "BUTTON 40x40",
+          "All 49x40",
+          "Programming Language 214x40",
+          "Frontend Development 196x40"
+        ]
+      },
+      "Achievements": {
+        "interactive": 1,
+        "under44": 1,
+        "sample": [
+          "BUTTON 40x40"
+        ]
+      },
+      "Certifications": {
+        "interactive": 10,
+        "under44": 5,
+        "sample": [
+          "BUTTON 40x40",
+          "View Certificate 275x38",
+          "View Certificate 262x36",
+          "View Certificate 262x36"
+        ]
+      },
+      "Contact": {
+        "interactive": 15,
+        "under44": 6,
+        "sample": [
+          "BUTTON 40x40",
+          "INPUT 262x40",
+          "INPUT 262x40",
+          "INPUT 262x40"
+        ]
+      }
+    }
+  },
+  "overflow": {
+    "1440x900": {
+      "Home": 0,
+      "Experience": 0,
+      "Education": 0,
+      "Projects": 0,
+      "Skills": 0,
+      "Achievements": 0,
+      "Certifications": 0,
+      "Contact": 0
+    },
+    "390x844": {
+      "Home": 0,
+      "Experience": 0,
+      "Education": 0,
+      "Projects": 0,
+      "Skills": 0,
+      "Achievements": 0,
+      "Certifications": 0,
+      "Contact": 0
+    },
+    "360x800": {
+      "Home": 0,
+      "Experience": 0,
+      "Education": 0,
+      "Projects": 0,
+      "Skills": 0,
+      "Achievements": 0,
+      "Certifications": 0,
+      "Contact": 0
+    }
+  },
+  "noJs": {
+    "bodyText": "",
+    "rootChildren": 0
+  }
+}

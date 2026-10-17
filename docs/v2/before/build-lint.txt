@@ -1,0 +1,51 @@
+# Baseline toolchain output (main@80c732a, node v22.22.0, npm 10.9.4)
+
+## npm run build
+> vite_react_shadcn_ts@0.0.0 build
+> vite build
+vite v5.4.19 building for production...
+transforming...
+✓ 1680 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   1.65 kB │ gzip:   0.75 kB
+dist/assets/index-HTq_B0YC.css   87.45 kB │ gzip:  14.08 kB
+dist/assets/index-CKaEvnSS.js   374.19 kB │ gzip: 114.95 kB
+✓ built in 3.84s
+exit=0
+
+## public/ asset sizes
+  103155  Sahil A Gowda Resume.pdf
+    7645  favicon.ico   
+    1040  favicon.svg   
+  217997  me.jpg   
+    3253  placeholder.svg   
+     594  resume.html   
+     160  robots.txt   
+
+## npm run lint (exit 1: 3 errors, 7 warnings; all in src/components/ui/* and tailwind.config.ts)
+> vite_react_shadcn_ts@0.0.0 lint
+> eslint .
+/home/user/Sahil-Portfolio/src/components/ui/badge.tsx
+  36:17  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+/home/user/Sahil-Portfolio/src/components/ui/button.tsx
+  56:18  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+/home/user/Sahil-Portfolio/src/components/ui/command.tsx
+  24:11  error  An interface declaring no members is equivalent to its supertype  @typescript-eslint/no-empty-object-type
+/home/user/Sahil-Portfolio/src/components/ui/form.tsx
+  168:3  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+/home/user/Sahil-Portfolio/src/components/ui/navigation-menu.tsx
+  119:3  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+/home/user/Sahil-Portfolio/src/components/ui/sidebar.tsx
+  760:3  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+/home/user/Sahil-Portfolio/src/components/ui/sonner.tsx
+  29:19  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+/home/user/Sahil-Portfolio/src/components/ui/textarea.tsx
+  5:18  error  An interface declaring no members is equivalent to its supertype  @typescript-eslint/no-empty-object-type
+/home/user/Sahil-Portfolio/src/components/ui/toggle.tsx
+  43:18  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+/home/user/Sahil-Portfolio/tailwind.config.ts
+  113:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+✖ 10 problems (3 errors, 7 warnings)
+
+## npx tsc --noEmit -p tsconfig.app.json: exit 0, no output

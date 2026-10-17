@@ -1,0 +1,182 @@
+{
+  "base": "http://127.0.0.1:4173",
+  "capturedAt": "2026-10-06T17:10:27.301Z",
+  "viewports": {
+    "1440x900": {
+      "home": {
+        "scrollHeight": 900,
+        "overflowX": 0,
+        "heading": "Sahil A Gowda",
+        "file": "1440x900/01-home.png",
+        "bytes": 365891
+      },
+      "experience": {
+        "scrollHeight": 1459,
+        "overflowX": 0,
+        "heading": "Professional Experience",
+        "file": "1440x900/02-experience.png",
+        "bytes": 239821
+      },
+      "education": {
+        "scrollHeight": 1163,
+        "overflowX": 0,
+        "heading": "Educational Background",
+        "file": "1440x900/03-education.png",
+        "bytes": 205126
+      },
+      "projects": {
+        "scrollHeight": 1553,
+        "overflowX": 0,
+        "heading": "Featured Projects",
+        "file": "1440x900/04-projects.png",
+        "bytes": 285755
+      },
+      "skills": {
+        "scrollHeight": 2802,
+        "overflowX": 0,
+        "heading": "Technical Skills",
+        "file": "1440x900/05-skills.png",
+        "bytes": 296672
+      },
+      "achievements": {
+        "scrollHeight": 1500,
+        "overflowX": 0,
+        "heading": "Achievements & Recognition",
+        "file": "1440x900/06-achievements.png",
+        "bytes": 319676
+      },
+      "certifications": {
+        "scrollHeight": 1524,
+        "overflowX": 0,
+        "heading": "Certifications & Learning",
+        "file": "1440x900/07-certifications.png",
+        "bytes": 286778
+      },
+      "contact": {
+        "scrollHeight": 946,
+        "overflowX": 0,
+        "heading": "Contact",
+        "file": "1440x900/08-contact.png",
+        "bytes": 153682
+      }
+    },
+    "768x1024": {
+      "home": {
+        "scrollHeight": 1043,
+        "overflowX": 0,
+        "heading": "Sahil A Gowda",
+        "file": "768x1024/01-home.png",
+        "bytes": 254081
+      },
+      "experience": {
+        "scrollHeight": 1483,
+        "overflowX": 0,
+        "heading": "Professional Experience",
+        "file": "768x1024/02-experience.png",
+        "bytes": 202006
+      },
+      "education": {
+        "scrollHeight": 1347,
+        "overflowX": 0,
+        "heading": "Educational Background",
+        "file": "768x1024/03-education.png",
+        "bytes": 164164
+      },
+      "projects": {
+        "scrollHeight": 2100,
+        "overflowX": 0,
+        "heading": "Featured Projects",
+        "file": "768x1024/04-projects.png",
+        "bytes": 327077
+      },
+      "skills": {
+        "scrollHeight": 4042,
+        "overflowX": 0,
+        "heading": "Technical Skills",
+        "file": "768x1024/05-skills.png",
+        "bytes": 290445
+      },
+      "achievements": {
+        "scrollHeight": 1744,
+        "overflowX": 0,
+        "heading": "Achievements & Recognition",
+        "file": "768x1024/06-achievements.png",
+        "bytes": 280729
+      },
+      "certifications": {
+        "scrollHeight": 1961,
+        "overflowX": 0,
+        "heading": "Certifications & Learning",
+        "file": "768x1024/07-certifications.png",
+        "bytes": 258713
+      },
+      "contact": {
+        "scrollHeight": 1470,
+        "overflowX": 0,
+        "heading": "Contact",
+        "file": "768x1024/08-contact.png",
+        "bytes": 110063
+      }
+    },
+    "390x844": {
+      "home": {
+        "scrollHeight": 1263,
+        "overflowX": 0,
+        "heading": "Sahil A Gowda",
+        "file": "390x844/01-home.png",
+        "bytes": 241117
+      },
+      "experience": {
+        "scrollHeight": 2569,
+        "overflowX": 0,
+        "heading": "Professional Experience",
+        "file": "390x844/02-experience.png",
+        "bytes": 215713
+      },
+      "education": {
+        "scrollHeight": 1811,
+        "overflowX": 0,
+        "heading": "Educational Background",
+        "file": "390x844/03-education.png",
+        "bytes": 156226
+      },
+      "projects": {
+        "scrollHeight": 3794,
+        "overflowX": 0,
+        "heading": "Featured Projects",
+        "file": "390x844/04-projects.png",
+        "bytes": 357168
+      },
+      "skills": {
+        "scrollHeight": 5630,
+        "overflowX": 0,
+        "heading": "Technical Skills",
+        "file": "390x844/05-skills.png",
+        "bytes": 288373
+      },
+      "achievements": {
+        "scrollHeight": 2476,
+        "overflowX": 0,
+        "heading": "Achievements & Recognition",
+        "file": "390x844/06-achievements.png",
+        "bytes": 263861
+      },
+      "certifications": {
+        "scrollHeight": 3437,
+        "overflowX": 0,
+        "heading": "Certifications & Learning",
+        "file": "390x844/07-certifications.png",
+        "bytes": 268920
+      },
+      "contact": {
+        "scrollHeight": 1634,
+        "overflowX": 0,
+        "heading": "Contact",
+        "file": "390x844/08-contact.png",
+        "bytes": 110012
+      }
+    }
+  },
+  "console": [],
+  "network": []
+}

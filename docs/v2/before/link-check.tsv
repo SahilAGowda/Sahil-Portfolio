@@ -1,0 +1,20 @@
+url	http_status	verdict	note
+https://github.com/SahilAGowda	403	unverifiable (github.com web pages return 403 to this session)	account exists: its repos are listed via the GitHub API; matches resume hyperlink
+https://www.linkedin.com/in/sahil-a-gowda-551b32270/	ERR	unverifiable (container egress policy returned 403 on CONNECT)	matches resume hyperlink; LinkedIn blocks bots anyway
+https://leetcode.com/u/sahilgowda204/	ERR	unverifiable (container egress policy returned 403 on CONNECT)	
+https://www.hackerrank.com/profile/sahilgowda204	ERR	unverifiable (container egress policy returned 403 on CONNECT)	
+https://www.codechef.com/users/sahilgowda204	ERR	unverifiable (container egress policy returned 403 on CONNECT)	
+https://github.com/sahil-gowda	403	unverifiable (github.com web pages return 403 to this session)	Sidebar.tsx URL; differs from the account/username in the resume hyperlinks, so wrong by construction (may 404 or belong to someone else)
+https://linkedin.com/in/sahil-gowda	ERR	unverifiable (container egress policy returned 403 on CONNECT)	Sidebar.tsx URL; differs from the account/username in the resume hyperlinks, so wrong by construction (may 404 or belong to someone else)
+https://leetcode.com/sahil-gowda	ERR	unverifiable (container egress policy returned 403 on CONNECT)	Sidebar.tsx URL; differs from the account/username in the resume hyperlinks, so wrong by construction (may 404 or belong to someone else)
+https://codechef.com/users/sahil_gowda	ERR	unverifiable (container egress policy returned 403 on CONNECT)	Sidebar.tsx URL; differs from the account/username in the resume hyperlinks, so wrong by construction (may 404 or belong to someone else)
+https://maps.google.com/?q=Bangalore,India	ERR	unverifiable (container egress policy returned 403 on CONNECT)	
+https://lovable.dev/opengraph-image-p98pqg.png	ERR	unverifiable (container egress policy returned 403 on CONNECT)	Lovable-branded og:image; to be removed
+https://drive.google.com/file/d/1OpcmcSJ4r5m2EjM3BURkAwoC8Jhi57nO/view?usp=sharing	ERR	unverifiable (container egress policy returned 403 on CONNECT)	certificate PDF on Google Drive; sharing state unknown
+https://drive.google.com/file/d/14TGjTTAcI3SG6dc5bxS5nv03avHX5n4K/view?usp=sharing	ERR	unverifiable (container egress policy returned 403 on CONNECT)	certificate PDF on Google Drive; sharing state unknown
+https://drive.google.com/file/d/1EA-l523bPbAKhSJqZtU9ykUlu3cdYrcC/view?usp=sharing	ERR	unverifiable (container egress policy returned 403 on CONNECT)	certificate PDF on Google Drive; sharing state unknown
+https://drive.google.com/file/d/1-gm4ljgFwgGaDPe_-I8mKgu8To2ykqtT/view?usp=sharing	ERR	unverifiable (container egress policy returned 403 on CONNECT)	certificate PDF on Google Drive; sharing state unknown
+https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap	200	ok (200)	
+https://www.hackerrank.com/sahilgowda204	ERR	unverifiable (container egress policy returned 403 on CONNECT)	
+https://x.com/sahilgowda204	ERR	unverifiable (container egress policy returned 403 on CONNECT)	
+https://sahil-a-gowda-portfolio.vercel.app/	ERR	unverifiable (container egress policy returned 403 on CONNECT)	live site
